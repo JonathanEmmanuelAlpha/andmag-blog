@@ -1,0 +1,101 @@
+.wrapper {
+  min-height: calc(100vh - var(--headerHeight));
+  max-width: 800px;
+  margin: 0px auto;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: var(--mainBgColor);
+  box-shadow: var(--shadow);
+}
+.wrapper section {
+  width: 100%;
+}
+
+.info {
+  margin: 20px 0 20px 0;
+}
+.info h2,
+.info h3 {
+  font-family: ethnocentric;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+.info h2 {
+  font-size: 25px;
+}
+.info h3 {
+  font-size: 18px;
+}
+.info p {
+  line-height: 25px;
+  margin: 10px 0;
+  color: var(--lightColor);
+  font-weight: 500;
+}
+.info p a {
+  color: var(--color);
+}
+
+.form {
+  margin-bottom: 30px;
+}
+.form form > div {
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+.form form > div > div {
+  width: 45%;
+}
+
+.info div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.info div a {
+  width: 150px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  margin-right: 10px;
+  text-decoration: none;
+}
+.info div a img {
+  width: 20px;
+  height: 20px;
+}
+.info div a span {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #f7f7f7;
+  margin-left: 5px;
+}
+
+.info a.wh {
+  background-color: #0ab74f;
+  box-shadow: 0 1px 0 #03973e, 0 2px 0 #087b36, 0 5px 0 rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2),
+    0 5px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2),
+    0 20px 20px rgba(0, 0, 0, 0.15);
+}
+.info a.fa {
+  background-color: #0a52b7;
+  box-shadow: 0 1px 0 #0648a5, 0 2px 0 #063679, 0 5px 0 rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2),
+    0 5px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2),
+    0 20px 20px rgba(0, 0, 0, 0.15);
+}
+.info a.tw {
+  background-color: #0eb6d4;
+  box-shadow: 0 1px 0 #059cb7, 0 2px 0 #09798d, 0 5px 0 rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2),
+    0 5px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2),
+    0 20px 20px rgba(0, 0, 0, 0.15);
+}

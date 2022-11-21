@@ -1,0 +1,48 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--color);
+  padding: 0 15px;
+  height: 100%;
+  border-bottom: 2px solid transparent;
+  border-radius: 2px 2px 2px 2px;
+}
+
+.wrapper:hover,
+.wrapper[data-active="true"] {
+  color: var(--primColor);
+  background-color: rgba(252, 192, 118, 0.1);
+  border-color: var(--primColor);
+}
+
+.wrapper svg {
+  width: 25px;
+  height: 25px;
+  pointer-events: none;
+}
+
+.wrapper span {
+  font-size: 13px;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.wrapper[data-reverse="true"] {
+  flex-direction: column-reverse;
+}
+
+.wrapper[data-direction="horizontal"].wrapper[data-reverse="true"] {
+  flex-direction: row-reverse;
+}
+.wrapper[data-direction="horizontal"].wrapper[data-reverse="true"] span {
+  margin-right: 7px;
+}
+.wrapper[data-direction="horizontal"] {
+  flex-direction: row;
+}
+.wrapper[data-direction="horizontal"] span {
+  margin-left: 5px;
+}

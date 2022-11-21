@@ -1,0 +1,48 @@
+.container {
+  width: 100%;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.wrapper svg {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  color: #636363;
+}
+
+.container input {
+  background-color: inherit;
+  border: none;
+  outline: none;
+  width: 100%;
+  color: var(--color);
+}
+.container input[type="number"] {
+  text-align: center;
+}
+
+.container fieldset {
+  border: 1.2px solid var(--lightColor);
+  border-radius: 3px;
+}
+
+.container legend {
+  padding: 2px 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.container .max {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 3px;
+  font-size: 13px;
+  font-weight: 600;
+  padding-left: 3px;
+}

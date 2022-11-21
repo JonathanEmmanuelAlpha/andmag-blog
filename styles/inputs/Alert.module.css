@@ -1,0 +1,30 @@
+.wrapper {
+  width: 100%;
+  padding: 12px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 3px;
+  line-height: 18px;
+}
+
+.wrapper svg {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.wrapper[data-type="danger"] {
+  color: #ffa9a9;
+  background-color: rgba(230, 91, 91, 0.1);
+}
+.wrapper[data-type="warning"] {
+  color: #ffe083;
+  background-color: rgba(207, 170, 57, 0.08);
+}
+.wrapper[data-type="success"] {
+  color: #94e6ac;
+  background-color: rgba(74, 179, 106, 0.08);
+}

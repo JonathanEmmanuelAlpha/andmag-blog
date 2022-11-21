@@ -1,0 +1,32 @@
+.slider_range {
+  width: 100%;
+}
+.slider_range input {
+  width: 100%;
+  appearance: none;
+  height: 7.5px;
+  border-radius: 30px;
+  background-color: var(--lightColor);
+  border: 1.5px solid rgba(0, 0, 0, 0.5);
+  background-image: linear-gradient(to right, var(--lightColor), #698ec1);
+  outline: none;
+}
+.slider_range input::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 100%;
+  background-color: #253853;
+  box-shadow: var(--simpleBoxShadow);
+  cursor: ew-resize;
+  transition: background 300ms ease-in-out;
+}
+.slider_range input::-webkit-slider-runnable-track {
+  appearance: none;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+}
+.slider_range input:hover {
+  cursor: pointer;
+}

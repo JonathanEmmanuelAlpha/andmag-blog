@@ -1,0 +1,22 @@
+.wrapper {
+  max-width: 150px;
+  padding-right: 20px;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.wrapper img {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  margin-right: 5px;
+}
+
+.wrapper span {
+  font-size: 13px;
+  font-weight: 600;
+}

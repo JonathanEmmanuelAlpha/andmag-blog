@@ -1,0 +1,57 @@
+.wrapper {
+  width: 128px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper[data-with-icon="true"] {
+  width: max-content;
+}
+.wrapper[data-with-icon="true"] button {
+  padding: 5px 10px;
+  width: max-content;
+  background-color: transparent !important;
+  color: var(--blueColor);
+}
+
+.wrapper button {
+  color: #d6e5ff;
+  text-align: center;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  text-transform: uppercase;
+  background-color: var(--blueColor) !important;
+  font-size: 14px;
+  font-weight: 600;
+  width: 128px;
+  height: 36px;
+  position: relative;
+  outline: none;
+}
+
+.wrapper button svg {
+  width: 28px;
+  height: 28px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  pointer-events: all;
+  cursor: default;
+  display: none;
+}
+.overlay[data-active="true"] {
+  display: flex;
+}

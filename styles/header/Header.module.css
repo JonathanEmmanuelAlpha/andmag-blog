@@ -1,0 +1,12 @@
+.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--headerHeight);
+  background-color: var(--mainBgColor);
+  box-shadow: var(--bottomShadow);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}

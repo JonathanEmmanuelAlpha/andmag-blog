@@ -1,0 +1,40 @@
+.container {
+  min-height: calc(100vh - var(--headerHeight));
+}
+
+.search_bar {
+  width: 80%;
+  margin: 30px auto;
+}
+.search_bar > div {
+  background-color: var(--mainBgColor);
+  box-shadow: var(--lightBoxShadow);
+}
+.search_bar > div input {
+  padding: 7.5px;
+  font-size: 16px;
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.card_list {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-bottom: 20px;
+}
+
+@media screen and (max-width: 830px) {
+  .search_bar {
+    width: 90%;
+  }
+}

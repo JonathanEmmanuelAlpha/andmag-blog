@@ -1,0 +1,161 @@
+.container {
+  max-width: 1024px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.wrapper {
+  width: calc(100% - 60px);
+  background-color: var(--mainBgColor);
+  padding: 20px;
+  min-height: calc(100vh - var(--headerHeight));
+}
+
+.new h1 {
+  font-weight: 600;
+  text-transform: capitalize;
+  margin-top: 0;
+}
+
+.card {
+  max-width: 350px;
+  box-shadow: var(--lightBoxShadow);
+  border-radius: 5px;
+  padding: 15px 20px;
+}
+.card h2 {
+  margin: 0;
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: 600;
+}
+.card p {
+  margin-bottom: 15px;
+  color: var(--lightColor);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+.card .link {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.card .link a {
+  width: max-content;
+  padding: 10px 20px;
+  color: #f9f9f9;
+  background-color: var(--dashboardColorPrim);
+  font-weight: 600;
+  border-radius: 5px;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.domain_creator {
+  width: 100%;
+}
+.domain_creator form {
+  max-width: 550px;
+  margin: 30px auto;
+  background-color: var(--mainBgColor);
+  padding: 50px 20px;
+  border-radius: 20px;
+  box-shadow: var(--simpleBoxShadow);
+}
+
+.domain_creator form textarea {
+  height: 80px;
+}
+
+.domain_creator form > div {
+  margin-bottom: 20px;
+}
+
+.domain_creator form div.btns {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.domain_creator form div.btns > div {
+  margin-top: 0;
+}
+.domain_creator form div.btns button {
+  margin: 0 15px;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 20px;
+  color: #f9f9f9;
+  background-color: var(--dashboardColorThird);
+  border-radius: 5px;
+  border: none;
+}
+
+.skill_list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin-top: 40px;
+}
+
+.edit_card {
+  max-width: 350px;
+  border-radius: 10px;
+  background-color: var(--mainBgColor);
+}
+.edit_card .head {
+  background-size: cover;
+  background-position: center;
+  height: 150px;
+  border-radius: 10px 10px 0 0;
+}
+.edit_card h2 {
+  font-size: 17px;
+  font-weight: 600;
+  padding: 15px 15px 0 15px;
+}
+.edit_card p {
+  padding: 15px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--lightColor);
+  line-height: 19px;
+}
+.edit_card .action {
+  width: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+.edit_card .action > div {
+  margin: 0;
+}
+.edit_card .action > div button {
+  background-color: var(--accountAlertColor) !important;
+  color: #ffc6c6 !important;
+}
+.edit_card .action a {
+  background-color: var(--dashboardColorPrim);
+  color: #d0f5ff;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-align: center;
+  padding: 7px 15px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

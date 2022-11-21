@@ -1,0 +1,111 @@
+.com_container {
+  width: 100%;
+  padding: 15px;
+}
+
+.com_item {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.com_item img {
+  border-radius: 100%;
+}
+
+.com_item p {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.com_item .cwrp {
+  width: calc(100% - 40px);
+  margin-left: 10px;
+  background-color: var(--comColor);
+  box-shadow: var(--lightBoxShadow);
+  padding: 10px;
+  border-radius: 5px;
+}
+.com_item.answer .cwrp {
+  background-color: var(--answerColor);
+}
+.com_item .cwrp .chd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.com_item .cwrp .chd a {
+  color: var(--linkColor);
+  font-size: 16px;
+  text-decoration: none;
+}
+.com_item .cwrp .chd a:hover {
+  text-decoration: underline;
+}
+.com_item .cwrp .chd span {
+  font-size: 12px;
+  font-weight: 600;
+}
+.com_item .cwrp .cbd {
+  line-height: 20px;
+  margin-top: 10px;
+}
+.com_item .cwrp .cft {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  margin-top: 20px;
+}
+.com_item .cwrp .cft button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: transparent;
+  border: none;
+  color: inherit;
+  padding: 0;
+  padding-right: 7px;
+  outline: none;
+}
+.com_item .cwrp .cft > div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.com_item .cwrp .cft > div button {
+  margin-right: 1px;
+}
+.com_item .cwrp .cft button svg {
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+.com_item .cwrp .cft button span {
+  font-size: 12px;
+  font-weight: 600;
+  pointer-events: none;
+}
+.com_item .cwrp .cft button.com_btn {
+  color: var(--linkColor);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+}
+.com_item .cwrp .cft button.com_btn span {
+  font-weight: 600;
+  margin-right: 5px;
+}
+.com_item .cwrp .cft button.com_btn:hover {
+  text-decoration: underline;
+}
+
+.response_form {
+  margin-top: 10px;
+}
+
+.add_comment {
+  margin-top: 20px;
+}

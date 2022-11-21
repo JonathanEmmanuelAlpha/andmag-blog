@@ -1,0 +1,33 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 0 auto 20px auto;
+  background-color: var(--mainBgColor);
+  padding: 5px;
+  border-radius: 5px;
+}
+.wrapper input {
+  border: none;
+  outline: none;
+  background-color: inherit;
+  width: 100%;
+  padding: 5px 0;
+  font-weight: 600;
+  color: inherit;
+  color: var(--color);
+}
+.wrapper button {
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding: 0 10px 0 5px;
+}
+.wrapper button svg {
+  width: 16px;
+  height: 16px;
+  color: var(--color);
+  pointer-events: none;
+}

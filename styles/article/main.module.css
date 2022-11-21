@@ -1,0 +1,4 @@
+.container {
+  min-height: calc(100vh - var(--headerHeight));
+  padding: 20px;
+}

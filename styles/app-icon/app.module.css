@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 13px;
+}
+
+.container img {
+  border-radius: 100%;
+  width: 40px;
+  height: 40px;
+  margin-left: 20px;
+}
+
+.container h1 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color);
+  margin-left: 10px;
+  font-family: ethnocentric;
+}
+
+.container svg {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}

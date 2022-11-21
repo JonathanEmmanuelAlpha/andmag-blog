@@ -1,0 +1,39 @@
+.wrapper {
+  max-width: 300px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.wrapper svg {
+  width: 150px;
+  height: 150px;
+  color: var(--secondary);
+}
+
+.wrapper h1 {
+  text-align: center;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.wrapper p {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.wrapper button {
+  padding: 10px;
+  border: 2.5px solid var(--secondary);
+  border-radius: 5px;
+  color: var(--secondary);
+  background-color: transparent;
+  text-transform: uppercase;
+  font-weight: 700;
+}

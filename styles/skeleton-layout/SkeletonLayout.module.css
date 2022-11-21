@@ -1,0 +1,64 @@
+.skeleton {
+  --sidebarHeader: 50px;
+
+  width: 100%;
+  min-height: calc(100vh - var(--headerHeight));
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.layout {
+  width: 100%;
+  min-height: calc(100vh - var(--headerHeight));
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.sidebar {
+  width: var(--sidebarHeader);
+  height: calc(100vh - var(--headerHeight));
+  position: sticky;
+  top: var(--headerHeight);
+  overflow: hidden;
+  background-color: var(--mainBgColor);
+  box-shadow: var(--rightShadow);
+  z-index: 1000;
+}
+.sidebar[data-active="true"] {
+  animation: open-sidebar 0.25s linear forwards;
+}
+
+.sidebar nav ul {
+  width: 100%;
+  margin: 15px 0;
+}
+.sidebar ul li a {
+  width: 200px;
+  justify-content: flex-start;
+  padding: 10px;
+  border-bottom: none;
+  border-left: 3px solid transparent;
+}
+.sidebar ul li a span {
+  font-size: 14px;
+}
+.sidebar ul li a svg {
+  margin-right: 10px;
+}
+
+@keyframes open-sidebar {
+  0% {
+    width: calc(200px / 4);
+  }
+  100% {
+    width: 200px;
+  }
+}
+
+.layout main {
+  min-height: calc(100vh - var(--headerHeight));
+  width: calc(100% - var(--sidebarHeader));
+}

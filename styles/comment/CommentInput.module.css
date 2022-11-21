@@ -1,0 +1,44 @@
+.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 10px 0 5px 0;
+}
+
+.container button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px;
+  background-color: var(--answerColor);
+  box-shadow: var(--thinShadow);
+  border: none;
+  border-radius: 100%;
+  color: var(--linkColor);
+}
+.container button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.container textarea {
+  background-color: var(--answerColor);
+  color: inherit;
+  width: calc(100% - 40px);
+  height: 40px;
+  border: 1.5px solid var(--lightColor);
+  border-radius: 30px;
+  resize: none;
+  padding: 10px 15px;
+  outline: none;
+}
+.container textarea::-webkit-scrollbar {
+  display: none;
+  scrollbar-width: none;
+}
+.container textarea::placeholder {
+  color: var(--lightColor);
+}

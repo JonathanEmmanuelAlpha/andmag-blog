@@ -1,0 +1,214 @@
+.container {
+  min-height: calc(100vh - var(--headerHeight));
+  width: 100%;
+  background-size: 100% 200px;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-blend-mode: hue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.container .banner {
+  width: 100%;
+  height: 200px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+
+.fake {
+  width: 100%;
+  height: 150px;
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 20px 20px 20px;
+}
+
+.main_section {
+  width: 800px;
+  margin: 0;
+  background-color: var(--mainBgColor);
+  box-shadow: var(--shadow);
+  border-radius: 5px 5px 0 0;
+  min-height: calc(100vh - var(--headerHeight));
+}
+.main_content {
+  padding: 15px;
+}
+
+.wrapper form {
+  width: 520px;
+  margin: 30px auto;
+  background-color: var(--mainBgColor);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  border-radius: 10px;
+}
+.wrapper form > div {
+  width: 100%;
+  margin-bottom: 12px;
+}
+.wrapper form > div textarea {
+  height: 150px;
+}
+
+/*----------------------------------------------- SIDE BAR --------------------------------------*/
+.sidebar {
+  position: sticky;
+  top: calc(20px + var(--headerHeight));
+  width: 300px;
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.sidebar svg {
+  width: 25px;
+  height: 25px;
+}
+
+.sidebar header {
+  background-color: var(--mainBgColor);
+  box-shadow: var(--shadow);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+.sidebar header img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+.sidebar header h1 {
+  font-size: 18px;
+  font-family: ethnocentric;
+  width: 100%;
+  text-align: center;
+  line-height: 25px;
+  margin: 1px 0 0 0;
+}
+.sidebar header h2 {
+  color: var(--lightColor);
+  font-size: 18px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  margin: 10px 0 20px 0;
+}
+
+.sidebar .stats {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.sidebar .stats div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.sidebar .stats div svg {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 5px;
+}
+.sidebar .stats span {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.sidebar nav {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background-color: transparent;
+}
+.sidebar nav a {
+  width: 140px;
+  height: 100px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: var(--mainBgColor);
+  border-radius: 5px;
+  box-shadow: var(--shadow);
+  color: var(--color);
+  transition: all 200ms ease-in-out;
+  border: 2px solid var(--answerColor);
+}
+.sidebar nav a svg {
+  width: 35px;
+  height: 35px;
+  margin-bottom: 5px;
+}
+.sidebar nav a span {
+  font-weight: 600;
+}
+.sidebar nav a:hover,
+.sidebar nav a[data-active="true"] {
+  background-color: var(--overColor);
+  color: var(--linkColor);
+}
+
+/*--------------------------------- MENU -------------------------------------*/
+.menu {
+  width: 100%;
+  box-shadow: var(--bottomShadow);
+}
+
+.menu ul {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.menu ul li {
+  list-style-type: none;
+  height: 100%;
+}
+
+.menu ul li a {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  color: var(--color);
+  border-bottom: 3px solid transparent;
+}
+.menu ul li a:hover,
+.menu ul li[data-active="true"] a {
+  border-bottom-color: var(--linkColor);
+  color: var(--linkColor);
+  background-color: rgba(234, 246, 255, 0.064);
+}
