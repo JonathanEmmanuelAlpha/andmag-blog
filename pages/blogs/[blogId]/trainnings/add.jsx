@@ -174,7 +174,7 @@ export default function trainning() {
           ? "Mise à jour d'une session"
           : "Nouvelle session d'entrainnement"
       }
-      description=""
+      robots={"noindex,nofollow"}
     >
       <div className={styles.wrapper}>
         <Form

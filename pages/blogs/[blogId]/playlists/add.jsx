@@ -177,6 +177,7 @@ export default function NewPlayList() {
       title={
         playlist && playlist.id ? "Mise à jour d'une liste" : "Nouvelle liste"
       }
+      robots={"noindex,nofollow"}
     >
       <Form
         onSubmit={async (event) => {

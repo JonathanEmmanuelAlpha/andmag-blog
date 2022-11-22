@@ -7,13 +7,13 @@ import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { v4 } from "uuid";
 
 const app = initializeApp({
-  apiKey: process.env.apiKey,
-  appId: process.env.appId,
-  authDomain: process.env.authDomain,
-  measurementId: process.env.measurementId,
-  messagingSenderId: process.env.messagingSenderId,
-  projectId: process.env.projectId,
-  storageBucket: process.env.storageBucket,
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
 });
 
 export const AppCheck = initializeAppCheck(app, {

@@ -6,11 +6,12 @@ import SearchBar from "../../components/nav-bar/SearchBar";
 import SkeletonLayout, {
   Layout,
 } from "../../components/skeleton-layout/SkeletonLayout";
+import generateRSSFeed from "../../helpers/generateRSSFeed";
 import useArticlesSearch from "../../hooks/useArticlesSearch";
 import useOnScreen from "../../hooks/useOnScreen";
 import styles from "../../styles/article/main.module.css";
 
-export default function Posts() {
+function Articles() {
   const [title, setTitle] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
@@ -71,3 +72,17 @@ export default function Posts() {
     </SkeletonLayout>
   );
 }
+
+export async function getStaticProps() {
+  try {
+    await generateRSSFeed();
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+
+  return {
+    props: {},
+  };
+}
+
+export default Articles;

@@ -13,24 +13,37 @@ import {
 import { CircleSeparator } from "./ArticleContainer";
 import toTimeString from "../../helpers/toTimeString";
 import { useAuth } from "../../context/AuthProvider";
+import { doc, increment, updateDoc } from "firebase/firestore";
+import { articlesCollection } from "../../firebase";
+import useBlogFollowers from "../../hooks/useBlogFollowers";
+import { SubButton } from "../blog/BlogHead";
 
+const INTERVAL = 1000 * 30;
 function Header({ article, blog }) {
   const { currentUser } = useAuth();
+
+  const followers = useBlogFollowers(blog.id);
 
   const [readers, setReaders] = useState(0);
   const [likeStatut, setLikeStatut] = useState("");
   const [favoriteStatut, setFavoriteStatut] = useState("");
 
-  /** Add evry user that stay on this page during more than 2min to readers */
+  /** Add evry user that stay on this page during more than 30s to readers */
   useEffect(() => {
     if (!article) return;
 
     setReaders((prev) => {
-      if (article.readers) return article.readers.length;
+      if (article.readers) return article.readers;
       return prev;
     });
 
-    const timeout = setTimeout(async () => {}, 1000 * 60 * 2);
+    const timeout = setTimeout(async () => {
+      updateDoc(doc(articlesCollection, article.id), {
+        readers: increment(1),
+      }).then(() => {
+        setReaders((prev) => prev + 1);
+      });
+    }, INTERVAL);
 
     return () => {
       clearTimeout(timeout);
@@ -53,9 +66,9 @@ function Header({ article, blog }) {
       <div className={styles.infos}>
         <h1>{article.title}</h1>
         <div className={styles.post_view}>
-          <span>{readers} readers</span>
+          <span>{readers} lecteurs</span>
           <CircleSeparator />
-          <span>{toTimeString(article.createAt.seconds * 1000 || 1000)}</span>
+          <span>{toTimeString(article.createAt * 1000)}</span>
         </div>
         <div className={styles.btns}>
           <button
@@ -66,7 +79,7 @@ function Header({ article, blog }) {
             {article && article.usersLiked?.length > 0 ? (
               <span>{article.usersLiked.length}</span>
             ) : (
-              <span>Like</span>
+              <span>J'aime</span>
             )}
           </button>
           <button
@@ -79,7 +92,7 @@ function Header({ article, blog }) {
             {article && article.usersDisliked?.length > 0 ? (
               <span>{article.usersDisliked.length}</span>
             ) : (
-              <span>Dislike</span>
+              <span>Je n'aime pas</span>
             )}
           </button>
           <button
@@ -90,12 +103,12 @@ function Header({ article, blog }) {
             {article && article.usersFavorite?.length > 0 ? (
               <span>{article.usersFavorite.length}</span>
             ) : (
-              <span>Favorites</span>
+              <span>Favoris</span>
             )}
           </button>
           <button>
             <FontAwesomeIcon icon={faShare} />
-            <span>Share</span>
+            <span>Partager</span>
           </button>
         </div>
       </div>
@@ -105,18 +118,12 @@ function Header({ article, blog }) {
             <Image src={blog.logo} width={50} height={50} />
             <div>
               <h2>{blog.name}</h2>
-              <span>
-                {blog.followers ? blog.followers.length : 0} followers
-              </span>
+              <span>{followers ? followers : 0} abonnés</span>
             </div>
           </a>
         </Link>
         <div className={styles.right}>
-          {blog.followers?.includes(currentUser.uid) ? (
-            <button>Unsubscribe</button>
-          ) : (
-            <button>Subscribe</button>
-          )}
+          <SubButton blog={blog} />
         </div>
       </div>
     </div>

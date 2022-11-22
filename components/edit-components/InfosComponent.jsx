@@ -17,27 +17,32 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import SubmitButton from "../inputs/SubmitButton";
 import Alert from "../inputs/Alert";
+import Textarea from "../inputs/Textarea";
 
 export default function InfosComponent() {
   const router = useRouter();
   const { currentUser, userProfile } = useAuth();
 
   const [pseudo, setPseudo] = useState("");
+  const [about, setAbout] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [warning, setWarning] = useState("");
 
   useEffect(() => {
-    if (!currentUser) return;
+    if (!userProfile) return;
 
-    setPseudo(currentUser.displayName);
-  }, [currentUser]);
+    setPseudo(userProfile.pseudo || "");
+    setPseudo(userProfile.about || "");
+  }, [userProfile]);
 
   const handleSubmit = async function (event) {
     event.preventDefault();
     setError("");
     setSuccess("");
+    setWarning("");
 
     if (!userProfile || !userProfile.id) return;
 
@@ -46,19 +51,39 @@ export default function InfosComponent() {
         "You need to provide a pseudo with a minimum of 08 characters."
       );
 
+    if (pseudo.length > 20)
+      return setError(
+        "You need to provide a pseudo with a maximum of 20 characters."
+      );
+
+    if (about.length < 32)
+      return setError("About can not contain less than 32 characters.");
+
+    if (about.length > 255)
+      return setError("About can not contain more than 255 characters.");
+
     setLoading(true);
 
+    let data = null;
+
     try {
-      await updateProfile(currentUser, {
-        displayName: pseudo,
-      });
+      if (pseudo !== currentUser.displayName) {
+        await updateProfile(currentUser, {
+          displayName: pseudo,
+        });
+        data = { updateAt: serverTimestamp(), pseudo: pseudo };
+      }
+      if (pseudo !== userProfile.about) {
+        data = { ...data, about: about };
+      }
 
-      await updateDoc(doc(profilesCollection, userProfile.id), {
-        updateAt: serverTimestamp(),
-        pseudo: pseudo,
-      });
-
-      setSuccess("Modifications applied successfully");
+      if (data !== null) {
+        await updateDoc(doc(profilesCollection, userProfile.id), data);
+        return setSuccess("Modifications applied successfully");
+      }
+      return setWarning(
+        "You need to change some of these fields to proccess an update"
+      );
     } catch (error) {
       setError((prev) => {
         const auth = handleAuthErrors(error);
@@ -78,7 +103,7 @@ export default function InfosComponent() {
         <div>
           <FontAwesomeIcon icon={faInfoCircle} />
         </div>
-        <h1>Ajouter un pseudo</h1>
+        <h1>Informations d'identifications</h1>
       </div>
       <form method="post">
         <Input
@@ -86,8 +111,17 @@ export default function InfosComponent() {
           required
           id={"pseudo"}
           icon={faImagePortrait}
+          autoComplete="on"
           value={pseudo}
           maxChar={20}
+          onChange={(e) => setPseudo(e.target.value)}
+        />
+        <Textarea
+          autoComplete="on"
+          label={"A propos de vous"}
+          id="about"
+          maxChar={255}
+          value={about}
           onChange={(e) => setPseudo(e.target.value)}
         />
         <div className={styles.pers_foot}>
@@ -98,6 +132,7 @@ export default function InfosComponent() {
           </p>
           {error && <Alert type="danger" message={error} />}
           {success && <Alert type="success" message={success} />}
+          {warning && <Alert type="warning" message={warning} />}
           <div className={styles.btns_save}>
             <SubmitButton
               onClick={handleSubmit}

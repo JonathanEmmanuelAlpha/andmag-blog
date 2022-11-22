@@ -35,6 +35,7 @@ export default function Blog() {
   return (
     <SkeletonLayout
       title={blog && blog.id ? "Mise à jour du blog" : "Créer un nouveau blog"}
+      robots={"noindex,nofollow"}
     >
       <div style={{ padding: "30px 20px" }}>
         <Form

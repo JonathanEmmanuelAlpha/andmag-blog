@@ -13,6 +13,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Header from "../header/Header";
 
+import { MdRssFeed } from "react-icons/md";
+
 function SideBar({ open }) {
   return (
     <aside className={styles.sidebar} data-active={open}>
@@ -78,6 +80,17 @@ function SideBar({ open }) {
               }}
             />
           </li>
+          <li>
+            <AwesomeLink
+              text="RSS Feed"
+              url="/rss.xml"
+              custum
+              icon={<MdRssFeed size={"35px"} color="#ee802f" />}
+              direction="horizontal"
+              target="_blank"
+              rel="noreferrer"
+            />
+          </li>
         </ul>
       </nav>
     </aside>
@@ -90,6 +103,7 @@ function SkeletonLayout({
   author,
   ogType,
   ogImage,
+  robots,
   children,
 }) {
   const [open, setOpen] = useState(false);
@@ -103,6 +117,7 @@ function SkeletonLayout({
         ogType={ogType}
         title={title}
         onOpen={() => setOpen(!open)}
+        robots={robots}
       />
       <section className={styles.layout}>
         <SideBar open={open} />

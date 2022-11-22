@@ -34,7 +34,7 @@ export function SubButton({ blog }) {
    * @returns
    */
   async function subscribe() {
-    if (!blog || !blog.id) return;
+    if (!blog || !blog.id || isFollower) return;
 
     setLoading(true);
     try {
@@ -43,8 +43,6 @@ export function SubButton({ blog }) {
         collection(blogsCollection, blog.id, "followers")
       );
       const lastDoc = followers.docs[followers.docs.length - 1];
-
-      console.log("Last doc: ", lastDoc);
 
       /** Si on a bien un dernier paquet, on ajoute l'ID de l'utisateur courent au champ followers et on met à jour joinON */
       if (lastDoc && lastDoc.data().followers.length < 100_000) {
@@ -70,16 +68,14 @@ export function SubButton({ blog }) {
         updateAt: serverTimestamp(),
       });
 
-      return router.push("/settings/subscriptions");
-    } catch (error) {
-      console.log("Sub error: ", error);
-    }
+      setIsFollower(!isFollower);
+    } catch (error) {}
 
     setLoading(false);
   }
 
   async function unsubscribe() {
-    if (!blog || !blog.id) return;
+    if (!blog || !blog.id || !isFollower) return;
 
     setLoading(true);
     try {
@@ -95,20 +91,17 @@ export function SubButton({ blog }) {
       /** Si on n'est pas un follower on sort de la fonction */
       if (!exist.exists()) return;
 
-      await updateDoc(
-        collection(blogsCollection, blog.id, "followers", exist.id),
-        {
-          followers: arrayRemove(currentUser.uid),
-        }
-      );
+      await updateDoc(doc(blogsCollection, blog.id, "followers", exist.id), {
+        followers: arrayRemove(currentUser.uid),
+      });
 
       await updateDoc(doc(profilesCollection, userProfile.id), {
         followed: arrayRemove(blog.id),
         updateAt: serverTimestamp(),
       });
-    } catch (error) {
-      console.log("unSub error: ", error);
-    }
+
+      setIsFollower(!isFollower);
+    } catch (error) {}
     setLoading(false);
   }
 
@@ -119,13 +112,14 @@ export function SubButton({ blog }) {
       if (
         userProfile.followed &&
         userProfile.followed.find((f) => f === blog.id)
-      )
-        return prev;
+      ) {
+        return true;
+      }
       return prev;
     });
 
     setLoading(false);
-  }, [userProfile]);
+  }, [userProfile, isFollower]);
 
   return (
     <div className={styles.sub_btn}>

@@ -213,6 +213,7 @@ export default function NewArticle() {
           ? "Mise ç jour d'un article"
           : "Ajouter un article"
       }
+      robots={"noindex,nofollow"}
     >
       <Form
         onSubmit={async (event) => {

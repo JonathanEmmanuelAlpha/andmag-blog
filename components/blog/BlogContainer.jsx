@@ -54,6 +54,7 @@ function BlogContainer({
   author,
   ogImage,
   ogType,
+  robots,
   children,
 }) {
   const router = useRouter();
@@ -66,6 +67,7 @@ function BlogContainer({
       author={author}
       ogImage={ogImage}
       ogType={ogType}
+      robots={robots}
     >
       <div className={styles.container}>
         {loadingBlog ? (

@@ -17,6 +17,7 @@ export default function Header({
   ogType,
   ogImage,
   onOpen,
+  robots,
 }) {
   const router = useRouter();
   const { currentUser, loadingUser, logout } = useAuth();
@@ -28,6 +29,7 @@ export default function Header({
         <link rel="icon" href="/favicon.ico" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content={robots || "all"} />
         <meta
           name="description"
           content={
@@ -35,7 +37,7 @@ export default function Header({
             "Speed, efficiency, performance and safety are our pride. Whatever the difficulty of your project, we promise you support that meets your expectations"
           }
         />
-        <meta name="author" content={author || "Jonathan Emmanuel Tonye"} />
+        <meta name="author" content={author || "Andmag ground"} />
         <meta
           name="keywords"
           content="developer web frontend backend fullstack blog articles posts playlists login profile native mobile windows-platforms iOS Android"

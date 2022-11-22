@@ -435,7 +435,7 @@ export default function Questions() {
   }
 
   return (
-    <BlogContainer title="Ajouter les questions">
+    <BlogContainer title="Ajouter les questions" robots={"noindex,nofollow"}>
       {!trainningDoc ? (
         <LoadingScreen />
       ) : (

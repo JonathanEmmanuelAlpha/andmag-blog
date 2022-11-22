@@ -14,6 +14,8 @@ export default function AwesomeLink({
   reverse = AwesomeLinkProps.reverse,
   color,
   handleClick,
+  target,
+  rel,
 }) {
   const router = useRouter();
   const finalUrl = `${domainName}${url}`;
@@ -26,6 +28,8 @@ export default function AwesomeLink({
         data-reverse={reverse}
         className={styles.wrapper}
         onClick={handleClick}
+        target={target}
+        rel={rel}
       >
         {custum ? icon : <FontAwesomeIcon icon={icon} />}
         <span>{text}</span>

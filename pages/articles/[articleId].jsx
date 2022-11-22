@@ -1,45 +1,94 @@
-import { collection, doc, getDoc } from "firebase/firestore";
-import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import ArticleContainer from "../../components/article/ArticleContainer";
-import Header from "../../components/header/Header";
-import LoadingScreen from "../../components/inputs/LoadingScreen";
-import SkeletonLayout, {
-  Layout,
-} from "../../components/skeleton-layout/SkeletonLayout";
-import { articlesCollection, blogsCollection } from "../../firebase";
+import SkeletonLayout from "../../components/skeleton-layout/SkeletonLayout";
+import { articlesCollection, blogsCollection } from "../../libs/database";
 
-export default function ArticleId(props) {
-  const router = useRouter();
-
-  const [article, setArticle] = useState(null);
-
-  const [loading, setloading] = useState(true);
-
-  useEffect(() => {
-    if (typeof router.query.articleId !== "string") return;
-
-    /** Get target article */
-    getDoc(doc(articlesCollection, router.query.articleId)).then((snap) => {
-      if (!snap.exists() || !snap.data().published) return setArticle(null);
-      setArticle({ id: snap.id, ...snap.data() });
-    });
-
-    setloading(false);
-  }, [router.query.articleId]);
-
+function ArticleId({ article, blog, playlist, comments }) {
   return (
     <SkeletonLayout
-      title={loading ? "loading.." : article ? article.title : "Andmag-ground"}
-      description={loading ? "loading.." : article ? article.description : ""}
-      ogImage={loading ? "" : article ? article.thumbnail : ""}
+      title={article.title}
+      description={article.description}
+      ogImage={article.thumbnail}
       ogType="article"
+      author={blog.name}
     >
-      {loading || !article ? (
-        <LoadingScreen />
-      ) : (
-        <ArticleContainer article={article} />
-      )}
+      <ArticleContainer
+        article={article}
+        blog={blog}
+        playlist={playlist}
+        comments={comments}
+      />
     </SkeletonLayout>
   );
 }
+
+export async function getServerSideProps(context) {
+  const article = await articlesCollection.doc(context.params.articleId).get();
+  if (!article.exists) {
+    return {
+      redirect: {
+        destination: "/articles",
+        permanent: false,
+      },
+    };
+  }
+
+  const blog = await blogsCollection.doc(article.data().blogId).get();
+  if (!blog.exists) {
+    return {
+      redirect: {
+        destination: "/articles",
+        permanent: false,
+      },
+    };
+  }
+
+  const playlist = await blogsCollection
+    .doc(blog.id)
+    .collection("playlists")
+    .doc(article.data().playlist)
+    .get();
+  if (!playlist.exists) {
+    return {
+      redirect: {
+        destination: "/articles",
+        permanent: false,
+      },
+    };
+  }
+
+  const comments = await articlesCollection
+    .doc(article.id)
+    .collection("comments")
+    .listDocuments();
+
+  return {
+    props: {
+      article: {
+        ...article.data(),
+        id: article.id,
+        createAt: article.data().createAt.seconds,
+        updateAt: article.data().updateAt
+          ? article.data().updateAt.seconds
+          : null,
+      },
+      blog: {
+        ...blog.data(),
+        id: blog.id,
+        createAt: blog.data().createAt.seconds,
+        updateAt: blog.data().updateAt ? blog.data().updateAt.seconds : null,
+      },
+      playlist: {
+        ...playlist.data(),
+        id: playlist.id,
+        createAt: playlist.data().createAt.seconds,
+        updateAt: playlist.data().updateAt
+          ? playlist.data().updateAt.seconds
+          : null,
+      },
+      comments: comments.length,
+    },
+  };
+}
+
+export default ArticleId;

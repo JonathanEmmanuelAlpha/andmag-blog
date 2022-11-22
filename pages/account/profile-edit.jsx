@@ -13,6 +13,7 @@ export default function Profile() {
     <SkeletonLayout
       title="Andmag ground - profile"
       description="Update your account information such as the profile picture and the nickname."
+      robots={"noindex,nofollow"}
     >
       <div className={styles.container}>
         <PersonnalComponent />

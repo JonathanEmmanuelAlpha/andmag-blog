@@ -9,14 +9,21 @@ import { domainName } from "../links/AwesomeLink.type";
 import EditLink from "../links/EditLink";
 import { useAuth } from "../../context/AuthProvider";
 import { useTargetBlog } from "../../context/BlogProvider";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export function ArticleCardThin(props) {
   return (
     <Link href={`/posts/${props.postId}`}>
       <a className={styles.card_thin}>
-        <img src={props.thumbnail} className="skeleton" />
+        <Skeleton />
+        {props.thumbnail ? (
+          <img src={props.thumbnail} />
+        ) : (
+          <Skeleton height={100} width={150} />
+        )}
         <div className={styles.card_thin_inf}>
-          <h2>{props.title}</h2>
+          <h2>{props.title || <Skeleton />}</h2>
           <div className={styles.card_thin_info}>
             <span className={styles.span}>
               {props.reads ? props.reads : 0} lecteurs
@@ -64,21 +71,33 @@ export function ArticleCard({
           <img className="skeleton" src={thumbnail} />
         </div>
         <div className={styles.body}>
-          <div className={`${styles.blog_logo} skeleton`}>
-            <Link href={blogUrl}>
-              <a>
-                <Image src={blogLogo} width={60} height={60} />
-              </a>
-            </Link>
+          <div className={styles.blog_logo}>
+            {blogUrl && blogLogo ? (
+              <Link href={blogUrl}>
+                <a>
+                  <Image src={blogLogo} width={60} height={60} />
+                </a>
+              </Link>
+            ) : (
+              <Skeleton height={60} width={60} />
+            )}
           </div>
           <div className={styles.infos}>
-            <h2>{title}</h2>
+            <h2>{title || <Skeleton />}</h2>
             <div className={styles.stats}>
-              <Link href={blogUrl}>{blogName}</Link>
+              {blogUrl && blogName ? (
+                <Link href={blogUrl}>{blogName}</Link>
+              ) : (
+                <Skeleton />
+              )}
               <CircleSeparator />
               <span>{reads ? reads : 0} lecteurs</span>
               <CircleSeparator />
-              <span>{toTimeString(at ? at.seconds * 1000 : 1000)}</span>
+              {at ? (
+                <span>{toTimeString(at.seconds * 1000)}</span>
+              ) : (
+                <Skeleton />
+              )}
             </div>
           </div>
         </div>

@@ -167,7 +167,7 @@ export default function Publish() {
   }
 
   return (
-    <BlogContainer title="Publish">
+    <BlogContainer title="Publish" robots={"noindex,nofollow"}>
       <Form
         title={
           post && post.id
