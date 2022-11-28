@@ -38,8 +38,8 @@ function HeadSection() {
     <section className={styles.hm}>
       <div className={styles.wrapper}>
         <div className={styles.logo}>
-          <h2>Andmag Ground</h2>
-          <p>Full stack developer & Google cloud expert.</p>
+          <h1>Andmag Ground</h1>
+          <p>Full stack developers & UI/UX Designers.</p>
         </div>
       </div>
     </section>
@@ -72,7 +72,7 @@ function AboutCard({
           </div>
           <div className={`${styles.link} ${styles.oth}`}>
             <AwesomeLink
-              text="See FAQ for more"
+              text="Plus d'informations"
               url={`/faq#${faqUrl}`}
               icon={faArrowRight}
               direction="horizontal"
@@ -181,20 +181,13 @@ function About() {
     } else {
       handleMask("third-tg");
     }
-
-    if (isVisble(fourthMask.current)) {
-      handleVisble("fourth-tg");
-    } else {
-      handleMask("fourth-tg");
-    }
   }
 
   useEffect(() => {
     if (
       firstMask.current == null ||
       secondMask.current == null ||
-      thirdMask.current == null ||
-      fourthMask.current == null
+      thirdMask.current == null
     )
       return;
 
@@ -204,14 +197,13 @@ function About() {
       if (
         firstMask.current == null ||
         secondMask.current == null ||
-        thirdMask.current == null ||
-        fourthMask.current == null
+        thirdMask.current == null
       )
         return;
 
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [firstMask, secondMask, thirdMask, fourthMask]);
+  }, [firstMask, secondMask, thirdMask]);
 
   return (
     <section className={styles.about}>
@@ -220,7 +212,7 @@ function About() {
           index={1}
           title="Mobile Apps & Windows desktops"
           attrs={["Full Stack Developer", "UI Designer"]}
-          description="Native applications are today present in every aspects of human life. The request about creating modern, fast, power full and secure native apps is increasingly growing. Andmag offer to you 03 solutions for more than 99.99% of existing platforms."
+          description="Les applications natives sont présentes aujourd'hui dans tous les aspects de la vie humaine. La demande de création d’applications natives modernes, rapides et sécurisées est de plus en plus croissante. Andmag vous offre 03 solutions pour plus de 99,99% des plateformes existantes."
           target="Natives Apps"
           id="first-tg"
         />
@@ -228,25 +220,17 @@ function About() {
           index={2}
           title="Web Apps & Progressive Web Apps"
           attrs={["Frontend Developer", "Backend Developer"]}
-          description="Native applications are today present in every aspects of human life. The request about creating modern, fast, power full and secure native apps is increasingly growing. Andmag offer to you 03 solutions for more than 99.99% of existing platforms."
+          description="La création d’une application web vous permet de disposer d’une application qui sera accessible depuis n’importe quel appareil. De plus, contrairement aux applications natives, elles ne nécessitent pas de téléchargement. Profiter en plus de certaines fonctionnalités natives grâce aux PWA."
           target="Web Apps & PWA"
           id="secd-tg"
         />
         <AboutGroup
           index={3}
-          title="Google cloud platforms"
-          attrs={["Google Analytics", "Google Cloud Developer"]}
-          description="Native applications are today present in every aspects of human life. The request about creating modern, fast, power full and secure native apps is increasingly growing. Andmag offer to you 03 solutions for more than 99.99% of existing platforms."
-          target="Google Cloud"
-          id="third-tg"
-        />
-        <AboutGroup
-          index={4}
           title="Backend Development"
           attrs={["API development", "Databases managment"]}
-          description="Native applications are today present in every aspects of human life. The request about creating modern, fast, power full and secure native apps is increasingly growing. Andmag offer to you 03 solutions for more than 99.99% of existing platforms."
+          description="Avec une API, des ordinateurs pouront gérer automatiquement vos tâches plutôt que de les faire manuellement via des personnes. Grâce aux API, les agences peuvent mettre à jour leurs flux de travail pour les rendre plus rapides et plus productifs."
           target="Backend"
-          id="fourth-tg"
+          id="third-tg"
         />
       </div>
       <div className={styles.wrap_content}>
@@ -256,7 +240,7 @@ function About() {
             alt="ios.png"
             target="iOS App"
             title="iOS App Development"
-            description=""
+            description="Des applications hautement performantes et accessible même sur les modèles plus anciens tels que les 6s et 7s. Une expérience utilisateur améliorée vous assurant la confiance de vos utilisateurs."
             technologies={["Objective C", "Swift"]}
             faqUrl="ios-dev"
           />
@@ -265,7 +249,7 @@ function About() {
             alt="android.jpg"
             target="Android App"
             title="Android App Development"
-            description=""
+            description="Elargissez vos perspectives en ciblant la plateforme possédant 84% des parts de marché mondiale. Andmag-ground vous offre la possibilité de conquérir ce marché de consommation dès aujourd’hui. N’attendez plus et prenez le taureau par les cornes."
             technologies={["Kotlin", "Java", "XML"]}
             faqUrl="android-dev"
           />
@@ -273,9 +257,17 @@ function About() {
             url="/images/about/uwp.png"
             alt="uwp.png"
             target="UWP App"
-            title="Universal Windows Platforms"
-            description=""
-            technologies={["CSharp", ".NET", "Azure", "Windows forms"]}
+            title="Plateformes Windows Universelles"
+            description="Ciblez l’ensemble des familles d’appareils (tablettes, PC, XBOX, Windows Phone, etc..) utilisant le système Windows avec une seule application. Ce qui représente pour vous un gain considérable en temps et en coût."
+            technologies={[
+              "C++",
+              "CSharp",
+              "VB",
+              ".NET",
+              "Azure",
+              "Windows forms",
+              "XAML",
+            ]}
             faqUrl="uwp-dev"
           />
           <AboutCard
@@ -283,8 +275,14 @@ function About() {
             alt="cross-platform.jpg"
             target="Cross-platform App"
             title="Cross-platforms development"
-            description=""
-            technologies={["React Native", "Xamarin"]}
+            description="Vous envisagez de ciblez l’ensemble du marché de consommation mais n’avez pas les moyens de payer pour avoir des copies différentes de la même application pour chaque plateforme ? Envisagez la création d’une seule application multiplateforme à la place."
+            technologies={[
+              "React Native",
+              "Flutter",
+              "Ionic",
+              "Xamarin",
+              "Kotlin Multiplatform Mobile",
+            ]}
             faqUrl="uwp-dev"
           />
         </div>
@@ -294,57 +292,34 @@ function About() {
             alt="web.jpg"
             target="Web App"
             title="Web App Development"
-            description=""
+            description="La pluspart des entreprises essaient de créer leur propre domaine Web et leur propre application afin de s'assurer qu'un grand nombre de leurs clients cibles sont attirés en même temps. Ne soyez plus en reste dès aujoud'hui."
             technologies={["HTML 5", "CSS 3", "JavaScript", "PHP", "Python"]}
             faqUrl="web-dev"
           />
           <AboutCard
             url="/images/about/pwa.png"
             alt="pwa.png"
-            target="PW App"
-            title="Progressive Web app"
-            description=""
+            target="PW App | Hybrid App"
+            title="Applications hybrides"
+            description="Si vous cherchez le meilleur parti entre application native et application web, les applications hybrides sont faites pour vous. Elles sont actuellement le leader sur le marché et présentent de nombreux avantages par rapport aux deux autres."
             technologies={["HTML 5", "CSS 3", "JavaScript"]}
             faqUrl="pwa-dev"
           />
         </div>
         <div className={styles.wrap} ref={thirdMask}>
           <AboutCard
-            url="/images/about/analytics.jpeg"
-            alt="analytics.jpeg"
-            target="Web App"
-            title="Web App Development"
-            description=""
-            technologies={["HTML 5", "CSS 3", "JavaScript", "PHP", "Python"]}
-            faqUrl="web-dev"
-          />
-          <AboutCard
-            url="/images/about/ads.png"
-            alt="ads.png"
-            target="PW App"
-            title="Progressive Web app"
-            description=""
-            technologies={["HTML 5", "CSS 3", "JavaScript"]}
-            faqUrl="pwa-dev"
-          />
-          <AboutCard
-            url="/images/about/cloud.png"
-            alt="cloud.png"
-            target="PW App"
-            title="Progressive Web app"
-            description=""
-            technologies={["HTML 5", "CSS 3", "JavaScript"]}
-            faqUrl="pwa-dev"
-          />
-        </div>
-        <div className={styles.wrap} ref={fourthMask}>
-          <AboutCard
             url="/images/about/rest.png"
             alt="rest.png"
             target="Rest api"
             title="Rest & RestFull API"
-            description=""
-            technologies={["HTML 5", "CSS 3", "JavaScript", "PHP", "Python"]}
+            description="Concevez une API simple, rapide et sécurisée en quelques étapes et à moindre coût. Idéale pour des projets moyennes envergures ciblant des tâches spécifiques à la demande."
+            technologies={[
+              "PHP 8",
+              "JavaScript",
+              "TypeScript",
+              "Python",
+              ".Net Core & C#",
+            ]}
             faqUrl="rest-api"
           />
           <AboutCard
@@ -352,27 +327,15 @@ function About() {
             alt="graphql.png"
             target="GraphQL"
             title="GraphQL API"
-            description=""
-            technologies={["HTML 5", "CSS 3", "JavaScript"]}
+            description="Si vous souhaitez plutôt une API traitant des schémas de données conséquent et multiples, l'API développée et utilisée par Facebook est ce qu'il vous faut. Notez toute fois qu'il faudra mettre la main à la poche."
+            technologies={[
+              "PHP 8",
+              "JavaScript",
+              "TypeScript",
+              "Python",
+              ".Net Core & C#",
+            ]}
             faqUrl="graphql-api"
-          />
-          <AboutCard
-            url="/images/about/sql.jpg"
-            alt="sql.jpg"
-            target="SQL"
-            title="SQL base Databases"
-            description=""
-            technologies={["HTML 5", "CSS 3", "JavaScript"]}
-            faqUrl="sql"
-          />
-          <AboutCard
-            url="/images/about/nosql.jpg"
-            alt="nosql.jpg"
-            target="NoSQL"
-            title="NoSQL base Databases"
-            description=""
-            technologies={["HTML 5", "CSS 3", "JavaScript"]}
-            faqUrl="no-sql"
           />
         </div>
       </div>
@@ -388,9 +351,9 @@ function SkillList() {
         <h2>Frontend</h2>
         <div className={styles.skill_group}>
           <p>
-            I've learn and mastering a many languages for UI/UX integration. I
-            like code things from scratch and brings ideas to life in browsers,
-            windows and on mobile devices
+            J'ai appris et maîtrisé plusieurs langages pour des intégrations
+            UI/UX. J'aime coder à partir de zéro et donnez vie à toutes sortes
+            d'idées peu importe leurs complexités de réalisation.
           </p>
           <ul>
             <li>HTML 5</li>
@@ -402,7 +365,7 @@ function SkillList() {
           </ul>
         </div>
         <div className={styles.skill_group}>
-          <p>Libraries and Frameworks for the frontend development</p>
+          <p>Bibliothèques utilisées pour le developpement frontend.</p>
           <ul>
             <li>ReactJS</li>
             <li>React Native</li>
@@ -415,8 +378,8 @@ function SkillList() {
         </div>
         <div className={styles.link}>
           <AwesomeLink
-            text="Ask a quote"
-            url="/ask-a-quote?appType=CLIENT"
+            text="En s'avoir plus"
+            url="/faq#frontend"
             icon={faArrowRight}
             direction="horizontal"
             reverse
@@ -428,10 +391,9 @@ function SkillList() {
         <h2>Backend</h2>
         <div className={styles.skill_group}>
           <p>
-            Mastering backend architecture is a dream that comes true. I love
-            create modern, fast and secure backend architectures that meets
-            every projects i work with. You have a project and need API, let's
-            do it.
+            Construire une API est une expérience enrichissante et plein
+            d'entrain. J'aime créer des API performantes et sécurisées qui
+            s'adaptent à tout type de projet sur lesquels je travaillent.
           </p>
           <ul>
             <li>JavaScript</li>
@@ -455,8 +417,8 @@ function SkillList() {
         </div>
         <div className={styles.link}>
           <AwesomeLink
-            text="Ask a quote for API"
-            url="/ask-a-quote?appType=API"
+            text="Plus d'informations"
+            url="/faq#backend"
             icon={faArrowRight}
             direction="horizontal"
             reverse
@@ -465,31 +427,35 @@ function SkillList() {
       </div>
       <div className={styles.skill}>
         <FontAwesomeIcon icon={faCloud} />
-        <h2>Google cloud & AI</h2>
+        <h2>Prestataires</h2>
         <div className={styles.skill_group}>
-          <p>Google Analytics</p>
+          <p>
+            Pour la gestion de vos données, vous préféreriez peut-être ne pas
+            avoir à débourser pour la construction d’une API. Je vous offre la
+            possibilité le cas échéant, les alternatives suivantes.
+          </p>
           <ul>
-            <li>Linear algébra</li>
-            <li>Python</li>
+            <li>Google Cloud</li>
+            <li>Amazon</li>
+            <li>Azure</li>
+            <li>Oracle Cloud</li>
           </ul>
         </div>
         <div className={styles.skill_group}>
-          <p>Libraries use in machine learning algorithms</p>
+          <p>Autres prestataires de services que j'utilise très souvent.</p>
           <ul>
-            <li>Numpy</li>
-            <li>Matplotlib</li>
-            <li>Pandas</li>
-            <li>Scikit Learn</li>
-            <li>SciPY</li>
-            <li>OpenCV</li>
-            <li>Keras</li>
-            <li>Tensorflow</li>
+            <li>Firebase</li>
+            <li>Google Ads</li>
+            <li>Google Analytics</li>
+            <li>AWS</li>
+            <li>Paypal</li>
+            <li>Stripe</li>
           </ul>
         </div>
         <div className={styles.link}>
           <AwesomeLink
-            text="Ask a quote"
-            url="/ask-a-quote?appType=GOOGLE_CLOUD"
+            text="Plus d'informations"
+            url="/faq#backend"
             icon={faArrowRight}
             direction="horizontal"
             reverse
@@ -515,7 +481,7 @@ function InfoCard({
         <div className={styles.over} />
       </div>
       <div className={styles.right}>
-        <h2>{title}</h2>
+        <h2 className="thin-text-3d">{title}</h2>
         <p>{description}</p>
         {children}
         <div className={`${styles.link} ${styles.oth}`}>
@@ -536,11 +502,11 @@ function Contact() {
   return (
     <InfoCard
       imageUrl={"/images/contact-us.webp"}
-      title={"Get in touch"}
+      title={"Entrer en contact"}
       description={
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vehicula at velit ut efficitur. Nulla imperdiet ultrices diam ut facilisis. Sed mattis nibh vitae odio hendrerit, maximus facilisis quam iaculis. Suspendisse sit amet orci imperdiet nulla pellentesque mattis. Cras pharetra urna ac efficitur egestas. "
+        "Pour me contacter, plusieurs moyens sont mis à votre disposition. Vous pouvez visitez l'une de mes pages sur les réseaux sociaux et plateformes de messageries ci-dessous. Vous pouvez, si vous le souhaité, cliquer sur le lien en bas à droite pour m'envoyer un email."
       }
-      linkText={"Send me an email"}
+      linkText={"Envoyer un email"}
       linkUrl={"/contact"}
     >
       <div className={styles.social_links}>
@@ -578,21 +544,21 @@ export default function Home() {
           <About />
           <SkillList />
           <InfoCard
-            imageUrl={"/images/contact-us.webp"}
-            title={"Pricing"}
+            imageUrl={"/images/blog.jpg"}
+            title={"Blogs"}
             description={
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vehicula at velit ut efficitur. Nulla imperdiet ultrices diam ut facilisis. Sed mattis nibh vitae odio hendrerit, maximus facilisis quam iaculis. Suspendisse sit amet orci imperdiet nulla pellentesque mattis. Cras pharetra urna ac efficitur egestas. "
+              "Vous êtes un créateur, passionné de lecture et la rédaction d'article vous intéresse ou vous passionne tout simplement ? Avec Andmag-ground, créer un blog n'aura jamais été aussi simple. Tous ce que vous avez à faire est de me contacter. Notez que rien ne vous seras demandé si ce n'est de fournir votre adresse email et bien évidement de créer un compte."
             }
-            linkText={"Price calculation"}
-            linkUrl={"/pricing"}
+            linkText={"Plus d'informations"}
+            linkUrl={"/faq#blog"}
           />
           <InfoCard
-            imageUrl={"/images/contact-us.webp"}
+            imageUrl={"/images/faq.webp"}
             title={"FAQ"}
             description={
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vehicula at velit ut efficitur. Nulla imperdiet ultrices diam ut facilisis. Sed mattis nibh vitae odio hendrerit, maximus facilisis quam iaculis. Suspendisse sit amet orci imperdiet nulla pellentesque mattis. Cras pharetra urna ac efficitur egestas. "
+              "Vous avez des préoccupations immédiates ? La FAQ est faite pour vous. Vous y trouverez un concentré des préoccupations les plus courantes de nos clients et membre de la communauté. N'hésitez pas à vous y rendre et si vous ne trouvez pas ce que vous cherchez, vous pouvez toujours me contacter."
             }
-            linkText={"go forward"}
+            linkText={"Aller de l'avant"}
             linkUrl={"/faq"}
           />
           <Contact />

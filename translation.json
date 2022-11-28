@@ -1,0 +1,17 @@
+{
+  "en": {
+    "home": {
+      "about": {},
+      "skills": {
+        "left": {
+          "intro": "I've learn and mastering many languages for UI/UX integrations. I like code things from scratch and brings ideas to life in browsers, windows and on mobile devices.",
+          "info": "Libraries and Frameworks for the frontend development."
+        },
+        "middle": {
+          "intro": "Mastering backend architecture is a dream that comes true. I love create modern, fast and secure backend architectures that meets every projects i work with. You have a project and you need an API, let's do it.",
+          "info": "Frameworks, tools, and API for the backend development."
+        }
+      }
+    }
+  }
+}

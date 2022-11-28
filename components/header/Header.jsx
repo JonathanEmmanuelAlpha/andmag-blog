@@ -58,34 +58,36 @@ export default function Header({
       <header className={styles.container}>
         <AppICon onOpen={onOpen} />
         <Navbar />
-        {loadingUser ? (
-          <LoadingScreen />
-        ) : currentUser ? (
-          currentUser.photoURL || currentUser.displayName ? (
-            <Account
-              photo={currentUser.photoURL}
-              pseudo={currentUser.displayName}
-            />
+        <div>
+          {loadingUser ? (
+            <LoadingScreen />
+          ) : currentUser ? (
+            currentUser.photoURL || currentUser.displayName ? (
+              <Account
+                photo={currentUser.photoURL}
+                pseudo={currentUser.displayName}
+              />
+            ) : (
+              <AwesomeLink
+                icon={faSignOut}
+                direction="horizontal"
+                text="Log Out"
+                url="/logout"
+                handleClick={(e) => {
+                  e.preventDefault();
+                  logout();
+                }}
+              />
+            )
           ) : (
             <AwesomeLink
-              icon={faSignOut}
+              icon={faSignIn}
               direction="horizontal"
-              text="Log Out"
-              url="/logout"
-              handleClick={(e) => {
-                e.preventDefault();
-                logout();
-              }}
+              text="Log In"
+              url="/account/login"
             />
-          )
-        ) : (
-          <AwesomeLink
-            icon={faSignIn}
-            direction="horizontal"
-            text="Log In"
-            url="/account/login"
-          />
-        )}
+          )}
+        </div>
       </header>
     </>
   );

@@ -25,7 +25,6 @@ export default function AppICon({ onOpen }) {
     <div className={styles.container}>
       <MenuIcons color={"var(--color)"} onClick={onOpen} />
       <img src="/images/AG.png" alt="andmag-ground.png" />
-      <h1>AG</h1>
     </div>
   );
 }

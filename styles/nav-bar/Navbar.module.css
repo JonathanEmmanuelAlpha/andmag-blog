@@ -6,6 +6,10 @@
   height: 100%;
 }
 
+.container a span {
+  margin-top: 2px;
+}
+
 .wrapper {
   display: flex;
   align-items: center;
@@ -16,4 +20,33 @@
 .wrapper li {
   list-style-type: none;
   height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: var(--headerHeight);
+    background-color: var(--mainBgColor);
+    border-top: 2px solid var(--overColor);
+  }
+  .container ul {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .container svg {
+    width: 20px;
+    height: 20px;
+  }
+  .container a span {
+    font-size: 13px !important;
+    margin-top: 3px;
+  }
+
+  .container ul.wrapper li a {
+    border-top: 2px solid transparent;
+    border-bottom: 0;
+  }
 }

@@ -1,12 +1,8 @@
 .skeleton {
-  --sidebarHeader: 50px;
+  --sidebarHeader: 200px;
 
   width: 100%;
   min-height: calc(100vh - var(--headerHeight));
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: column;
 }
 
 .layout {
@@ -18,14 +14,16 @@
 }
 
 .sidebar {
-  width: var(--sidebarHeader);
-  height: calc(100vh - var(--headerHeight));
-  position: sticky;
-  top: var(--headerHeight);
+  width: 50px;
   overflow: hidden;
+  height: calc(100vh - var(--headerHeight));
   background-color: var(--mainBgColor);
   box-shadow: var(--rightShadow);
+  position: fixed;
+  top: var(--headerHeight);
+  left: 0;
   z-index: 1000;
+  animation: close-sidebar 0.25s linear forwards;
 }
 .sidebar[data-active="true"] {
   animation: open-sidebar 0.25s linear forwards;
@@ -51,8 +49,9 @@
 
 @keyframes open-sidebar {
   0% {
-    width: calc(200px / 4);
+    width: 50px;
   }
+
   100% {
     width: 200px;
   }
@@ -60,5 +59,21 @@
 
 .layout main {
   min-height: calc(100vh - var(--headerHeight));
-  width: calc(100% - var(--sidebarHeader));
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    width: 0px;
+  }
+
+  @keyframes open-sidebar {
+    0% {
+      width: 0px;
+    }
+
+    100% {
+      width: 200px;
+    }
+  }
 }

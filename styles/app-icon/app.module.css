@@ -3,21 +3,13 @@
   align-items: center;
   justify-content: flex-start;
   padding: 0 13px;
+  height: 100%;
 }
 
 .container img {
-  border-radius: 100%;
-  width: 40px;
-  height: 40px;
+  width: 120px;
   margin-left: 20px;
-}
-
-.container h1 {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--color);
-  margin-left: 10px;
-  font-family: ethnocentric;
+  padding-bottom: 10px;
 }
 
 .container svg {
