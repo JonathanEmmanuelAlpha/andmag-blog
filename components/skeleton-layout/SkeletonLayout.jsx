@@ -4,6 +4,7 @@ import styles from "../../styles/skeleton-layout/SkeletonLayout.module.css";
 import AwesomeLink from "../links/AwesomeLink";
 import {
   faBlog,
+  faInfoCircle,
   faPeopleArrows,
   faRegistered,
   faSignOut,
@@ -78,6 +79,14 @@ function SideBar({ open }) {
                 e.preventDefault();
                 logout();
               }}
+            />
+          </li>
+          <li>
+            <AwesomeLink
+              text="FAQ"
+              url="/faq"
+              icon={faInfoCircle}
+              direction="horizontal"
             />
           </li>
           <li>

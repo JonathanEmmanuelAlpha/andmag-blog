@@ -39,7 +39,7 @@ function HeadSection() {
       <div className={styles.wrapper}>
         <div className={styles.logo}>
           <h1>Andmag Ground</h1>
-          <p>Full stack developers & UI/UX Designers.</p>
+          <p>Full stack developer & UI/UX Designer.</p>
         </div>
       </div>
     </section>

@@ -14,7 +14,7 @@
 }
 
 .sidebar {
-  width: 50px;
+  width: 0px;
   overflow: hidden;
   height: calc(100vh - var(--headerHeight));
   background-color: var(--mainBgColor);
@@ -49,7 +49,7 @@
 
 @keyframes open-sidebar {
   0% {
-    width: 50px;
+    width: 0px;
   }
 
   100% {
@@ -57,23 +57,17 @@
   }
 }
 
+@keyframes close-sidebar {
+  0% {
+    width: 200px;
+  }
+
+  100% {
+    width: 0px;
+  }
+}
+
 .layout main {
   min-height: calc(100vh - var(--headerHeight));
   width: 100%;
-}
-
-@media screen and (max-width: 768px) {
-  .sidebar {
-    width: 0px;
-  }
-
-  @keyframes open-sidebar {
-    0% {
-      width: 0px;
-    }
-
-    100% {
-      width: 200px;
-    }
-  }
 }
