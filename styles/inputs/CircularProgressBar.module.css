@@ -21,7 +21,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  color: var(--dashboardColorSecd) !important;
+  color: var(--primColor) !important;
   font-weight: 500;
 }
 .svg_pi_label span.svg_pi_label__loading {

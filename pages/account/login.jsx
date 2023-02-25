@@ -13,7 +13,6 @@ import { auth, handleAuthErrors } from "../../firebase";
 
 function Login(props) {
   const router = useRouter();
-  const { login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -50,17 +49,18 @@ function Login(props) {
   };
 
   return (
-    <SkeletonLayout title="Se connecter à Skill Upgrade" description="">
+    <SkeletonLayout
+      title="Se connecter"
+      description="Entrez votre email ainsi que le mot de passe associé pour vous connecter. Notez que si vous n'avez pas encore activé votre compte, vous ne pourrez pas pleinement l'utiliser."
+    >
       <AccountContainer
         title="Bienvenue sur Andmag ground"
-        message="Insert the email address and the password used to your
-        registration. Note that if you have not yet activated your
-        account, you will not be able to use it fully."
+        message="Entrez votre email ainsi que le mot de passe associé pour vous connecter. Notez que si vous n'avez pas encore activé votre compte, vous ne pourrez pas pleinement l'utiliser."
         Form={
           <>
             <Input
               type="email"
-              placeholder="Addresse email"
+              placeholder="Adresse email"
               value={email}
               isRequired
               handleChange={(e) => setEmail(e.target.value)}
@@ -80,7 +80,7 @@ function Login(props) {
         LinkOptions={
           <>
             <Link href="/account/login-with-email-link">
-              Se connecter autrement
+              Utiliser mon email
             </Link>
             <Link href="/account/account-activation">Activer mon compte</Link>
             <Link href="/account/register">Créér un compte</Link>

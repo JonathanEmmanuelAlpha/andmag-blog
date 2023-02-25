@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "../../styles/inputs/Select.module.css";
 import Input from "./Input";
 
 export default function Select({
@@ -13,7 +12,7 @@ export default function Select({
   children,
 }) {
   return (
-    <div className={styles.wrapper}>
+    <div style={{ width: "100%" }}>
       <datalist id={list}>{children}</datalist>
       <Input
         list={list}

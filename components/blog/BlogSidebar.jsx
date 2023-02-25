@@ -18,14 +18,25 @@ import { SubButton } from "./BlogHead";
 
 function AsideHeader({ blog }) {
   const [open, setOpen] = useState(false);
-  const followers = useBlogFollowers(blog.id);
+  const { followers: _f } = useTargetBlog();
+  const [followers, setFollowers] = useState(0);
+
+  useEffect(() => {
+    if (!_f) return;
+
+    setFollowers(_f);
+  }, [_f]);
 
   return (
     <header>
       <img src={blog.logo} alt={`${blog.name}.png`} />
       <h1>{blog.name}</h1>
       <h2>{followers ? followers : 0} abonnés</h2>
-      <SubButton blog={blog} />
+      <SubButton
+        blog={blog}
+        onSubscribe={() => setFollowers((prev) => prev + 1)}
+        onUnSubscribe={() => setFollowers((prev) => prev - 1)}
+      />
       <div className={styles.stats}>
         <div>
           <FontAwesomeIcon icon={faNewspaper} />

@@ -23,7 +23,19 @@ function ArticleId({ article, blog, playlist, comments }) {
 }
 
 export async function getServerSideProps(context) {
-  const article = await articlesCollection.doc(context.params.articleId).get();
+  if (!context.params || typeof context.params.articleId !== "string") {
+    return {
+      redirect: {
+        destination: "/articles",
+        permanent: false,
+      },
+    };
+  }
+
+  const root = context.params.articleId.split("-");
+  const articleId = root[root.length - 1];
+
+  const article = await articlesCollection.doc(articleId).get();
   if (!article.exists) {
     return {
       redirect: {

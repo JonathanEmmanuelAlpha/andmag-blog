@@ -40,10 +40,7 @@ function ForgotPassword(props) {
   }
 
   return (
-    <SkeletonLayout
-      title="Andmag-ground - Mot de passe oublié ?"
-      description=""
-    >
+    <SkeletonLayout title="Mot de passe oublié ?" description="">
       <AccountContainer
         title="Vous Avez Oublié Votre Mot de Passe ?"
         message="Entrez votre adresse email dans la zone de texte ci-dessous. Un lien vous sera envoyé pour finaliser la procédure."
@@ -51,7 +48,7 @@ function ForgotPassword(props) {
           <>
             <Input
               type="email"
-              placeholder="Addresse email"
+              placeholder="Adresse email"
               isRequired
               value={email}
               handleChange={(e) => setEmail(e.target.value)}

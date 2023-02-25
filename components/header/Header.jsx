@@ -9,6 +9,7 @@ import { faSignIn, faSignOut } from "@fortawesome/free-solid-svg-icons";
 import Account from "../nav-bar/Account";
 import { useAuth } from "../../context/AuthProvider";
 import LoadingScreen from "../inputs/LoadingScreen";
+import { domainName } from "../links/AwesomeLink.type";
 
 export default function Header({
   title,
@@ -22,6 +23,9 @@ export default function Header({
   const router = useRouter();
   const { currentUser, loadingUser, logout } = useAuth();
 
+  const desc =
+    "Andmag ground est une entreprise de prestation de services axés sur le génie logiciel et la conception UI/UX. Nous offrons donc à nos clients la possibilités de cibler un large éventail de client, augmentant ainsi leur productivité et leur rentabilité.";
+
   return (
     <>
       <Head>
@@ -30,60 +34,52 @@ export default function Header({
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="robots" content={robots || "all"} />
-        <meta
-          name="description"
-          content={
-            description ||
-            "Speed, efficiency, performance and safety are our pride. Whatever the difficulty of your project, we promise you support that meets your expectations"
-          }
-        />
+        <meta name="description" content={description || desc} />
         <meta name="author" content={author || "Andmag ground"} />
         <meta
           name="keywords"
-          content="developer web frontend backend fullstack blog articles posts playlists login profile native mobile windows-platforms iOS Android"
+          content="developer web frontend backend fullstack blog articles posts playlists login register profile native mobile windows-platforms iOS Android"
         />
-        <meta property="og:site_name" content={"Andmag ground"} />
+        <meta property="og:site_name" content={"Andmag-ground"} />
         <meta property="og:title" content={title || "Andmag-ground"} />
         <meta property="og:type" content={ogType || "website"} />
-        <meta property="og:url" content={router.asPath} />
-        <meta
-          property="og:description"
-          content={
-            description ||
-            "Speed, efficiency, performance and safety are our pride. Whatever the difficulty of your project, we promise you support that meets your expectations"
-          }
-        />
+        <meta property="og:url" content={`${domainName}${router.asPath}`} />
+        <meta property="og:description" content={description || desc} />
         <meta property="og:image" content={ogImage || "/images/AG.png"} />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta
+          property="twitter:url"
+          content={`${domainName}${router.asPath}`}
+        />
+        <meta property="twitter:title" content={title || "Andmag-ground"} />
+        <meta property="twitter:description" content={description || desc} />
+        <meta property="twitter:image" content={ogImage || "/images/AG.png"} />
       </Head>
       <header className={styles.container}>
         <AppICon onOpen={onOpen} />
         <Navbar />
-        <div>
+        <div className={styles.item}>
           {loadingUser ? (
             <LoadingScreen />
           ) : currentUser ? (
-            currentUser.photoURL || currentUser.displayName ? (
+            currentUser.emailVerified ? (
               <Account
                 photo={currentUser.photoURL}
                 pseudo={currentUser.displayName}
               />
             ) : (
               <AwesomeLink
-                icon={faSignOut}
+                icon={faSignIn}
                 direction="horizontal"
-                text="Log Out"
-                url="/logout"
-                handleClick={(e) => {
-                  e.preventDefault();
-                  logout();
-                }}
+                text="Activer mon compte"
+                url="/account/account-activation"
               />
             )
           ) : (
             <AwesomeLink
               icon={faSignIn}
               direction="horizontal"
-              text="Log In"
+              text="Se connecter"
               url="/account/login"
             />
           )}

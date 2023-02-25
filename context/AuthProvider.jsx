@@ -5,8 +5,16 @@ import {
   signOut,
   updateEmail,
   updatePassword,
+  updateProfile,
 } from "firebase/auth";
-import { getDocs, limit, query, where } from "firebase/firestore";
+import {
+  addDoc,
+  getDocs,
+  limit,
+  query,
+  serverTimestamp,
+  where,
+} from "firebase/firestore";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import { domainName } from "../components/links/AwesomeLink.type";
@@ -36,10 +44,12 @@ export default function AuthProvider({ children }) {
     return unsubcriber;
   }, []);
 
+  /** Get current user profile */
   useEffect(() => {
     if (!currentUser) return;
 
     setLoadingProfile(true);
+
     getDocs(
       query(
         profilesCollection,
@@ -50,13 +60,28 @@ export default function AuthProvider({ children }) {
       if (snaps.size === 0) return;
       const profileDoc = snaps.docs[0];
       setUserProfile({ id: profileDoc.id, ...profileDoc.data() });
+      setLoadingProfile(false);
     });
-    setLoadingProfile(false);
   }, [currentUser]);
 
-  const logout = function () {
+  async function initializeAccount(user) {
+    await updateProfile(user, {
+      displayName: "Unknown-pseudo",
+      photoURL: "/images/default-pp.png",
+    });
+
+    await addDoc(profilesCollection, {
+      ppRef: null,
+      userId: user.uid,
+      pp: "/images/default-pp.png",
+      pseudo: "Unknown-pseudo",
+      createAt: serverTimestamp(),
+    });
+  }
+
+  function logout() {
     return signOut(auth);
-  };
+  }
 
   function resetPassword(email) {
     return sendPasswordResetEmail(auth, email);
@@ -75,6 +100,7 @@ export default function AuthProvider({ children }) {
     resetPassword,
     updateUserEmail,
     updateUserPassword,
+    initializeAccount,
     currentUser,
     loadingUser,
     userProfile,

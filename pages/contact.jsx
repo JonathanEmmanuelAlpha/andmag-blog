@@ -1,6 +1,7 @@
 import { faEnvelope, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import React, { useState } from "react";
 import Header from "../components/header/Header";
+import Alert from "../components/inputs/Alert";
 import Form from "../components/inputs/Form";
 import Input from "../components/inputs/Input";
 import SubmitButton from "../components/inputs/SubmitButton";
@@ -10,20 +11,58 @@ import SkeletonLayout, {
 } from "../components/skeleton-layout/SkeletonLayout";
 import styles from "../styles/contact.module.css";
 
-export default function Contact() {
+export default function () {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    setError("");
+    setSuccess("");
+    setLoading(true);
+
+    const data = {
+      name,
+      email,
+      message,
+    };
+
+    fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          setName("");
+          setEmail("");
+          setMessage("");
+          setSuccess("Votre message a bien été envoyé");
+        }
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
+
+    setLoading(false);
+  }
 
   return (
     <SkeletonLayout
       title="Entrer en contact"
-      description="Si vous souhaité entré en contact, parler nous d'un projet ou dites juste salut. Si vous souhaité nous envoyer un mail, remplissez le formulaire ci-dessous ou cliquez sur andmagground@gmail. Vous pouvez également nous trouvez sur les réseaux sociaux."
+      description="Si vous souhaitez entrer en contact, parler nous d'un projet ou dites juste salut. Si vous souhaité nous envoyer un mail, remplissez le formulaire ci-dessous ou cliquez sur andmagground@gmail. Vous pouvez également nous trouvez sur les réseaux sociaux."
     >
       <div className={styles.wrapper}>
         <section className={styles.info}>
-          <h2>Get in touch</h2>
+          <h1>Entrez en contact</h1>
           <p>
             Si vous souhaité entré en contact, parler nous d'un projet ou dites
             juste salut. Si vous souhaité nous envoyer un mail, remplissez le
@@ -33,8 +72,10 @@ export default function Contact() {
           </p>
         </section>
         <section className={styles.form}>
-          <form>
-            <div className="flex">
+          <form onSubmit={handleSubmit}>
+            {error && <Alert message={error} type="danger" />}
+            {success && <Alert message={success} type="success" />}
+            <div className={styles.both}>
               <Input
                 type="text"
                 icon={faUserCircle}
@@ -72,14 +113,14 @@ export default function Contact() {
           </form>
         </section>
         <section className={styles.info}>
-          <h3>Réseaux sociaux</h3>
+          <h2>Réseaux sociaux</h2>
           <p>
             suivez moi sur Whatsapp, Facebook et Twitter pour plus
             d'informations
           </p>
           <div>
             <a
-              href="https://whatsapp.com"
+              href="https://wa.me/237620689433"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.wh}
@@ -88,7 +129,7 @@ export default function Contact() {
               <span>whatsapp</span>
             </a>
             <a
-              href="https://facebook.com"
+              href="https://facebook.com/AndmagGround"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.fa}
@@ -97,7 +138,7 @@ export default function Contact() {
               <span>facebook</span>
             </a>
             <a
-              href="https://twiter.com"
+              href="https://twiter.com/AndmagGround"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.tw}

@@ -38,8 +38,6 @@ function AccountContainer(props) {
       <div className={styles.wapper}>
         <div className={styles.right}>
           <h1 className={styles.right_title}>ANDMAG GROUND</h1>
-          {props.error && <Alert type="danger" message={props.error} />}
-          {props.success && <Alert type="success" message={props.success} />}
           <p className={styles.msg}>
             En créant un compte, vous avez la possibilité d'interagir avec
             d'autre utilisateurs de la communauté.
@@ -48,6 +46,8 @@ function AccountContainer(props) {
         <div className={styles.left}>
           <h1 className={styles.left_title}>{props.title}</h1>
           {props.message ? <p>{props.message}</p> : null}
+          {props.error && <Alert type="danger" message={props.error} />}
+          {props.success && <Alert type="success" message={props.success} />}
           <form className={styles.form} onSubmit={props.handleSubmit}>
             {props.Form}
             {props.btnMsg ? (

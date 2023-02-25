@@ -3,148 +3,185 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "../../styles/comment/ContentFooter.module.css";
 import {
-  faComments,
   faHandsClapping,
   faShareSquare,
   faThumbsDown,
   faThumbsUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
-import { arrayRemove, collection, updateDoc } from "firebase/firestore";
+import {
+  arrayRemove,
+  arrayUnion,
+  collection,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import CommentContainer from "./CommentContainer";
 import { useAuth } from "../../context/AuthProvider";
-import { blogsCollection } from "../../firebase";
+import { blogsCollection, handleFirestoreErrors } from "../../firebase";
+import { showErrorToast } from "../skeleton-layout/ToasComponent";
+import useArray from "../../hooks/useArray";
+import { toast } from "react-toastify";
+import ShareButton from "../actions/ShareButton";
 
-const ACTIONS = {
-  LIKE: "LIKE",
-  DEFAULT: "DEFAULT",
-};
-
-const TYPE = {
-  LOAD: "LOAD",
-  ADD_LIKE: "ADD_LIKE",
-  RESET_LIKE: "RESET_LIKE",
-};
-
-function getStatut(id, likes, claps) {
-  if (likes && likes.includes(id)) return ACTIONS.LIKE;
-  return ACTIONS.DEFAULT;
-}
-
-function reducer(state, { type, payload }) {
-  switch (type) {
-    case TYPE.LOAD:
-      const statut = getStatut(payload.userId, payload.likes, payload.claps);
-      return {
-        likes: payload.likes ? payload.likes.length : 0,
-        claps: payload.claps ? payload.claps.length : 0,
-        statut: statut,
-      };
-
-    case TYPE.ADD_LIKE:
-      return {
-        likes: payload.likes.length + 1,
-        claps: payload.claps.length,
-        statut: ACTIONS.LIKE,
-      };
-
-    case TYPE.RESET_LIKE:
-      return {
-        likes: payload.likes.length - 1,
-        claps: payload.claps.length,
-        statut: ACTIONS.DEFAULT,
-      };
-
-    default:
-      break;
-  }
-}
-
-function ContentFooter({ pub, commentShown }) {
+function ContentFooter({ pub, commentShown, blog }) {
   const router = useRouter();
   const { currentUser } = useAuth();
 
-  const [openComment, setOpenComment] = useState();
+  const [openComment, setOpenComment] = useState(commentShown);
 
-  const [state, dispatch] = useReducer(reducer, {
-    likes: 0,
-    claps: 0,
-    statut: ACTIONS.DEFAULT,
-  });
+  const {
+    array: likes,
+    set: setLikes,
+    push: addLike,
+    remove: deleteLike,
+  } = useArray(pub.likes || []);
+  const {
+    array: claps,
+    set: setClaps,
+    push: addClap,
+    remove: deleteClap,
+  } = useArray(pub.claps || []);
 
-  useEffect(() => {
-    if (!pub) return;
+  const hasLiked = typeof likes.find((l) => l == currentUser.uid) === "string";
+  const hasClapped =
+    typeof claps.find((c) => c == currentUser.uid) === "string";
 
-    setOpenComment(commentShown);
-
-    dispatch({
-      type: TYPE.LOAD,
-      payload: { userId: currentUser ? currentUser.uid : null, ...pub },
-    });
-  }, [pub, commentShown]);
-
-  async function handleLike() {
-    if (!pub.likes.includes(currentUser.uid)) {
-      try {
-        await updateDoc(doc(publicationsRef, pub.id), {
-          likes: [...pub.likes, currentUser.uid],
-        });
-        dispatch({
-          type: TYPE.ADD_LIKE,
-          payload: { userId: currentUser.uid, ...pub },
-        });
-      } catch (error) {
-        console.log(`Like of ${pub.id} => ${error}`);
-      }
-      return;
-    }
-
-    if (pub.likes.includes(currentUser.uid)) {
-      try {
-        await updateDoc(doc(publicationsRef, pub.id), {
+  function handleLike() {
+    /** Si l'utilisateur avait déjà liker la publication, resitrer son like */
+    if (hasLiked) {
+      toast.promise(
+        updateDoc(doc(blogsCollection, router.query.blogId, "posts", pub.id), {
           likes: arrayRemove(currentUser.uid),
-        });
-        dispatch({
-          type: TYPE.RESET_LIKE,
-          payload: { userId: currentUser.uid, ...pub },
-        });
-      } catch (error) {
-        console.log(`Like of ${pub.id} => ${error}`);
-      }
-      return;
+        }),
+        {
+          pending: "Retrait de le mention j'aime...",
+          success: "Mention j'aime retirer",
+          error: {
+            render({ data }) {
+              return handleFirestoreErrors(data);
+            },
+          },
+        }
+      );
+
+      return deleteLike(likes.indexOf(currentUser.uid));
     }
+
+    /** Ajouter un like */
+    toast.promise(
+      updateDoc(doc(blogsCollection, router.query.blogId, "posts", pub.id), {
+        likes: arrayUnion(currentUser.uid),
+      }),
+      {
+        pending: "Ajout de le mention j'aime...",
+        success: "Mention j'aime ajouter",
+        error: {
+          render({ data }) {
+            return handleFirestoreErrors(data);
+          },
+        },
+      }
+    );
+    return addLike(currentUser.uid);
+  }
+
+  function handleClap() {
+    /** Si l'utilisateur avait déjà applaudit la publication, resitrer son like */
+    if (hasClapped) {
+      toast.promise(
+        updateDoc(doc(blogsCollection, router.query.blogId, "posts", pub.id), {
+          claps: arrayRemove(currentUser.uid),
+        }),
+        {
+          pending: "Retrait de le mention en cours...",
+          success: "Mention retirer avec succès",
+          error: {
+            render({ data }) {
+              return handleFirestoreErrors(data);
+            },
+          },
+        }
+      );
+
+      return deleteClap(likes.indexOf(currentUser.uid));
+    }
+
+    /** Ajouter un bravo */
+    toast.promise(
+      updateDoc(doc(blogsCollection, router.query.blogId, "posts", pub.id), {
+        claps: arrayUnion(currentUser.uid),
+      }),
+      {
+        pending: "Ajout de le mention en cours...",
+        success: "Mention ajouter avec succès",
+        error: {
+          render({ data }) {
+            return handleFirestoreErrors(data);
+          },
+        },
+      }
+    );
+    return addClap(currentUser.uid);
   }
 
   return (
     <div className={styles.foot_container}>
       <div className={styles.foot}>
         <div>
-          <button disabled={true}>
-            <FontAwesomeIcon icon={faComments} />
-            <span>{0}</span>
-          </button>
           <button
             className={styles.like}
-            data-active={state.statut === ACTIONS.LIKE}
+            data-active={hasLiked}
             onClick={handleLike}
           >
             <FontAwesomeIcon icon={faThumbsUp} />
-            <span>{state.likes === 0 ? "J'aime" : state.likes}</span>
+            <span>{likes.length > 0 ? likes.length : "J'aime"}</span>
           </button>
-          <button>
+          <button
+            className={styles.clap}
+            data-active={hasClapped}
+            onClick={handleClap}
+          >
             <FontAwesomeIcon icon={faHandsClapping} />
-            <span>{0}</span>
+            <span>{claps.length > 0 ? claps.length : "Bravo"}</span>
           </button>
+          <ShareButton
+            popupOnTop={true}
+            generateOnClick={true}
+            metas={[
+              {
+                property: 'property="og:title"',
+                value: `${blog.name} - publication`,
+              },
+              {
+                property: 'property="og:image"',
+                value: pub.thumbnails[0].downloadURL,
+              },
+              {
+                property: 'property="twitter:title"',
+                value: `${blog.name} - publication`,
+              },
+              {
+                property: 'property="twitter:image"',
+                value: pub.thumbnails[0].downloadURL,
+              },
+            ]}
+          />
         </div>
         <div>
-          <button onClick={() => setOpenComment(!openComment)}>comment</button>
-          <button>
-            <FontAwesomeIcon icon={faShareSquare} />
+          <button
+            className={styles.com_btn}
+            onClick={() => setOpenComment(!openComment)}
+          >
+            {!openComment
+              ? "Afficher les commentaires"
+              : "Masquer les commentaires"}
           </button>
         </div>
       </div>
       <CommentContainer
         isOpen={openComment}
+        onClose={() => setOpenComment(!openComment)}
         targetRef={collection(blogsCollection, router.query.blogId, "posts")}
         targetId={pub.id}
       />

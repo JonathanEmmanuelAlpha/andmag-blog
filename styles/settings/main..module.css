@@ -2,62 +2,23 @@
   width: 100%;
   min-height: calc(100vh - var(--headerHeight));
 
-  --height: 50px;
-}
-
-.container header {
-  width: 100%;
-  height: var(--height);
-  overflow-y: hidden;
-  overflow-x: scroll;
-  scrollbar-width: none;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 0 20px;
-}
-.container header::-webkit-scrollbar {
-  display: none;
-}
-
-.container header .blog_item {
-  width: max-content;
-  height: 40px;
-  border-radius: 30px;
-  padding: 0 15px 0 0;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  background-color: var(--overColor);
-  box-shadow: var(--shadow);
-}
-.container header .blog_item img {
-  border-radius: 50%;
-}
-.container header .blog_item span {
-  font-size: 14px;
-  font-weight: 600;
-  margin-left: 5px;
-  color: var(--color);
+  --height: 60px;
 }
 
 .container fieldset {
   max-width: 1280px;
   margin: 20px auto 50px auto;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   flex-wrap: wrap;
-  border: 2px solid var(--answerColor);
-  border-radius: 10px;
+  border: none;
 }
 .container fieldset legend {
-  font-size: 20px;
+  font-size: 18px;
   padding: 0 10px;
-}
-.container fieldset > a,
-.container fieldset > div {
-  margin: 20px;
+  font-family: ethnocentric;
 }
 
 .container > h2 {
@@ -67,10 +28,39 @@
   font-size: 20px;
   font-family: ethnocentric;
 }
-.container .list {
-  padding: 20px;
+
+.list {
+  max-width: 1300px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   flex-wrap: wrap;
+}
+
+.list > a {
+  margin: 15px;
+}
+
+@media screen and (max-width: 470px) {
+  .list > a {
+    max-width: 350px;
+  }
+  .list > a h2 {
+    font-size: 15px;
+  }
+  .list > a span {
+    font-size: 10px;
+    font-weight: 700;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .list > a {
+    margin: 15px;
+    max-width: 320px;
+  }
+  .list > a span {
+    margin-top: 5px;
+  }
 }

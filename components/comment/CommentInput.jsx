@@ -10,7 +10,7 @@ function CommentInput({ handlePost }) {
   return (
     <div className={styles.container}>
       <textarea
-        placeholder="Tape your comment here"
+        placeholder="Tapez votre commentaire"
         value={comment}
         onChange={(e) => setComment(e.target.value)}
       />

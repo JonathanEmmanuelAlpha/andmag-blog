@@ -394,6 +394,10 @@ main section {
   flex-wrap: wrap;
 }
 
+.clear {
+  clear: both;
+}
+
 /*--------------------------------------------- TEXT EDITOR ------------------------------*/
 .text-editor-container {
   background-color: var(--defBgColor);
@@ -431,6 +435,11 @@ main section {
   width: 100%;
   height: 50vh;
   margin: 0;
+}
+@media screen and (max-width: 550px) {
+  .ql-container .ql-editor .ql-video {
+    height: 40vh;
+  }
 }
 
 .text-editor-container .auto-save {

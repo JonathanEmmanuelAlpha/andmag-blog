@@ -26,12 +26,12 @@ function ActivitiesContainer(props) {
 
 ActivitiesContainer.propTypes = {
   hideBar: PropTypes.bool,
-  pageTitle: PropTypes.string.isRequired,
-  pageDesc: PropTypes.string.isRequired,
-  searchHolder: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  handleSearch: PropTypes.func.isRequired,
-  onchange: PropTypes.func.isRequired,
+  pageTitle: PropTypes.string,
+  pageDesc: PropTypes.string,
+  searchHolder: PropTypes.string,
+  value: PropTypes.string,
+  handleSearch: PropTypes.func,
+  onchange: PropTypes.func,
 };
 
 export default ActivitiesContainer;

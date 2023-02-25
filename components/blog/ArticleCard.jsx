@@ -11,10 +11,11 @@ import { useAuth } from "../../context/AuthProvider";
 import { useTargetBlog } from "../../context/BlogProvider";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import dashify from "dashify";
 
 export function ArticleCardThin(props) {
   return (
-    <Link href={`/posts/${props.postId}`}>
+    <Link href={`/posts/${dashify(props.title)}-${props.postId}`}>
       <a className={styles.card_thin}>
         <Skeleton />
         {props.thumbnail ? (
@@ -36,11 +37,11 @@ export function ArticleCardThin(props) {
   );
 }
 ArticleCardThin.propTypes = {
-  postId: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  thumbnail: PropTypes.string.isRequired,
-  reads: PropTypes.number.isRequired,
-  at: PropTypes.string.isRequired,
+  postId: PropTypes.string,
+  title: PropTypes.string,
+  thumbnail: PropTypes.string,
+  reads: PropTypes.number,
+  at: PropTypes.string,
 };
 
 export function ArticleCard({
@@ -58,7 +59,7 @@ export function ArticleCard({
   const { currentUser } = useAuth();
   const { isOwner } = useTargetBlog();
   return (
-    <Link href={`${domainName}/articles/${articleId}`}>
+    <Link href={`${domainName}/articles/${dashify(title)}-${articleId}`}>
       <a className={styles.card}>
         {isOwner && createBy === currentUser?.uid && (
           <EditLink

@@ -6,6 +6,7 @@ import ActivitiesContainer from "../../components/trainning/ActivitiesContainer"
 import TrainningCard from "../../components/trainning/TrainningCard";
 import useOnScreen from "../../hooks/useOnScreen";
 import useTrainning from "../../hooks/useTrainning";
+import styles from "../../styles/trainning/ActivitiesContainer.module.css";
 
 export default function Trainnings(props) {
   const router = useRouter();
@@ -23,13 +24,15 @@ export default function Trainnings(props) {
 
   return (
     <ActivitiesContainer pageTitle="Trainnings sessions" pageDesc="" hideBar>
-      {trainnings.loading ? (
-        <LoadingScreen />
-      ) : (
-        trainnings.map((trainning) => {
-          return <TrainningCard key={trainning.id} trainning={trainning} />;
-        })
-      )}
+      <div className={styles.card_list}>
+        {trainnings.loading ? (
+          <LoadingScreen />
+        ) : (
+          trainnings.map((trainning) => {
+            return <TrainningCard key={trainning.id} trainning={trainning} />;
+          })
+        )}
+      </div>
       <div ref={divRef} />
     </ActivitiesContainer>
   );

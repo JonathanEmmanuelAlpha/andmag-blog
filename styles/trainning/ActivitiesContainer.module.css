@@ -27,14 +27,26 @@
 .card_list {
   width: 100%;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   padding-bottom: 20px;
 }
 
+.card_list > a {
+  margin: 15px;
+  max-width: 350px;
+}
+
 @media screen and (max-width: 830px) {
   .search_bar {
     width: 90%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .card_list > a {
+    margin: 15px;
+    max-width: 320px;
   }
 }

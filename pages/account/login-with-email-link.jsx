@@ -14,6 +14,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth, handleAuthErrors } from "../../firebase";
+import { domainName } from "../../components/links/AwesomeLink.type";
 
 function Login(props) {
   const router = useRouter();
@@ -39,7 +40,7 @@ function Login(props) {
         handleCodeInApp: true,
       });
       window.localStorage.setItem("signin-email", email);
-      setSuccess("A login email has been sent to the email address entered.");
+      setSuccess("Un lien de connexion vous a été envoyé par email.");
     } catch (error) {
       setError((prev) => {
         return handleAuthErrors(error);
@@ -50,17 +51,18 @@ function Login(props) {
   };
 
   return (
-    <SkeletonLayout title="Se connecter à Skill Upgrade" description="">
+    <SkeletonLayout
+      title="Se connecter"
+      description="Connectez en un clic. Entrez votre adresse email dans la zone ci-dessous, nous vous enverrons un lien pour vous connecter."
+    >
       <AccountContainer
         title="Bienvenue sur Andmag ground"
-        message="This method use links sent by email to facilitate the login
-        process especially on mobile devices. Connections are
-        persistent by default but you can log out at any time."
+        message="Connectez en un clic. Entrez votre adresse email dans la zone ci-dessous, nous vous enverrons un lien pour vous connecter."
         Form={
           <>
             <Input
               type="email"
-              placeholder="Addresse email"
+              placeholder="Adresse email"
               value={email}
               isRequired
               handleChange={(e) => setEmail(e.target.value)}

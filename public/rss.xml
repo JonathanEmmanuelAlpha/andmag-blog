@@ -4,7 +4,7 @@
         <title>Andmag-ground</title>
         <link>http://localhost:3000</link>
         <description>Speed, efficiency, performance and safety are our pride. Whatever the difficulty of your project, we promise you support that meets your expectations</description>
-        <lastBuildDate>Wed, 30 Nov 2022 19:22:12 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 25 Feb 2023 09:44:32 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -12,10 +12,10 @@
             <url>http://localhost:3000/images/AG.png</url>
             <link>http://localhost:3000</link>
         </image>
-        <copyright>All rights reserved 2022, Andmag-ground</copyright>
+        <copyright>All rights reserved 2023, Andmag-ground</copyright>
         <item>
             <title><![CDATA[Get starting with C programming language]]></title>
-            <link>http://localhost:3000/articles/0hHOjrwJu8io8kYJlW1C</link>
+            <link>http://localhost:3000/articles/Get starting with C programming language-0hHOjrwJu8io8kYJlW1C</link>
             <guid>0hHOjrwJu8io8kYJlW1C</guid>
             <pubDate>Sat, 19 Nov 2022 13:55:41 GMT</pubDate>
             <description><![CDATA[Nam quis tempus lacus. Sed lobortis ex nec dui tristique, at placerat felis tincidunt. Suspendisse potenti. Proin in massa vitae mi eleifend egestas vel non enim. In hac habitasse platea dictumst.]]></description>

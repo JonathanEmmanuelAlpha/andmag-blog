@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import styles from "../../styles/article/ArticleContainer.module.css";
 import Header from "./Header";
 import { PlayList, PlayListFull } from "./PlayList";
@@ -94,6 +93,12 @@ function ArticleContainer({ article, blog, playlist, comments }) {
         <div className={styles.section}>
           <Header article={article} blog={blog} />
           <article>
+            <PlayListFull
+              playlist={playlist}
+              articles={articles}
+              totalReaders={totalReaders}
+              mobileDevice={true}
+            />
             <QuillContent delta={JSON.parse(article.content)} />
           </article>
           <PostEndSeparator />
@@ -104,18 +109,22 @@ function ArticleContainer({ article, blog, playlist, comments }) {
           />
           <PageNavigation article={article} articles={articles} />
           <div className={styles.com_show}>
-            <span>
-              {comments > 10 ? comments : `0${comments}`} Commentaires
-            </span>
+            <div>
+              <span>Commentaires</span>
+              <CircleSeparator />
+              <span style={{ marginLeft: "5px" }}>
+                {comments > 10 ? comments : `0${comments}`}
+              </span>
+            </div>
             <button onClick={() => setOpen(!open)}>
               {!open ? (
                 <>
-                  <span>Afficher les commentaires</span>
+                  <span>Afficher</span>
                   <FontAwesomeIcon icon={faAngleDown} />
                 </>
               ) : (
                 <>
-                  <span>Masquer les commentaires</span>
+                  <span>Masquer</span>
                   <FontAwesomeIcon icon={faAngleUp} />
                 </>
               )}
@@ -125,6 +134,7 @@ function ArticleContainer({ article, blog, playlist, comments }) {
             isOpen={open}
             targetRef={articlesCollection}
             targetId={article.id}
+            onClose={() => setOpen(!open)}
           />
         </div>
       </div>

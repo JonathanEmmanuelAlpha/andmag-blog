@@ -1,7 +1,16 @@
-import { doc, getDoc } from "firebase/firestore";
+import { faAnglesDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  doc,
+  documentId,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ArticleCard } from "../../components/blog/ArticleCard";
 import LoadingScreen from "../../components/inputs/LoadingScreen";
 import SkeletonLayout from "../../components/skeleton-layout/SkeletonLayout";
@@ -25,21 +34,25 @@ function BlogItem({ blog }) {
   );
 }
 
-export default function subscriptions() {
+export default function Subscriptions() {
   const { userProfile } = useAuth();
 
   const [blogs, setBlogs] = useState({ docs: [], loading: true });
   const [articles, setArticles] = useState({ docs: [], loading: true });
   const [tests, setTests] = useState({ docs: [], loading: true });
 
+  const [isActive, setIsActive] = useState(false);
+
   /** Fetch user followed blogs */
   useEffect(() => {
     if (!userProfile) return;
 
-    setBlogs({ docs: [], loading: true });
-    const blogsFind = userProfile.followed.map((id) => {
-      if (typeof id !== "string") return;
-      return getDoc(doc(blogsCollection, id)).then((blog) => {
+    const blogQuery = query(
+      blogsCollection,
+      where(documentId(), "in", userProfile.followed)
+    );
+    getDocs(blogQuery).then((snaps) => {
+      snaps.forEach((blog) => {
         setBlogs((prev) => {
           if (prev.docs.find((b) => b.id === blog.id)) return prev;
           return {
@@ -49,30 +62,33 @@ export default function subscriptions() {
         });
       });
     });
-    Promise.all(blogsFind);
   }, [userProfile]);
 
   /** Fetch followed blogs lastest articles */
   useEffect(() => {
     if (!userProfile || blogs.docs.length === 0) return;
 
-    setArticles({ docs: [], loading: true });
-    const articlesFind = blogs.docs.map((blog) => {
-      if (typeof blog.mostRecentArticle !== "string") return;
+    const recentArticle = blogs.docs
+      .map((b) => b.mostRecentArticle)
+      .filter((res) => res !== undefined);
 
-      return getDoc(doc(articlesCollection, blog.mostRecentArticle)).then(
-        (article) => {
-          setArticles((prev) => {
-            if (prev.docs.find((a) => a.id === article.id)) return prev;
-            return {
-              loading: false,
-              docs: [...prev.docs, { id: article.id, ...article.data() }],
-            };
-          });
-        }
-      );
+    setArticles({ docs: [], loading: true });
+
+    const articleQuery = query(
+      articlesCollection,
+      where(documentId(), "in", recentArticle)
+    );
+    getDocs(articleQuery).then((snaps) => {
+      snaps.forEach((article) => {
+        setArticles((prev) => {
+          if (prev.docs.find((a) => a.id === article.id)) return prev;
+          return {
+            loading: false,
+            docs: [...prev.docs, { id: article.id, ...article.data() }],
+          };
+        });
+      });
     });
-    Promise.all(articlesFind);
   }, [userProfile, blogs.docs]);
 
   /** Fetch followed blogs lastest tests */
@@ -80,53 +96,55 @@ export default function subscriptions() {
     if (!userProfile || blogs.docs.length === 0) return;
 
     setTests({ docs: [], loading: true });
-    const testsFind = blogs.docs.map((blog) => {
-      if (typeof blog.mostRecentTest !== "string") return;
-      return getDoc(doc(trainningsCollection, blog.mostRecentTest)).then(
-        (test) => {
-          setTests((prev) => {
-            if (prev.docs.find((t) => t.id === test.id)) return prev;
-            return {
-              loading: false,
-              docs: [...prev.docs, { id: test.id, ...test.data() }],
-            };
-          });
-        }
-      );
+
+    const recentTest = blogs.docs
+      .map((b) => b.mostRecentTest)
+      .filter((res) => res !== undefined);
+
+    setArticles({ docs: [], loading: true });
+
+    const testQuery = query(
+      trainningsCollection,
+      where(documentId(), "in", recentTest)
+    );
+    getDocs(testQuery).then((snaps) => {
+      snaps.forEach((test) => {
+        setTests((prev) => {
+          if (prev.docs.find((t) => t.id === test.id)) return prev;
+          return {
+            loading: false,
+            docs: [...prev.docs, { id: test.id, ...test.data() }],
+          };
+        });
+      });
     });
-    Promise.all(testsFind);
   }, [userProfile, blogs.docs]);
 
   return (
-    <SkeletonLayout title="Vos abonnements">
+    <SkeletonLayout title="Mes abonnements">
       <div className={styles.container}>
-        <header>
-          {blogs.loading ? (
-            <LoadingScreen />
-          ) : (
-            blogs.docs.map((blog) => <BlogItem key={blog.id} blog={blog} />)
-          )}
-        </header>
         <fieldset>
           <legend>Les derniers articles</legend>
           {articles.loading ? (
             <LoadingScreen />
           ) : articles.docs.length > 0 ? (
-            articles.docs.map((article) => (
-              <ArticleCard
-                key={article.id}
-                blogId={article.blogId}
-                createBy={article.createBy}
-                articleId={article.id}
-                blogUrl={`/blogs/${article.blogId}`}
-                blogLogo={article.blogLogo}
-                blogName={article.blogName}
-                thumbnail={article.thumbnail}
-                title={article.title}
-                reads={article.reads}
-                at={article.updateAt}
-              />
-            ))
+            <div className={styles.list}>
+              {articles.docs.map((article) => (
+                <ArticleCard
+                  key={article.id}
+                  blogId={article.blogId}
+                  createBy={article.createBy}
+                  articleId={article.id}
+                  blogUrl={`/blogs/${article.blogId}`}
+                  blogLogo={article.blogLogo}
+                  blogName={article.blogName}
+                  thumbnail={article.thumbnail}
+                  title={article.title}
+                  reads={article.readers}
+                  at={article.updateAt}
+                />
+              ))}
+            </div>
           ) : (
             <Infos
               title={"Aucun article trouvé"}

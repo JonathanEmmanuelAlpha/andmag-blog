@@ -73,6 +73,12 @@
   justify-content: flex-start;
 }
 
+@media screen and (max-width: 500px) {
+  .card {
+    margin: 20px;
+  }
+}
+
 /*--------------------- THIN ------------------------------*/
 .card_thin {
   width: 100%;

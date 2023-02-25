@@ -1,6 +1,5 @@
 import dynamic from "next/dynamic";
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import styles from "../../styles/post/PostCard.module.css";
 import Link from "next/link";
 import { domainName } from "../links/AwesomeLink.type";
@@ -17,7 +16,7 @@ const QuillContent = dynamic(() => import("../article/QuillContent"), {
 
 export function PostCard({ pub, commentShown }) {
   const router = useRouter();
-  const { isOwner } = useTargetBlog();
+  const { isOwner, blog } = useTargetBlog();
 
   const [showLightbox, setShowLightbox] = useState(false);
   const [currentImage, setCurrentImage] = useState(
@@ -39,7 +38,7 @@ export function PostCard({ pub, commentShown }) {
       <div className={styles.pub_wrapper}>
         <div className={styles.head}>
           <div className={styles.uinf}>
-            <Link href={`${domainName}/profile?userId=${pub.userName}`}>
+            <Link href={`${domainName}/account/profile?pseudo=${pub.userName}`}>
               <a>{pub.userName}</a>
             </Link>
           </div>
@@ -75,7 +74,7 @@ export function PostCard({ pub, commentShown }) {
               />
             ))}
           </div>
-          {pub.thumbnails.length > 3 && (
+          {pub.thumbnails.length > 2 && (
             <div className={styles.gal_indicator}>
               {pub.thumbnails.map((file) => (
                 <div key={file.fileName} className={styles.indicator} />
@@ -83,12 +82,8 @@ export function PostCard({ pub, commentShown }) {
             </div>
           )}
         </div>
-        <ContentFooter pub={pub} commentShown={commentShown} />
+        <ContentFooter pub={pub} commentShown={commentShown} blog={blog} />
       </div>
     </div>
   );
 }
-PostCard.propTypes = {
-  pub: PropTypes.any,
-  commentShown: PropTypes.bool,
-};

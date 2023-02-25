@@ -12,11 +12,16 @@ import {
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthProvider";
-import { blogsCollection, profilesCollection } from "../../firebase";
+import {
+  blogsCollection,
+  handleFirestoreErrors,
+  profilesCollection,
+} from "../../firebase";
 import styles from "../../styles/blog/BlogHead.module.css";
 import LoadingScreen from "../inputs/LoadingScreen";
+import { showErrorToast } from "../skeleton-layout/ToasComponent";
 
-export function SubButton({ blog }) {
+export function SubButton({ blog, onSubscribe, onUnSubscribe }) {
   const router = useRouter();
   const { currentUser, userProfile } = useAuth();
 
@@ -69,7 +74,10 @@ export function SubButton({ blog }) {
       });
 
       setIsFollower(!isFollower);
-    } catch (error) {}
+      return onSubscribe();
+    } catch (error) {
+      showErrorToast(handleFirestoreErrors(error));
+    }
 
     setLoading(false);
   }
@@ -101,6 +109,7 @@ export function SubButton({ blog }) {
       });
 
       setIsFollower(!isFollower);
+      return onUnSubscribe();
     } catch (error) {}
     setLoading(false);
   }
@@ -126,9 +135,13 @@ export function SubButton({ blog }) {
       {loading ? (
         <LoadingScreen />
       ) : isFollower ? (
-        <button onClick={async () => await unsubscribe()}>Se désabonner</button>
+        <button disabled={loading} onClick={async () => await unsubscribe()}>
+          Se désabonner
+        </button>
       ) : (
-        <button onClick={async () => await subscribe()}>S'abonner</button>
+        <button disabled={loading} onClick={async () => await subscribe()}>
+          S'abonner
+        </button>
       )}
     </div>
   );

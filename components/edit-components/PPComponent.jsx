@@ -16,7 +16,7 @@ import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
 
 export default function PPComponent({ ppReady }) {
   const router = useRouter();
-  const { currentUser, userProfile } = useAuth();
+  const { currentUser, userProfile, initializeAccount } = useAuth();
 
   const [picture, setPicture] = useState();
 
@@ -29,13 +29,20 @@ export default function PPComponent({ ppReady }) {
     setError("");
     setSuccess("");
 
-    if (!userProfile) return;
+    if (!currentUser.emailVerified) {
+      return setError("Vous devez activer votre compte pour continuer.");
+    }
 
     if (!(picture instanceof Blob))
-      return setError("Please provide a picture to process.");
+      return setError(
+        "S'il vous plait, veuillez fournir une image pour continuer."
+      );
 
     setLoading(true);
     try {
+      if (!userProfile || !userProfile.id) {
+        await initializeAccount(currentUser);
+      }
       const fileRef = userProfile.ppRef ? userProfile.ppRef : v4();
 
       const url = await fileUpload(
@@ -43,17 +50,20 @@ export default function PPComponent({ ppReady }) {
         picture,
         currentUser.uid
       );
+      if (!url)
+        return setError("Echec de la mise à jour de le photo de profile.");
+
       await updateProfile(currentUser, {
-        photoURL: url ? url : currentUser.photoURL,
+        photoURL: url,
       });
 
       await updateDoc(doc(profilesCollection, userProfile.id), {
         updateAt: serverTimestamp(),
         ppRef: fileRef,
-        pp: url ? url : currentUser.photoURL,
+        pp: url,
       });
 
-      setSuccess("Modifications applied successfully");
+      setSuccess("Modifications appliquées avec succès.");
     } catch (error) {
       setError((prev) => {
         const auth = handleAuthErrors(error);

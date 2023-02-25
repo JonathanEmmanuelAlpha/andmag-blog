@@ -8,13 +8,18 @@ import { faEnvelope, faGear } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuth } from "../../context/AuthProvider";
 import SkeletonLayout from "../../components/skeleton-layout/SkeletonLayout";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  updateProfile,
+} from "firebase/auth";
 import { auth, handleAuthErrors, profilesCollection } from "../../firebase";
 import { addDoc, serverTimestamp } from "firebase/firestore";
+import { domainName } from "../../components/links/AwesomeLink.type";
 
 export default function Register(props) {
   const router = useRouter();
-  const { register } = useAuth();
+  const { initializeAccount } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,10 +34,10 @@ export default function Register(props) {
 
     if (password.length < 8)
       return setError(
-        "You need to provide a password with a minimum of 08 characters."
+        "Fournissez un mot de passe avec un minimum de 08 charactères."
       );
     if (password !== passwordConf)
-      return setError("Both password does not matchs");
+      return setError("Les 02 mots de passes ne correspondent pas.");
 
     setLoading(true);
     setError("");
@@ -53,17 +58,11 @@ export default function Register(props) {
           handleCodeInApp: true,
         });
 
-        await updateProfile(credential.user, {
-          displayName: "Unknown-pseudo",
-          photoURL: "/images/default-pp.png",
-        });
+        await initializeAccount(credential.user);
 
-        await addDoc(profilesCollection, {
-          ppRef: null,
-          createAt: serverTimestamp(),
-        });
-
-        setSuccess("An account activation link has been sent to your email.");
+        setSuccess(
+          "Un lien d'activation de compte vous a été envoyé par email."
+        );
       }
     } catch (error) {
       setError((prev) => {
@@ -76,8 +75,8 @@ export default function Register(props) {
 
   return (
     <SkeletonLayout
-      title="Andmag-gound - Register"
-      description="Use Skill Upgrade to improve your skill, challenge your friends and the rest of the world !"
+      title="S'inscrire"
+      description="En créant un compte, vous avez la possibilité d'interagir avec d'autre utilisateurs de la communauté."
     >
       <AccountContainer
         title="Créer un nouveau compte"
@@ -85,7 +84,7 @@ export default function Register(props) {
           <>
             <Input
               type="email"
-              placeholder="Addresse email"
+              placeholder="Adresse email"
               value={email}
               isRequired
               handleChange={(e) => setEmail(e.target.value)}

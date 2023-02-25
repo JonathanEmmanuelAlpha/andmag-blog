@@ -32,7 +32,7 @@ export default async function generateRSSFeed() {
     feed.addItem({
       title: article.data().title,
       id: article.id,
-      link: `${site_url}/articles/${article.id}`,
+      link: `${site_url}/articles/${article.data().title}-${article.id}`,
       description: article.data().description,
       date: new Date(article.data().updateAt.seconds * 1000),
       author: article.data().blogName,
@@ -43,6 +43,4 @@ export default async function generateRSSFeed() {
   });
 
   fs.writeFileSync("./public/rss.xml", feed.rss2());
-  fs.writeFileSync("./public/rss.json", feed.json1());
-  fs.writeFileSync("./public/atom.xml", feed.atom1());
 }

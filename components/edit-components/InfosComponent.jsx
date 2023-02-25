@@ -17,14 +17,20 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import SubmitButton from "../inputs/SubmitButton";
 import Alert from "../inputs/Alert";
-import Textarea from "../inputs/Textarea";
+import dynamic from "next/dynamic";
+
+const SimpleTextEditor = dynamic(
+  () => import("../text editor/SimpleTextEditor"),
+  { ssr: false }
+);
 
 export default function InfosComponent() {
   const router = useRouter();
-  const { currentUser, userProfile } = useAuth();
+  const { currentUser, userProfile, initializeAccount } = useAuth();
 
   const [pseudo, setPseudo] = useState("");
-  const [about, setAbout] = useState("");
+  const [about, setAbout] = useState(null);
+  const [editor, setEditor] = useState(null);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -35,7 +41,10 @@ export default function InfosComponent() {
     if (!userProfile) return;
 
     setPseudo(userProfile.pseudo || "");
-    setPseudo(userProfile.about || "");
+    setAbout((prev) => {
+      if (userProfile.about) return JSON.parse(userProfile.about);
+      return prev;
+    });
   }, [userProfile]);
 
   const handleSubmit = async function (event) {
@@ -44,46 +53,50 @@ export default function InfosComponent() {
     setSuccess("");
     setWarning("");
 
-    if (!userProfile || !userProfile.id) return;
+    if (!currentUser.emailVerified) {
+      return setError("Vous devez activer votre compte pour continuer.");
+    }
 
     if (pseudo.length < 8)
       return setError(
-        "You need to provide a pseudo with a minimum of 08 characters."
+        "Fournissez un pseudo avec un minimum de 08 charactères."
       );
 
     if (pseudo.length > 20)
       return setError(
-        "You need to provide a pseudo with a maximum of 20 characters."
+        "Fournissez un pseudo avec un maximum de 20 charactères."
       );
 
-    if (about.length < 32)
-      return setError("About can not contain less than 32 characters.");
-
-    if (about.length > 255)
-      return setError("About can not contain more than 255 characters.");
+    if (editor.getText() && editor.getText().length < 32)
+      return setError("A propos ne peut contenir moins de 32 charactères.");
 
     setLoading(true);
 
     let data = null;
 
     try {
+      if (!userProfile || !userProfile.id) {
+        await initializeAccount(currentUser);
+      }
+
       if (pseudo !== currentUser.displayName) {
         await updateProfile(currentUser, {
           displayName: pseudo,
         });
         data = { updateAt: serverTimestamp(), pseudo: pseudo };
       }
-      if (pseudo !== userProfile.about) {
-        data = { ...data, about: about };
+      if (editor.getContents() !== about) {
+        data = { ...data, about: JSON.stringify(editor.getContents()) };
       }
 
-      if (data !== null) {
-        await updateDoc(doc(profilesCollection, userProfile.id), data);
-        return setSuccess("Modifications applied successfully");
+      if (data === null) {
+        return setWarning(
+          "Vous devez aportez des modifications pour effectuer cettte action."
+        );
       }
-      return setWarning(
-        "You need to change some of these fields to proccess an update"
-      );
+      await updateDoc(doc(profilesCollection, userProfile.id), data);
+      setLoading(false);
+      return setSuccess("Modifications appliquées");
     } catch (error) {
       setError((prev) => {
         const auth = handleAuthErrors(error);
@@ -92,6 +105,7 @@ export default function InfosComponent() {
         if (store) return store;
         return prev;
       });
+      setLoading(false);
     }
 
     setLoading(false);
@@ -116,13 +130,10 @@ export default function InfosComponent() {
           maxChar={20}
           onChange={(e) => setPseudo(e.target.value)}
         />
-        <Textarea
-          autoComplete="on"
-          label={"A propos de vous"}
-          id="about"
-          maxChar={255}
-          value={about}
-          onChange={(e) => setPseudo(e.target.value)}
+        <br />
+        <SimpleTextEditor
+          initialDelta={about}
+          onReady={(editor) => setEditor(editor)}
         />
         <div className={styles.pers_foot}>
           <p>

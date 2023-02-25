@@ -15,6 +15,7 @@ import {
 import Header from "../header/Header";
 
 import { MdRssFeed } from "react-icons/md";
+import ToasComponent from "./ToasComponent";
 
 function SideBar({ open }) {
   return (
@@ -132,6 +133,7 @@ function SkeletonLayout({
         <SideBar open={open} />
         <main>{children}</main>
       </section>
+      <ToasComponent />
     </div>
   );
 }

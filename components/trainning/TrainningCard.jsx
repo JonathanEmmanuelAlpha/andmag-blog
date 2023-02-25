@@ -39,13 +39,15 @@ function TrainningCard({ trainning }) {
           </span>
           <CircleSeparator />
           <span>
-            <strong>{trainning.time} min</strong>
+            <strong>{trainning.time * trainning.questionsNumber} min</strong>
           </span>
         </div>
       </div>
       <p>{trainning.description.slice(0, 124)}</p>
       {trainning.published && (
-        <Link href={`${domainName}/trainnings/train?channel=${trainning.id}`}>
+        <Link
+          href={`${domainName}/trainnings/train?testChannel=${trainning.id}`}
+        >
           S'entrainner
         </Link>
       )}

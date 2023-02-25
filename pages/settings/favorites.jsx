@@ -26,7 +26,7 @@ export default function Subscriptions() {
 
     setLoading(true);
     setArticles([]);
-    const articlesFind = userProfile.favorites.docs.map((id) => {
+    const articlesFind = userProfile.favorites.map((id) => {
       if (typeof id !== "string") return;
 
       return getDoc(doc(articlesCollection, id)).then((article) => {
@@ -60,7 +60,7 @@ export default function Subscriptions() {
                 blogName={article.blogName}
                 thumbnail={article.thumbnail}
                 title={article.title}
-                reads={article.reads}
+                reads={article.readers}
                 at={article.updateAt}
               />
             ))

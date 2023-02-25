@@ -15,8 +15,23 @@ import {
 import CommentInput from "./CommentInput";
 import Alert from "../inputs/Alert";
 import { useAuth } from "../../context/AuthProvider";
+import { showErrorToast } from "../skeleton-layout/ToasComponent";
+import { handleFirestoreErrors } from "../../firebase";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
-function CommentContainer({ targetId, targetRef, isOpen }) {
+function ReturnButton({ onClick }) {
+  return (
+    <div className={styles.ret_btn}>
+      <button onClick={onClick}>
+        <FontAwesomeIcon icon={faArrowLeft} />
+        <span>Retour</span>
+      </button>
+    </div>
+  );
+}
+
+function CommentContainer({ targetId, targetRef, isOpen, onClose }) {
   if (isOpen === false) return null;
 
   const { currentUser } = useAuth();
@@ -95,13 +110,40 @@ function CommentContainer({ targetId, targetRef, isOpen }) {
 
   return (
     <div className={styles.com_container}>
+      <ReturnButton onClick={onClose} />
+      <div className={styles.add_comment}>
+        {error && <Alert type="danger" message={error} />}
+        {currentUser && (
+          <CommentInput
+            handlePost={async (content) => {
+              setLoading(true);
+              try {
+                await postComment(content);
+              } catch (error) {
+                setError((prev) => {
+                  return error.message;
+                });
+              }
+              setLoading(false);
+            }}
+          />
+        )}
+      </div>
       {comments?.length <= 0
         ? null
         : rootComments?.map((comment) => (
             <CommentItem
               key={comment.id}
               comment={comment}
-              responseComment={responseComment}
+              collectionRoot={targetRef}
+              targetId={targetId}
+              responseComment={async (id, content) => {
+                try {
+                  await responseComment();
+                } catch (error) {
+                  showErrorToast(handleFirestoreErrors(error));
+                }
+              }}
             >
               {responses?.map((response) => {
                 if (response.parentId === comment.id) {
@@ -110,12 +152,13 @@ function CommentContainer({ targetId, targetRef, isOpen }) {
                       isAnswer
                       key={response.id}
                       comment={response}
-                      onShowAnswer={async () => await showAnswers(response.id)}
+                      collectionRoot={targetRef}
+                      targetId={targetId}
                       responseComment={async (id, content) => {
                         try {
-                          responseComment(id, content);
+                          await responseComment(id, content);
                         } catch (error) {
-                          console.log("Error: ", error);
+                          showErrorToast(handleFirestoreErrors(error));
                         }
                       }}
                     />
@@ -124,22 +167,6 @@ function CommentContainer({ targetId, targetRef, isOpen }) {
               })}
             </CommentItem>
           ))}
-      <div className={styles.add_comment}>
-        {error && <Alert type="danger" message={error} />}
-        <CommentInput
-          handlePost={async (content) => {
-            setLoading(true);
-            try {
-              await postComment(content);
-            } catch (error) {
-              setError((prev) => {
-                return error.message;
-              });
-            }
-            setLoading(false);
-          }}
-        />
-      </div>
     </div>
   );
 }

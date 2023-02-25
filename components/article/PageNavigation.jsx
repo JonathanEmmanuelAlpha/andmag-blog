@@ -26,22 +26,19 @@ function PageNavigation({ article, articles }) {
     return prevPost;
   }
 
+  const next = getNextElement(articles, article.id);
+  const prev = getPevElement(articles, article.id);
+
   return (
     <div className={styles.page_nav}>
-      <Link href={`/articles/${getNextElement(articles, article.id)?.id}`}>
-        <a
-          title={getNextElement(articles, article.id)?.title}
-          className={styles.prev_link}
-        >
+      <Link href={`/articles/${prev?.title}-${prev?.id}`}>
+        <a title={prev?.title} className={styles.prev_link}>
           <FontAwesomeIcon icon={faArrowAltCircleLeft} />
           <span>Précédent</span>
         </a>
       </Link>
-      <Link href={`/articles/${getPevElement(articles, article.id)?.id}`}>
-        <a
-          title={getPevElement(articles, article.id)?.title}
-          className={styles.next_link}
-        >
+      <Link href={`/articles/${next?.title}-${next?.id}`}>
+        <a title={next?.title} className={styles.next_link}>
           <span>Suivant</span>
           <FontAwesomeIcon icon={faArrowAltCircleRight} />
         </a>

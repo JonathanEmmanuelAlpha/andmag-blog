@@ -1,15 +1,50 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import styles from "../styles/components-styles/TestsContainer.module.css";
-import AppSkeleton from "./AppSkeleton";
-import SubmitButton from "./SubmitButton";
+import React, { useEffect, useState } from "react";
+import styles from "../../styles/trainning/TestsContainer.module.css";
 import dynamic from "next/dynamic";
-import LoadingScreen from "./LoadingScreen";
-import useTimer from "../hooks/useTimer";
+import SkeletonLayout from "../skeleton-layout/SkeletonLayout";
+import SubmitButton from "../inputs/SubmitButton";
+import LoadingScreen from "../inputs/LoadingScreen";
+import useTimer from "../../hooks/useTimer";
+import { useTrain } from "../../context/TrainProvider";
 
-const QuillContent = dynamic(() => import("./post/QuillContent"), {
+const QuillContent = dynamic(() => import("../article/QuillContent"), {
   ssr: false,
 });
+
+export function TestResultCard(props) {
+  const { currentTrainning, result } = useTrain();
+
+  return (
+    <div className={styles.res_card}>
+      <h1>{currentTrainning.doc.title}</h1>
+      <div className={styles.res_stats}>
+        <span>
+          <strong>{currentTrainning.doc.questionsNumber}</strong> questions
+        </span>
+        <span>
+          <strong>{currentTrainning.doc.time}</strong> min d'évaluation
+        </span>
+        <span>
+          <strong>{result.answers}</strong> réponses fournies
+        </span>
+        <span>
+          <strong>{result.skiped}</strong> qestions sautées
+        </span>
+        <span>
+          <strong>{result.correctAnswers}</strong> réponses correctes
+        </span>
+      </div>
+      <div className={styles.res_per}>
+        <span>
+          {Math.round(
+            (result.correctAnswers / currentTrainning.doc.questionsNumber) * 100
+          )}
+          %
+        </span>
+      </div>
+    </div>
+  );
+}
 
 function QCMItem({
   active,
@@ -39,7 +74,7 @@ function QCMItem({
           currentlabel.dataset.active = true;
         }}
       />
-      <label htmlFor={answerId} id={answerId} data-active={active}>
+      <label htmlFor={letter} id={answerId} data-active={active}>
         <span>{letter}.</span>
         <QuillContent delta={answer} />
       </label>
@@ -47,41 +82,43 @@ function QCMItem({
   );
 }
 
+function Timer(props) {
+  const { currentTrainning, finilizeTest } = useTrain();
+
+  const { output, timer, updateOutput } = useTimer(
+    currentTrainning.doc?.time * 60,
+    finilizeTest
+  );
+
+  return (
+    <div className={styles.time}>
+      <span>{output}</span>
+    </div>
+  );
+}
+
 export function QCMCard({
+  active,
+  qIndex,
   question,
-  stats,
   trainning,
   asnwers,
-  timeManager,
   onSkip,
   onSendAnswer,
 }) {
-  const timer = useTimer(timeManager.timeRemaining);
-  const [choosedAnswer, setChoosedAnswer] = useState("");
+  if (!active) return null;
 
+  const [choosedAnswer, setChoosedAnswer] = useState("");
   return (
     <div className={styles.qcm_wrapper}>
       <div className={styles.nbq}>
-        {stats.loading ? (
-          <LoadingScreen />
-        ) : (
-          <span>
-            Q{" "}
-            {stats.passed.length > 10
-              ? stats.passed.length
-              : `0${stats.passed.length}`}{" "}
-            / {stats.nbQuestions}
-          </span>
-        )}
+        <span>
+          Q {qIndex} / {trainning.questionsNumber}
+        </span>
       </div>
-      <div className={styles.level}>
-        <span>{trainning.level}</span>
-      </div>
-      <div className={styles.time}>
-        <span>{timer}</span>
-      </div>
-      {question.doc?.content ? (
-        <QuillContent delta={JSON.parse(question.doc.content)} />
+      <Timer />
+      {question.content ? (
+        <QuillContent delta={JSON.parse(question.content)} />
       ) : (
         <LoadingScreen />
       )}
@@ -91,12 +128,15 @@ export function QCMCard({
         asnwers.docs.map((answer, index) => {
           return (
             <QCMItem
+              active={choosedAnswer === answer.id}
               key={answer.id}
-              questionId={question.doc.id}
+              questionId={question.id}
               answerId={answer.id}
               letter={String.fromCharCode(index + 65)}
               answer={JSON.parse(answer.content)}
-              handleChange={(event) => setChoosedAnswer(event.target.value)}
+              handleChange={(event) => {
+                setChoosedAnswer(event.target.value);
+              }}
             />
           );
         })
@@ -109,7 +149,7 @@ export function QCMCard({
           text="Soumettre"
           onClick={() => onSendAnswer(choosedAnswer)}
         />
-        <button onClick={onSkip}>Sauter</button>
+        <button onClick={() => onSkip()}>Sauter</button>
       </div>
     </div>
   );
@@ -117,15 +157,10 @@ export function QCMCard({
 
 function TestsContainer({ pageTitle, pageDesc, children }) {
   return (
-    <AppSkeleton headerTitle={pageTitle} headerDesc={pageDesc}>
+    <SkeletonLayout title={pageTitle} description={pageDesc}>
       <div className={styles.container}>{children}</div>
-    </AppSkeleton>
+    </SkeletonLayout>
   );
 }
-
-TestsContainer.propTypes = {
-  pageTitle: PropTypes.string,
-  pageDesc: PropTypes.string,
-};
 
 export default TestsContainer;

@@ -9,9 +9,14 @@ import AccountContainer, {
 import SkeletonLayout from "../../components/skeleton-layout/SkeletonLayout";
 import { useAuth } from "../../context/AuthProvider";
 import useDebounceEffect from "../../hooks/useDebounceEffect";
-import { isSignInWithEmailLink, signInWithEmailLink } from "firebase/auth";
+import {
+  isSignInWithEmailLink,
+  sendEmailVerification,
+  signInWithEmailLink,
+} from "firebase/auth";
 import { auth, handleAuthErrors } from "../../firebase";
 import LoadingScreen from "../../components/inputs/LoadingScreen";
+import { domainName } from "../../components/links/AwesomeLink.type";
 
 export default function Activation(props) {
   const router = useRouter();
@@ -21,7 +26,8 @@ export default function Activation(props) {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [error, setError] = useState();
+  const [error, setError] = useState("");
+  const [success, setSucces] = useState("");
 
   useDebounceEffect(() => {
     setProcess(true);
@@ -51,7 +57,11 @@ export default function Activation(props) {
 
   const handleSubmit = async function (event) {
     event.preventDefault();
-    if (currentUser) return router.push("/account/profile");
+    setSucces("");
+    setError("");
+
+    if (currentUser && currentUser.emailVerified)
+      return router.push("/account/profile");
 
     setLoading(true);
 
@@ -68,13 +78,28 @@ export default function Activation(props) {
             return handleAuthErrors(error);
           });
         });
+    } else {
+      try {
+        await sendEmailVerification(currentUser, {
+          url:
+            typeof router.query.next === "string"
+              ? `${domainName}${router.query.next}`
+              : `${domainName}/account/profile-edit`,
+          handleCodeInApp: true,
+        });
+        setSucces(
+          "Un lien d'activation de compte vous a été envoyé par email."
+        );
+      } catch (error) {
+        setError((prev) => {
+          return handleAuthErrors(error);
+        });
+      }
     }
     setLoading(false);
-
-    return router.push("/login");
   };
   return (
-    <SkeletonLayout title="Andmag-ground Account activation" description="">
+    <SkeletonLayout title="Activer mon compte" description="">
       {process ? (
         <LoadingScreen />
       ) : (
@@ -87,7 +112,7 @@ export default function Activation(props) {
             <>
               <Input
                 type="email"
-                placeholder="Addresse email"
+                placeholder="Adresse email"
                 value={email}
                 isRequired
                 handleChange={(e) => setEmail(e.target.value)}
@@ -98,12 +123,15 @@ export default function Activation(props) {
           btnMsg="Activer"
           LinkOptions={
             <>
-              <Link href="/account/register">Se conncter</Link>
+              <Link href="/account/login">Se conncter</Link>
               <Link href="/account/register">Créér un compte</Link>
               <Link href="/account/forgotPassword">Mot de passe oublié ?</Link>
             </>
           }
           handleSubmit={handleSubmit}
+          error={error}
+          loading={loading}
+          success={success}
         />
       )}
     </SkeletonLayout>

@@ -1,4 +1,39 @@
 .container {
   min-height: calc(100vh - var(--headerHeight));
-  padding: 20px;
+  padding: 20px 5px;
+}
+
+.wrapper {
+  max-width: 1300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.wrapper > a {
+  margin: 15px;
+}
+
+@media screen and (max-width: 470px) {
+  .wrapper > a {
+    max-width: 350px;
+  }
+  .wrapper > a h2 {
+    font-size: 15px;
+  }
+  .wrapper > a span {
+    font-size: 10px;
+    font-weight: 700;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .wrapper > a {
+    margin: 15px;
+    max-width: 320px;
+  }
+  .wrapper > a span {
+    margin-top: 5px;
+  }
 }

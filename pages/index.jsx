@@ -19,13 +19,25 @@ function SocialsWrapper() {
       <a href="mailto:andmagground@gmail.com">
         <img src="/icons/mail.png" alt="email.png" />
       </a>
-      <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer">
+      <a
+        href="https://wa.me/237620689433"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <img src="/icons/whatsapp.png" alt="whatsapp.png" />
       </a>
-      <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+      <a
+        href="https://facebook.com/AndmagGround"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <img src="/icons/facebook.png" alt="facebook.png" />
       </a>
-      <a href="https://twiter.com" target="_blank" rel="noopener noreferrer">
+      <a
+        href="https://twiter.com/AndmagGround"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <img src="/icons/twiter.png" alt="twiter.png" />
       </a>
       <div />
@@ -73,7 +85,7 @@ function AboutCard({
           <div className={`${styles.link} ${styles.oth}`}>
             <AwesomeLink
               text="Plus d'informations"
-              url={`/faq#${faqUrl}`}
+              url={`/faq/${faqUrl}`}
               icon={faArrowRight}
               direction="horizontal"
               reverse
@@ -242,7 +254,7 @@ function About() {
             title="iOS App Development"
             description="Des applications hautement performantes et accessible même sur les modèles plus anciens tels que les 6s et 7s. Une expérience utilisateur améliorée vous assurant la confiance de vos utilisateurs."
             technologies={["Objective C", "Swift"]}
-            faqUrl="ios-dev"
+            faqUrl="native-app#ios"
           />
           <AboutCard
             url="/images/about/android.jpg"
@@ -251,7 +263,7 @@ function About() {
             title="Android App Development"
             description="Elargissez vos perspectives en ciblant la plateforme possédant 84% des parts de marché mondiale. Andmag-ground vous offre la possibilité de conquérir ce marché de consommation dès aujourd’hui. N’attendez plus et prenez le taureau par les cornes."
             technologies={["Kotlin", "Java", "XML"]}
-            faqUrl="android-dev"
+            faqUrl="native-app#android"
           />
           <AboutCard
             url="/images/about/uwp.png"
@@ -268,7 +280,7 @@ function About() {
               "Windows forms",
               "XAML",
             ]}
-            faqUrl="uwp-dev"
+            faqUrl="native-app#uwp"
           />
           <AboutCard
             url="/images/about/cross-platform.jpg"
@@ -283,7 +295,7 @@ function About() {
               "Xamarin",
               "Kotlin Multiplatform Mobile",
             ]}
-            faqUrl="uwp-dev"
+            faqUrl="native-app#cross-platforms"
           />
         </div>
         <div className={styles.wrap} ref={secondMask}>
@@ -294,7 +306,7 @@ function About() {
             title="Web App Development"
             description="La pluspart des entreprises essaient de créer leur propre domaine Web et leur propre application afin de s'assurer qu'un grand nombre de leurs clients cibles sont attirés en même temps. Ne soyez plus en reste dès aujoud'hui."
             technologies={["HTML 5", "CSS 3", "JavaScript", "PHP", "Python"]}
-            faqUrl="web-dev"
+            faqUrl="web-pwa#web"
           />
           <AboutCard
             url="/images/about/pwa.png"
@@ -303,7 +315,7 @@ function About() {
             title="Applications hybrides"
             description="Si vous cherchez le meilleur parti entre application native et application web, les applications hybrides sont faites pour vous. Elles sont actuellement le leader sur le marché et présentent de nombreux avantages par rapport aux deux autres."
             technologies={["HTML 5", "CSS 3", "JavaScript"]}
-            faqUrl="pwa-dev"
+            faqUrl="web-pwa#pwa"
           />
         </div>
         <div className={styles.wrap} ref={thirdMask}>
@@ -320,7 +332,7 @@ function About() {
               "Python",
               ".Net Core & C#",
             ]}
-            faqUrl="rest-api"
+            faqUrl="api#rest"
           />
           <AboutCard
             url="/images/about/graphql.png"
@@ -335,7 +347,7 @@ function About() {
               "Python",
               ".Net Core & C#",
             ]}
-            faqUrl="graphql-api"
+            faqUrl="api#graphql"
           />
         </div>
       </div>
@@ -514,20 +526,24 @@ function Contact() {
           <img src="/icons/mail.png" alt="email.png" />
         </a>
         <a
-          href="https://whatsapp.com"
+          href="https://wa.me/237620689433"
           target="_blank"
           rel="noopener noreferrer"
         >
           <img src="/icons/whatsapp.png" alt="whatsapp.png" />
         </a>
         <a
-          href="https://facebook.com"
+          href="https://facebook.com/AndmagGround"
           target="_blank"
           rel="noopener noreferrer"
         >
           <img src="/icons/facebook.png" alt="facebook.png" />
         </a>
-        <a href="https://twiter.com" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://twiter.com/AndmagGround"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <img src="/icons/twiter.png" alt="twiter.png" />
         </a>
       </div>

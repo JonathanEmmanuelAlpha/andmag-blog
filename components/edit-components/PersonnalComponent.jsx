@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { faShieldAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEnvelope,
+  faGear,
+  faShieldAlt,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
 import styles from "../../styles/account/edit.module.css";
@@ -77,6 +81,7 @@ export default function PersonnalComponent() {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          icon={faEnvelope}
         />
         <div className={styles.two_elt} style={{ marginTop: "20px" }}>
           <Input
@@ -86,6 +91,7 @@ export default function PersonnalComponent() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            icon={faGear}
           />
           <Input
             type={"password"}
@@ -94,6 +100,7 @@ export default function PersonnalComponent() {
             required
             value={passwordConf}
             onChange={(e) => setPasswordConf(e.target.value)}
+            icon={faGear}
           />
         </div>
         <div className={styles.pers_foot}>

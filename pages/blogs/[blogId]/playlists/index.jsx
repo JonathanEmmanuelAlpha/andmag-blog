@@ -71,7 +71,7 @@ export default function Playlists() {
               blogName={article.blogName}
               thumbnail={article.thumbnail}
               title={article.title}
-              reads={article.reads}
+              reads={article.readers}
               at={article.updateAt}
             />
           );

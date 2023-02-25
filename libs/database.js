@@ -17,5 +17,6 @@ const db = admin.firestore();
 
 export const articlesCollection = db.collection("articles");
 export const blogsCollection = db.collection("blogs");
+export const profilesCollection = db.collection("profiles");
 
 export { db };

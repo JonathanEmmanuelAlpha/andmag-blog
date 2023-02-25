@@ -32,8 +32,10 @@ export const profilesCollection = collection(database, "profiles");
 export const blogsCollection = collection(database, "blogs");
 export const articlesCollection = collection(database, "articles");
 export const trainningsCollection = collection(database, "trainnings");
+export const faqsCollection = collection(database, "faqs");
 
 export const AUTH_ERRORS = {
+  "auth/wrong-password": "Wrong password. Please verify your password",
   "auth/invalid-email": "Invalid email. Please enter a correct email",
   "auth/email-already-in-use": "Email already in use",
   "auth/email-already-exists":
@@ -55,6 +57,8 @@ export const AUTH_ERRORS = {
 };
 export function handleAuthErrors(error) {
   switch (error.code) {
+    case "auth/wrong-password":
+      return AUTH_ERRORS["auth/wrong-password"];
     case "auth/email-already-exists":
       return AUTH_ERRORS["auth/email-already-exists"];
     case "auth/email-already-in-use":
@@ -75,7 +79,7 @@ export function handleAuthErrors(error) {
       return AUTH_ERRORS["auth/network-request-failed"];
 
     default:
-      return "Internal server error. Please try again.";
+      return "Unknown error. Please try again.";
   }
 }
 
@@ -133,7 +137,7 @@ export function handleFirestoreErrors(error) {
       return FIRESTORE_ERRORS.unknown;
 
     default:
-      return "Internal server error. Please try again.";
+      return "Unknown error. Please try again.";
   }
 }
 
@@ -165,7 +169,7 @@ export function handleStorageErrors(error) {
       return STORAGE_ERRORS["storage/unknown"];
 
     default:
-      return "Internal server error. Please try again.";
+      return "Unknown error. Please try again.";
   }
 }
 

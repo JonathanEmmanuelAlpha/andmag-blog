@@ -1,26 +1,35 @@
 .container {
-  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
 }
 
-/*----------------------------------------------- MENU ----------------------------------------------*/
-.menu {
-  width: 300px;
-  height: calc(100vh - var(--headerHeight));
-  overflow-y: scroll;
-  padding: 15px;
-}
-.menu h2 {
-  font-size: 20px;
-  text-align: left;
-  font-family: ethnocentric;
-}
-
 /*----------------------------------------------- SECTION -------------------------------------------*/
 .section {
   width: calc(100% - 300px);
+  box-shadow: var(--shadow);
+  min-height: calc(100vh - var(--headerHeight));
+  background-color: var(--mainBgColor);
+  padding: 30px 15px;
+}
+
+section.add_section {
+  width: 800px;
+  margin: 0 auto;
+  padding: 30px 15px;
+}
+section.add_section > div {
+  width: 100%;
+  max-width: 100%;
+}
+
+.flex {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 /*----------------------------------------------- SCROLL BUTTON -----------------------------------------------------*/

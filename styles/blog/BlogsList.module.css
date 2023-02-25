@@ -96,3 +96,30 @@
     height: 80px;
   }
 }
+
+@media screen and (max-width: 830px) {
+  .bi_c {
+    width: 400px;
+    flex-direction: column;
+    height: max-content;
+  }
+  .bi_left {
+    width: 100%;
+    height: 250px;
+  }
+  .bi_left img {
+    width: 100px;
+    height: 100px;
+  }
+  .bi_right {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .bi_c {
+    width: 320px;
+    flex-direction: column;
+    height: max-content;
+  }
+}

@@ -15,9 +15,7 @@
   color: inherit;
   font-weight: 600;
   color: inherit;
-}
-.foot button[data-active="true"] {
-  color: var(--acountBorderColor);
+  transition: opacity 200ms ease-in-out;
 }
 .foot button svg {
   width: 20px;
@@ -31,4 +29,30 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+}
+
+button.clap:hover,
+button.like:hover {
+  opacity: 0.6;
+}
+button.like[data-active="true"] {
+  color: var(--linkColor);
+}
+button.clap[data-active="true"] {
+  color: var(--primColor);
+}
+
+button.com_stat {
+  cursor: default;
+}
+
+button.com_btn {
+  color: var(--linkColor);
+  font-size: 13px;
+  text-decoration: underline;
+  transition: color 200ms ease-in-out;
+  width: min-content;
+}
+button.com_btn:hover {
+  color: var(--secondary);
 }

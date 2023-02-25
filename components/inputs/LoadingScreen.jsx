@@ -7,7 +7,7 @@ export default function LoadingScreen() {
     <div className={styles.container}>
       <CircularProgressBar
         trackColor={"#333"}
-        indicatorColor="#f3f"
+        indicatorColor="var(--primColor)"
         size={50}
         trackWidth={5}
         indicatorWidth={5}

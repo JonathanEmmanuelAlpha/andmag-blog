@@ -1,32 +1,40 @@
 import {
   addDoc,
+  arrayRemove,
   arrayUnion,
   collection,
   doc,
   getDoc,
   getDocs,
+  increment,
   limit,
   onSnapshot,
   orderBy,
   query,
   serverTimestamp,
+  setDoc,
   startAfter,
   updateDoc,
   where,
 } from "firebase/firestore";
 import { useRouter } from "next/router";
 import React, { useEffect, useReducer, useState } from "react";
+import { showErrorToast } from "../components/skeleton-layout/ToasComponent";
 import { useAuth } from "../context/AuthProvider";
-import { trainningsCollection } from "../firebase";
+import { useTargetBlog } from "../context/BlogProvider";
+import {
+  handleFirestoreErrors,
+  profilesCollection,
+  trainningsCollection,
+} from "../firebase";
 
 const ACTIONS = {
   LOAD_CURRENT: "LOAD_CURRENT",
-  LOAD_CURRENT_QUESTION: "LOAD_CURRENT_QUESTION",
+  LOAD_QUESTIONS: "LOAD_QUESTIONS",
   RESET_ANSWERS: "RESET_ANSWERS",
   LOAD_ANSWERS: "LOAD_ANSWERS",
-  GET_STATS: "GET_STATS",
-  GET_PARTICIPANT: "GET_PARTICIPANT",
-  SET_TIME_MANAGER: "SET_TIME_MANAGER",
+  RESET_QUESTION_DONE: "RESET_QUESTION_DONE",
+  ADD_QUESTION_DONE: "ADD_QUESTION_DONE",
 };
 
 function reducer(state, { type, payload }) {
@@ -49,12 +57,12 @@ function reducer(state, { type, payload }) {
         },
       };
 
-    case ACTIONS.LOAD_CURRENT_QUESTION:
+    case ACTIONS.LOAD_QUESTIONS:
       return {
         ...state,
-        question: {
+        questions: {
           loading: false,
-          doc: payload.question,
+          docs: [...new Set([...state.questions.docs, payload.question])],
         },
       };
 
@@ -67,31 +75,16 @@ function reducer(state, { type, payload }) {
         },
       };
 
-    case ACTIONS.GET_STATS:
+    case ACTIONS.RESET_QUESTION_DONE:
       return {
         ...state,
-        stats: {
-          loading: false,
-          nbQuestions: payload.nb,
-          passed: payload.current
-            ? [...state.stats.passed, payload.current]
-            : state.stats.passed,
-        },
+        questionsDone: [],
       };
 
-    case ACTIONS.GET_PARTICIPANT:
+    case ACTIONS.ADD_QUESTION_DONE:
       return {
         ...state,
-        participant: payload.participant,
-      };
-
-    case ACTIONS.SET_TIME_MANAGER:
-      return {
-        ...state,
-        timeManager: {
-          timeElapsed: payload.timeElapsed,
-          timeRemaining: payload.timeRemaining,
-        },
+        questionsDone: [...state.questionsDone, payload.item],
       };
 
     default:
@@ -103,12 +96,11 @@ export default function useTrainning(
   blogId,
   docLimit = 20,
   pageNumber,
-  trainningRef
+  trainningRef,
+  currentQuestionId
 ) {
   const router = useRouter();
-  const { currentUserProfile } = useAuth();
-
-  const [currentQuestionRef, setCurrentQuestionRef] = useState();
+  const { userProfile, loadingProfile } = useAuth();
 
   const [state, dispatch] = useReducer(reducer, {
     trainnings: {
@@ -119,24 +111,15 @@ export default function useTrainning(
       loading: true,
       doc: undefined,
     },
-    question: {
+    questions: {
       loading: true,
-      doc: undefined,
-    },
-    stats: {
-      loading: true,
-      nbQuestions: undefined,
-      passed: [],
+      docs: [],
     },
     answers: {
       loading: true,
       docs: [],
     },
-    participant: undefined,
-    timeManager: {
-      timeElapsed: undefined,
-      timeRemaining: undefined,
-    },
+    questionsDone: [],
   });
 
   const [loading, setLoading] = useState(true);
@@ -144,125 +127,77 @@ export default function useTrainning(
   const [lastDoc, setLastDoc] = useState(null);
   const [hasMore, setHasMore] = useState(true);
 
-  /*function updateScore() {
-    if(question.doc.)
-  }*/
-
-  function goToNextQuestion() {
-    if (!currentQuestionRef) return;
-
-    const next = query(
-      collection(trainningsCollection, trainningRef, "questions"),
-      orderBy("createAt", "asc"),
-      startAfter(currentQuestionRef),
-      limit(1)
-    );
-
-    getDocs(next).then((snapshot) => {
-      snapshot.forEach((doc) => {
-        dispatch({
-          type: ACTIONS.LOAD_CURRENT_QUESTION,
-          payload: { question: { id: doc.id, ...doc.data() } },
-        });
-
-        dispatch({
-          type: ACTIONS.GET_STATS,
-          payload: {
-            nb: state.stats.nbQuestions,
-            current: doc.id,
-          },
-        });
-
-        setCurrentQuestionRef(snapshot.docs[snapshot.docs.length - 1]);
-      });
+  function getSkiped() {
+    let sum = 0;
+    state.questionsDone.forEach((done, index) => {
+      if (done.answer === null) sum += 1;
     });
+    return sum;
   }
 
-  function sendAnswer(answer) {
-    const participant = {
-      ...state.participant,
-      questionsDone: arrayUnion({
-        questionId: state.question.doc.id,
-        answer: answer,
-      }),
-      score: null,
-      time: state.timeManager.timeElapsed,
-    };
-    updateParticipant(state.participant.id, participant);
-
-    return goToNextQuestion();
+  function getAnswers() {
+    let sum = 0;
+    state.questionsDone.forEach((done, index) => {
+      if (typeof done.answer === "string") sum += 1;
+    });
+    return sum;
   }
 
-  function skipQuestion() {
-    const participant = {
-      ...state.participant,
-      questionsDone: arrayUnion({
-        questionId: state.question.doc.id,
-        answer: null,
-      }),
-      score: null,
-      time: state.timeManager.timeElapsed,
-    };
-
-    updateParticipant(state.participant.id, participant);
-
-    return goToNextQuestion();
+  function getCorrectAnswers() {
+    let sum = 0;
+    state.questionsDone.forEach((done, index) => {
+      if (done.answer === done.questionCorrectAnswer) sum += 1;
+    });
+    return sum;
   }
 
-  function newParticipant() {
-    let exist = false;
-
-    getDocs(
-      collection(trainningsCollection, trainningRef, "participants")
-    ).then((snapshot) => {
-      snapshot.forEach((doc) => {
-        if (doc.data().userId === currentUserProfile.userId) {
-          exist = true;
-          const participant = {
-            id: doc.id,
-            score: null,
-            time: null,
-            createAt: serverTimestamp(),
-            updateAt: serverTimestamp(),
-            ...doc.data(),
-          };
-          return updateParticipant(doc.id, participant);
+  async function finilizeTest() {
+    if (!loadingProfile && !userProfile) {
+      router.replace(`/account/login?next${router.asPath}`);
+      return;
+    }
+    try {
+      await setDoc(
+        doc(
+          profilesCollection,
+          userProfile.id,
+          "tests",
+          state.currentTrainning.doc.id
+        ),
+        {
+          score: Math.round(
+            (getCorrectAnswers() / state.currentTrainning.doc.questionsNumber) *
+              100
+          ),
+          updateAt: serverTimestamp(),
         }
-      });
-      if (!exist) {
-        const participant = {
-          userId: currentUserProfile.userId,
-          pseudo: currentUserProfile.pseudo,
-          pp: currentUserProfile.profilePicture,
-          createAt: serverTimestamp(),
-          score: null,
-          time: null,
-        };
-
-        addDoc(
-          collection(trainningsCollection, trainningRef, "participants"),
-          participant
-        ).then((doc) => {
-          dispatch({
-            type: ACTIONS.GET_PARTICIPANT,
-            payload: { participant: { id: doc.id, ...doc.data() } },
-          });
-        });
-      }
-    });
+      );
+    } catch (error) {
+      return showErrorToast(handleFirestoreErrors(error));
+    }
   }
 
-  function updateParticipant(docRef, participant) {
-    updateDoc(
-      doc(trainningsCollection, trainningRef, "participants", docRef),
-      participant
-    );
+  function sendAnswer(answer, question) {
+    const newItem = {
+      questionCorrectAnswer: question.correctAnswer,
+      answer: answer,
+    };
 
     dispatch({
-      type: ACTIONS.GET_PARTICIPANT,
-      payload: {
-        participant: participant,
-      },
+      type: ACTIONS.ADD_QUESTION_DONE,
+      payload: { item: newItem },
+    });
+  }
+
+  function skipQuestion(question) {
+    const newItem = {
+      questionCorrectAnswer: question.correctAnswer,
+      answer: null,
+    };
+
+    dispatch({
+      type: ACTIONS.ADD_QUESTION_DONE,
+      payload: { item: newItem },
     });
   }
 
@@ -297,7 +232,7 @@ export default function useTrainning(
         setLastDoc(last);
       })
       .catch((error) => {
-        console.log("error: ", error);
+        return showErrorToast(handleFirestoreErrors(error));
       });
   }
 
@@ -323,103 +258,98 @@ export default function useTrainning(
           payload: { trainning: { id: result.id, ...result.data() } },
         });
       })
-      .catch((error) => console.log("Error: ", error));
+      .catch((error) => {
+        return showErrorToast(handleFirestoreErrors(error));
+      });
   }, [trainningRef]);
 
-  /** Get trainning first question and create/update participant */
+  /** Get trainning questions */
   useEffect(() => {
-    if (!trainningRef || !currentUserProfile) return;
+    if (!trainningRef || loadingProfile || !userProfile) return;
 
-    const first = query(
+    const q = query(
       collection(trainningsCollection, trainningRef, "questions"),
-      orderBy("createAt", "asc"),
-      limit(1)
+      orderBy("createAt", "asc")
     );
 
-    getDocs(first).then((snapshot) => {
-      snapshot.forEach((doc) => {
-        setCurrentQuestionRef(doc.ref);
-        dispatch({
-          type: ACTIONS.LOAD_CURRENT_QUESTION,
-          payload: { question: { id: doc.id, ...doc.data() } },
+    getDocs(q)
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          dispatch({
+            type: ACTIONS.LOAD_QUESTIONS,
+            payload: { question: { id: doc.id, ...doc.data() } },
+          });
         });
+      })
+      .catch((error) => {
+        return showErrorToast(handleFirestoreErrors(error));
       });
 
-      dispatch({
-        type: ACTIONS.GET_STATS,
-        payload: { nb: state.stats.nbQuestions, current: doc.id },
-      });
-
-      setCurrentQuestionRef(snapshot.docs[snapshot.docs.length - 1]);
-
-      newParticipant();
+    dispatch({
+      type: ACTIONS.RESET_QUESTION_DONE,
     });
-  }, [trainningRef, currentUserProfile]);
+  }, [trainningRef, loadingProfile, userProfile]);
 
   /** Get all answers off current question */
   useEffect(() => {
-    if (!state?.question?.doc?.id || !trainningRef) return;
+    if (!currentQuestionId || !trainningRef) return;
+
+    dispatch({
+      type: ACTIONS.RESET_ANSWERS,
+    });
 
     const q = query(
       collection(
         trainningsCollection,
         trainningRef,
         "questions",
-        state.question.doc.id,
+        currentQuestionId,
         "answers"
       ),
       orderBy("createAt", "asc")
     );
-    getDocs(q).then((snap) => {
-      snap.forEach((doc) => {
-        dispatch({
-          type: ACTIONS.LOAD_ANSWERS,
-          payload: { answer: { id: doc.id, ...doc.data() } },
+    getDocs(q)
+      .then((snap) => {
+        snap.forEach((doc) => {
+          dispatch({
+            type: ACTIONS.LOAD_ANSWERS,
+            payload: { answer: { id: doc.id, ...doc.data() } },
+          });
         });
+      })
+      .catch((error) => {
+        return showErrorToast(handleFirestoreErrors(error));
       });
-    });
-  }, [state?.question?.doc?.id, trainningRef]);
+  }, [currentQuestionId, trainningRef]);
 
-  /** Get trainning questions number */
+  /** Look for test last question */
   useEffect(() => {
-    if (!trainningRef) return;
+    if (
+      state.currentTrainning.doc === undefined ||
+      state.currentTrainning.doc.questionsNumber !== state.questionsDone.length
+    )
+      return;
 
-    const q = query(
-      collection(trainningsCollection, trainningRef, "questions")
-    );
-
-    getDocs(q).then((snapshot) => {
-      dispatch({
-        type: ACTIONS.GET_STATS,
-        payload: { nb: snapshot.docs.length, current: null },
-      });
-    });
-  }, [trainningRef]);
-
-  /** Load timer */
-  useEffect(() => {
-    if (!state.participant) return;
-
-    dispatch({
-      type: ACTIONS.SET_TIME_MANAGER,
-      payload: {
-        timeElapsed: 0,
-        timeRemaining: state.currentTrainning.doc.time * 60,
-      },
-    });
-  }, [state.participant]);
+    finilizeTest();
+  }, [state.questionsDone, state.currentTrainning.doc]);
 
   return {
     trainnings: docs,
     loading: loading,
     hasMore: hasMore,
     currentTrainning: state.currentTrainning,
-    question: state.question,
-    stats: state.stats,
-    timeManager: state.timeManager,
+    questions: state.questions,
     answers: state.answers,
-    participant: state.participant,
+    result: {
+      answers: getAnswers(),
+      skiped: getSkiped(),
+      correctAnswers: getCorrectAnswers(),
+    },
+    hasFinish:
+      state.currentTrainning.doc !== undefined &&
+      state.currentTrainning.doc.questionsNumber === state.questionsDone.length,
     sendAnswer,
     skipQuestion,
+    finilizeTest,
   };
 }

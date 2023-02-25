@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { blogsCollection } from "../firebase";
 
 export default function useBlogFollowers(blogId) {
-  const [followers, setFollowers] = useState([]);
+  const [followers, setFollowers] = useState();
 
   useEffect(() => {
     if (!blogId) return;

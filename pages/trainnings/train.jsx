@@ -1,21 +1,27 @@
 import { useRouter } from "next/router";
 import React from "react";
-import LoadingScreen from "../../../components/LoadingScreen";
-import TestsContainer, { QCMCard } from "../../../components/TestsContainer";
-import useTrainning from "../../../hooks/useTrainning";
+import LoadingScreen from "../../components/inputs/LoadingScreen";
+import TestsContainer, {
+  QCMCard,
+  TestResultCard,
+} from "../../components/trainning/TestsContainer";
+import { useTrain } from "../../context/TrainProvider";
+import useIsAurh from "../../hooks/useIsAurh";
+import useTrainning from "../../hooks/useTrainning";
 
 export default function trainning() {
-  const router = useRouter();
-
+  useIsAurh();
   const {
     currentTrainning,
-    question,
-    stats,
-    timeManager,
+    questions,
     answers,
+    questionId,
+    hasFinish,
+    setQuestionId,
     sendAnswer,
     skipQuestion,
-  } = useTrainning();
+    finilizeTest,
+  } = useTrain();
 
   return (
     <TestsContainer
@@ -24,17 +30,31 @@ export default function trainning() {
     >
       {currentTrainning.loading ? (
         <LoadingScreen />
+      ) : questions.loading ? (
+        <LoadingScreen />
       ) : (
-        <QCMCard
-          trainning={currentTrainning.doc}
-          question={question}
-          stats={stats}
-          timeManager={timeManager}
-          asnwers={answers}
-          onSkip={() => skipQuestion()}
-          onSendAnswer={(answer) => sendAnswer(answer)}
-        />
+        questions.docs.map((question, index) => {
+          return (
+            <QCMCard
+              key={index}
+              active={question.id === questionId}
+              qIndex={index + 1}
+              trainning={currentTrainning.doc}
+              question={question}
+              asnwers={answers}
+              onSkip={(time) => {
+                skipQuestion(question, time);
+                setQuestionId(questions.docs[index + 1]?.id);
+              }}
+              onSendAnswer={(answer, time) => {
+                sendAnswer(answer, question, time);
+                setQuestionId(questions.docs[index + 1]?.id);
+              }}
+            />
+          );
+        })
       )}
+      {currentTrainning.doc && hasFinish && <TestResultCard />}
     </TestsContainer>
   );
 }

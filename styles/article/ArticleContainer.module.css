@@ -21,11 +21,14 @@
   min-width: 320px;
   margin-top: 20px;
   margin-left: 50px;
-  height: calc(60vh);
+  height: calc(70vh);
   background-color: var(--overColor);
   overflow-x: hidden;
   overflow-y: scroll;
   padding: 15px;
+}
+.playlist[data-device="mobile"] {
+  display: none;
 }
 .playlist_info {
   padding: 10px;
@@ -59,6 +62,7 @@
 .section {
   width: 700px;
   background-color: var(--mainBgColor);
+  padding-bottom: var(--headerHeight);
 }
 
 ._post_end {
@@ -181,13 +185,6 @@
   border-radius: 5px;
   color: inherit;
 }
-.btns button[data-like-statut="LIKE_INCREASED"],
-.btns button[data-dislike-statut="DISLIKE_INCREASED"] {
-  color: var(--primColor);
-}
-.btns button[data-favorite-statut="FAVORITE_INCREASED"] {
-  color: var(--primColor);
-}
 
 .btns button svg {
   width: 22px;
@@ -201,7 +198,7 @@
 .header .action {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   border: 1.2px solid var(--lightColor);
   border-left: none;
   border-right: none;
@@ -230,7 +227,28 @@
   font-weight: 600;
 }
 .header .action .right {
-  margin-left: 30px;
+  margin-left: 15px;
+}
+
+.like_btn,
+.clap_btn,
+.favorite_btn {
+  transition: opacity 200ms ease-in-out;
+}
+.like_btn:hover,
+.clap_btn:hover,
+.favorite_btn:hover {
+  opacity: 0.6;
+}
+
+.like_btn[data-active="true"] {
+  color: var(--linkColor);
+}
+.clap_btn[data-active="true"] {
+  color: var(--primColor);
+}
+.favorite_btn[data-active="true"] {
+  color: var(--accountAlertColor);
 }
 
 /*---------------------------------- PLAY LIST ---------------------------------*/
@@ -238,7 +256,7 @@
   position: relative;
   width: 600px;
   margin: 20px;
-  background-color: var(--mainBgColor);
+  background-color: var(--overColor);
   border-radius: 5px;
   box-shadow: var(--shadow);
 }
@@ -316,6 +334,21 @@
   color: var(--lightColor);
 }
 
+@media screen and (max-width: 680px) {
+  .playlist_wrapper {
+    width: 320px;
+    margin: 0 auto;
+  }
+  .playlist_wrapper .head {
+    flex-direction: column;
+    height: max-content;
+  }
+  .playlist_wrapper .head .thumb {
+    height: 170px;
+    width: 100%;
+  }
+}
+
 /*--------------------------------------- COMMENT ------------------------------------*/
 .com_show {
   width: 100%;
@@ -323,29 +356,115 @@
   margin: 50px 0 20px 0;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
+  border-top: 1.5px solid var(--lightColor);
+  border-bottom: 1.5px solid var(--lightColor);
 }
 .com_show > span {
-  font-size: 17px;
   color: var(--lightColor);
   font-weight: 600;
 }
-
+.com_show > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+.com_show > div svg {
+  width: 25px;
+  height: 25px;
+}
 .com_show button {
-  padding: 7px 10px;
-  border: 1.5px solid var(--linkColor);
-  border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  color: var(--linkColor);
+  color: var(--primColor);
   margin-left: 20px;
+  font-size: 15px;
+  border: none;
+  font-weight: 600;
 }
 .com_show svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
 }
 .com_show span {
   margin-right: 5px;
+}
+
+@media screen and (max-width: 1200px) {
+  .playlist {
+    display: none;
+  }
+  .playlist[data-device="mobile"] {
+    display: block;
+    width: 100%;
+    margin: 0;
+    height: 88px;
+  }
+  .playlist[data-device="mobile"]::-webkit-scrollbar {
+    display: none;
+    width: 0;
+  }
+  .playlist[data-mobile-active="true"] {
+    animation: toggle-playlist 0.25s linear forwards;
+  }
+  .playlist_info {
+    position: relative;
+  }
+  .toggle_btn {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    color: var(--primColor);
+    font-size: 14px;
+    font-weight: 500;
+    position: absolute;
+    top: 5px;
+    right: 2px;
+  }
+  .toggle_btn svg {
+    width: 16px;
+    height: 16px;
+    margin-left: 3px;
+  }
+
+  @keyframes toggle-playlist {
+    0% {
+      height: 88px;
+    }
+
+    100% {
+      height: 70vh;
+    }
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .section {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .header .infos h1 {
+    font-size: 17px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .header .action a.left div span {
+    font-size: 12px;
+  }
+  .header .action a.left div h2 {
+    font-size: 14px;
+  }
+  .header .action .right > div button {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
 }

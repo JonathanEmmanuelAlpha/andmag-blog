@@ -1,13 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useState } from "react";
 import styles from "../../styles/article/ArticleContainer.module.css";
 import { ArticleCardThin } from "../blog/ArticleCard";
 import toTimeString from "../../helpers/toTimeString";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faHeart,
+  faAngleDown,
+  faAngleUp,
   faPlayCircle,
-  faShare,
 } from "@fortawesome/free-solid-svg-icons";
 import { CircleSeparator } from "./ArticleContainer";
 import Link from "next/link";
@@ -15,16 +14,47 @@ import AwesomeLink from "../links/AwesomeLink";
 import EditLink from "../links/EditLink";
 import { useRouter } from "next/router";
 import { useTargetBlog } from "../../context/BlogProvider";
+import ShareButton from "../actions/ShareButton";
+import { domainName } from "../links/AwesomeLink.type";
 
-export function PlayListFull({ playlist, articles, totalReaders }) {
+export function PlayListFull({
+  playlist,
+  articles,
+  totalReaders,
+  mobileDevice,
+}) {
+  const [toggle, setToggle] = useState(false);
+
   return (
-    <div className={styles.playlist}>
+    <div
+      className={styles.playlist}
+      data-device={mobileDevice ? "mobile" : "computer"}
+      data-mobile-active={toggle && mobileDevice}
+    >
       <div className={styles.playlist_info}>
         <h2>{playlist.name}</h2>
         <div>
           <span>{articles.length} articles</span>
           <span>{totalReaders} lecteurs</span>
         </div>
+        {mobileDevice && (
+          <button
+            className={styles.toggle_btn}
+            onClick={() => setToggle(!toggle)}
+          >
+            {!toggle ? (
+              <>
+                <span>Afficher</span>
+                <FontAwesomeIcon icon={faAngleDown} />
+              </>
+            ) : (
+              <>
+                <span>Masquer</span>
+                <FontAwesomeIcon icon={faAngleUp} />
+              </>
+            )}
+          </button>
+        )}
       </div>
       <div className={styles.playlist_list}>
         {articles.map((article, index) => (
@@ -41,12 +71,6 @@ export function PlayListFull({ playlist, articles, totalReaders }) {
     </div>
   );
 }
-PlayListFull.propTypes = {
-  post: PropTypes.any.isRequired,
-  playlist: PropTypes.any.isRequired,
-  playlistPosts: PropTypes.any.isRequired,
-  totalReaders: PropTypes.number,
-};
 
 export function PlayList({ blog, playlist, totalReaders }) {
   const router = useRouter();
@@ -86,14 +110,34 @@ export function PlayList({ blog, playlist, totalReaders }) {
             </span>
           </div>
           <div className={styles.btns}>
-            <button data-favorite-statut>
-              <FontAwesomeIcon icon={faHeart} />
-              <span>Favoris</span>
-            </button>
-            <button>
-              <FontAwesomeIcon icon={faShare} />
-              <span>Partarger</span>
-            </button>
+            <ShareButton
+              generateOnClick={true}
+              metas={[
+                { property: 'property="og:title"', value: playlist.name },
+                {
+                  property: 'property="og:description"',
+                  value: playlist.description,
+                },
+                {
+                  property: 'property="og:url"',
+                  value: `${domainName}/blogs/${blog.id}/playlists?list=${playlist.id}`,
+                },
+                { property: 'property="og:image"', value: playlist.thumbnail },
+                { property: 'property="twitter:title"', value: playlist.name },
+                {
+                  property: 'property="twitter:description"',
+                  value: playlist.description,
+                },
+                {
+                  property: 'property="twitter:url"',
+                  value: `${domainName}/blogs/${blog.id}/playlists?list=${playlist.id}`,
+                },
+                {
+                  property: 'property="twitter:image"',
+                  value: playlist.thumbnail,
+                },
+              ]}
+            />
           </div>
           <div className={styles.playlist_link}>
             <AwesomeLink
@@ -110,8 +154,3 @@ export function PlayList({ blog, playlist, totalReaders }) {
     </div>
   );
 }
-PlayList.propTypes = {
-  blog: PropTypes.any.isRequired,
-  playlist: PropTypes.any.isRequired,
-  totalReaders: PropTypes.number,
-};

@@ -31,23 +31,25 @@ export default function Blog() {
         <LoadingScreen />
       ) : (
         <>
-          {articles.map((article, index) => {
-            return (
-              <ArticleCard
-                key={article.id}
-                blogId={article.blogId}
-                createBy={article.createBy}
-                articleId={article.id}
-                blogUrl={`/blogs/${article.blogId}`}
-                blogLogo={article.blogLogo}
-                blogName={article.blogName}
-                thumbnail={article.thumbnail}
-                title={article.title}
-                reads={article.reads}
-                at={article.updateAt}
-              />
-            );
-          })}
+          <div className={styles.list}>
+            {articles.map((article, index) => {
+              return (
+                <ArticleCard
+                  key={article.id}
+                  blogId={article.blogId}
+                  createBy={article.createBy}
+                  articleId={article.id}
+                  blogUrl={`/blogs/${article.blogId}`}
+                  blogLogo={article.blogLogo}
+                  blogName={article.blogName}
+                  thumbnail={article.thumbnail}
+                  title={article.title}
+                  reads={article.readers}
+                  at={article.updateAt}
+                />
+              );
+            })}
+          </div>
           <div ref={divRef} />
         </>
       )}
