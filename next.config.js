@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   i18n: {
     locales: ["en", "fr"],
-    defaultLocale: "en",
+    defaultLocale: "fr",
     localeDetection: false,
   },
   images: {
@@ -13,7 +13,7 @@ const nextConfig = {
 
 module.exports = nextConfig;
 
-/*const withPWA = require("next-pwa");
+const withPWA = require("next-pwa");
 module.exports = withPWA({
   pwa: {
     dest: "public",
@@ -21,4 +21,4 @@ module.exports = withPWA({
     disable: process.env.NODE_ENV === "development",
     skipWaiting: true,
   },
-});*/
+});
