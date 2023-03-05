@@ -1,0 +1,32 @@
+{
+    "theme_color": "#fcc076",
+    "background_color": "#1e2227",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/",
+    "name": "Andmag Ground",
+    "short_name": "Andmag Ground",
+    "description": "Andmag ground est une entreprise de prestation de services ax\u00e9s sur le g\u00e9nie logiciel et la conception UI/UX. Nous offrons donc \u00e0 nos clients la possibilit\u00e9s de cibler un large \u00e9ventail de client, augmentant ainsi leur productivit\u00e9 et leur rentabilit\u00e9.",
+    "icons": [
+        {
+            "src": "/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

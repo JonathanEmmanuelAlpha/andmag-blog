@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  env: {
-    reCaptchatSiteKey: "6LcbbQIjAAAAACfc-yfMIQYg7TzpjLmg4PqM_ySx",
-  },
   i18n: {
     locales: ["en", "fr"],
     defaultLocale: "en",
@@ -15,3 +12,13 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
+
+/*const withPWA = require("next-pwa");
+module.exports = withPWA({
+  pwa: {
+    dest: "public",
+    register: true,
+    disable: process.env.NODE_ENV === "development",
+    skipWaiting: true,
+  },
+});*/

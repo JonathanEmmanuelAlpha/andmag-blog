@@ -294,7 +294,7 @@ body {
 
   --tesnAnswerColor: #24cba3;
 
-  --shadow: 0 0.15rem 1.25rem 0 rgb(26, 26, 34);
+  --shadow: 0 0.1rem 1.5rem 0 rgba(26, 26, 34, 0.9);
   --thinShadow: 0 0.05rem 1rem 0 rgba(19, 19, 23, 0.15);
   --lightShadow: var(--thinShadow);
   --bottomShadow: 0 5px 8px -8px #00000075;

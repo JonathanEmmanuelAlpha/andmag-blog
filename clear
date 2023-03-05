@@ -1,0 +1,29 @@
+[33mcommit ba8fd79750a5797c8cce2c29cef96a944bf5cded[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: jonathan emmanuel tonye <emmanueljonathant453@gmail.com>
+Date:   Sat Feb 25 17:46:51 2023 +0100
+
+    Andmag-ground final project
+
+[33mcommit c2aa5700989de53105cdd2edbca02dc6c35e7978[m[33m ([m[1;31morigin/faq-feature[m[33m, [m[1;32mfaq-feature[m[33m)[m
+Author: jonathan emmanuel tonye <emmanueljonathant453@gmail.com>
+Date:   Wed Nov 30 20:30:59 2022 +0100
+
+    init faq section off our application
+
+[33mcommit 7c6572f7f9719bc8fecd2141ae7c87abed80ffe0[m[33m ([m[1;31morigin/article-feature[m[33m, [m[1;32marticle-feature[m[33m)[m
+Author: jonathan emmanuel tonye <emmanueljonathant453@gmail.com>
+Date:   Mon Nov 28 09:48:50 2022 +0100
+
+    add responsive design to home page
+
+[33mcommit 94ce73c8ffb427008fe0be478f4960bf567d5e8c[m
+Author: jonathan emmanuel tonye <emmanueljonathant453@gmail.com>
+Date:   Tue Nov 22 14:55:08 2022 +0100
+
+    switched [articleId] to server side rendering and custum hook for blog followers
+
+[33mcommit ef9445c96e6ca06bc793a06fa036d61969f481db[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m
+Author: jonathan emmanuel tonye <emmanueljonathant453@gmail.com>
+Date:   Mon Nov 21 14:52:10 2022 +0100
+
+    Initial commit

@@ -3,7 +3,6 @@ import { getAnalytics } from "firebase/analytics";
 import { collection, getFirestore } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { getAuth } from "firebase/auth";
-import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { v4 } from "uuid";
 
 const app = initializeApp({
@@ -14,11 +13,6 @@ const app = initializeApp({
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-});
-
-export const AppCheck = initializeAppCheck(app, {
-  provider: new ReCaptchaV3Provider(process.env.reCaptchatSiteKey),
-  isTokenAutoRefreshEnabled: true,
 });
 
 export const auth = getAuth(app);
@@ -34,6 +28,7 @@ export const articlesCollection = collection(database, "articles");
 export const trainningsCollection = collection(database, "trainnings");
 export const faqsCollection = collection(database, "faqs");
 
+//#region HELPERS
 export const AUTH_ERRORS = {
   "auth/wrong-password": "Wrong password. Please verify your password",
   "auth/invalid-email": "Invalid email. Please enter a correct email",
@@ -172,7 +167,9 @@ export function handleStorageErrors(error) {
       return "Unknown error. Please try again.";
   }
 }
+//#endregion
 
+//#region UPLOAD TASKS
 /**
  * @param {String} destination
  * @param {Blob} file
@@ -231,3 +228,4 @@ export const multiFileUpload = async function (
 
   return Promise.all(promises);
 };
+//#endregion

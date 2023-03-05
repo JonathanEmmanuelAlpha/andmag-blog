@@ -1,4 +1,5 @@
 import {
+  documentId,
   getDocs,
   limit,
   orderBy,
@@ -7,9 +8,9 @@ import {
   where,
 } from "firebase/firestore";
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { articlesCollection } from "../firebase";
+import { articlesCollection, blogsCollection } from "../firebase";
 
-export default function useBlogSearch(searchQuery, docLimit = 15, pageNumber) {
+export default function useBlogSearch(searchQuery, docLimit = 9, pageNumber) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -64,19 +65,17 @@ export default function useBlogSearch(searchQuery, docLimit = 15, pageNumber) {
         setLastDoc(last);
       })
       .catch((error) => {
-        console.log("error: ", error);
         setError(error.message);
       });
   }
 
+  /** Listening for more documents */
   useEffect(() => {
     if (!pageNumber) return;
     setLoading(true);
     setError(null);
 
     goToNextPage();
-
-    setLoading(false);
   }, [pageNumber, searchQuery]);
 
   return { loading, docs, hasMore, error };

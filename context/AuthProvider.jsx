@@ -35,6 +35,7 @@ export default function AuthProvider({ children }) {
   const [userProfile, setUserProfile] = useState();
   const [loadingProfile, setLoadingProfile] = useState(true);
 
+  /** Listening for auth state change */
   useEffect(() => {
     const unsubcriber = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);

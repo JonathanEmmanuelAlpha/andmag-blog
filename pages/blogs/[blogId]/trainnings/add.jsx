@@ -69,7 +69,7 @@ export default function trainning() {
     setError("");
     setSuccess("");
 
-    if (target !== "public" || target !== "community") {
+    if (target !== "public" && target !== "community") {
       return setError("Portée de session invalide");
     }
     if (title.length > 30 || title.length < 10) {
@@ -82,10 +82,13 @@ export default function trainning() {
         "La description ne doit pas contenir moins de 20 ou plus de 120 charactères"
       );
     }
-    if (time > 60 || time < 2) {
+    if (time > 60 || time < 1) {
       return setError(
-        "La durée du test doit être comprise entre 02 et 60 minutes"
+        "La durée du test doit être comprise entre 01 et 60 minutes"
       );
+    }
+    if (questionsNumber < 1) {
+      return setError("Le test doit avoir au moins 01 question");
     }
 
     const trainning = {
@@ -181,7 +184,7 @@ export default function trainning() {
           title={"Nouveau test"}
           onSubmit={async (event) => {
             event.preventDefault();
-            if (currentTrainning && currentTrainning.doc.id) {
+            if (currentTrainning && currentTrainning.doc) {
               return await update();
             }
             return await handleSubmit();
@@ -208,7 +211,7 @@ export default function trainning() {
 
           <div className={styles.two_items}>
             <Input
-              label="Durée en minutes"
+              label="Durée unitaire (en min)"
               required
               maxChar={2}
               type="number"

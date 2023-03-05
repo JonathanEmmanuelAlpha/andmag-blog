@@ -1,4 +1,5 @@
 import {
+  documentId,
   getDocs,
   limit,
   orderBy,
@@ -7,9 +8,9 @@ import {
   where,
 } from "firebase/firestore";
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { articlesCollection } from "../firebase";
+import { articlesCollection, blogsCollection } from "../firebase";
 
-export default function useArticles(blogId, docLimit = 25, pageNumber) {
+export default function useArticles(blogId, docLimit = 9, pageNumber) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 

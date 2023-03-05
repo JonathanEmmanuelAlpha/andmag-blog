@@ -21,7 +21,7 @@ function Articles() {
     error,
     hasMore,
     loading,
-  } = useArticlesSearch(searchQuery, 15, pageNumber);
+  } = useArticlesSearch(searchQuery, 9, pageNumber);
 
   const divRef = useRef();
   useOnScreen("50px", divRef, () =>
@@ -57,8 +57,8 @@ function Articles() {
                   createBy={article.createBy}
                   articleId={article.id}
                   blogUrl={`/blogs/${article.blogId}`}
-                  blogLogo={article.blogLogo}
-                  blogName={article.blogName}
+                  blogLogo={article.blog?.logo}
+                  blogName={article.blog?.name}
                   thumbnail={article.thumbnail}
                   title={article.title}
                   reads={article.readers}

@@ -57,7 +57,6 @@ export default function NewArticle() {
     setDescription(article.description);
     setPlaylist((prev) => {
       const list = playlists.find((art) => art.id === article.playlist);
-      console.log("Listes: ", playlists);
       if (list) return list.name;
       return prev;
     });

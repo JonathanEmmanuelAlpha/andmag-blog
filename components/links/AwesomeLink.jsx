@@ -12,7 +12,6 @@ export default function AwesomeLink({
   url = AwesomeLinkProps.url,
   custum = AwesomeLinkProps.custum,
   reverse = AwesomeLinkProps.reverse,
-  color,
   handleClick,
   target,
   rel,

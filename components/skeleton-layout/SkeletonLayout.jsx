@@ -10,7 +10,6 @@ import {
   faSignOut,
   faStar,
   faUserEdit,
-  faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
 import Header from "../header/Header";
 
@@ -35,14 +34,6 @@ function SideBar({ open }) {
               text="Editer mon profile"
               url="/account/profile-edit"
               icon={faUserEdit}
-              direction="horizontal"
-            />
-          </li>
-          <li>
-            <AwesomeLink
-              text="Abonnements"
-              url="/settings/subscriptions"
-              icon={faUserGroup}
               direction="horizontal"
             />
           </li>

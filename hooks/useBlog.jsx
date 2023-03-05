@@ -180,6 +180,7 @@ export default function useBlog(
         description,
         bannerRef,
         logoRef,
+        adminId,
         tags: `${description} ${name}`.split(" "),
         banner: bannerUrl,
         logo: logoUrl,
@@ -194,6 +195,7 @@ export default function useBlog(
 
       router.push(`/blogs/${result.id}`);
     } catch (error) {
+      console.log("Blog err: ", error);
       setError((prev) => {
         const store = handleFirestoreErrors(error);
         const storage = handleStorageErrors(error);

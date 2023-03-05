@@ -446,17 +446,19 @@ export default function Questions() {
               Question {currentQuestion} / {trainningDoc.questionsNumber}
             </span>
           </div>
-          <div className={styles.question_editor}>
-            {error && <Alert message={error} type="danger" />}
-            {success && <Alert message={success} type="success" />}
-            <SimpleTextEditor onReady={(quill) => setQuestionEditor(quill)} />
-            <SubmitButton
-              text="Ajouter"
-              loading={loading}
-              progress={25}
-              onClick={() => saveQuestion()}
-            />
-          </div>
+          {allQuestions.length !== trainningDoc.questionsNumber && (
+            <div className={styles.question_editor}>
+              {error && <Alert message={error} type="danger" />}
+              {success && <Alert message={success} type="success" />}
+              <SimpleTextEditor onReady={(quill) => setQuestionEditor(quill)} />
+              <SubmitButton
+                text="Ajouter"
+                loading={loading}
+                progress={25}
+                onClick={() => saveQuestion()}
+              />
+            </div>
+          )}
           <div className={styles.question_list}>
             {allQuestions.map((question, index) => {
               return (

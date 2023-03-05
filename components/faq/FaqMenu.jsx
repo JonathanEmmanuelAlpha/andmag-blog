@@ -29,10 +29,6 @@ function Menu({ route, name, subMenus }) {
         />
       </div>
       <div className={styles.submenu} data-active={open}>
-        <div
-          className={styles.left}
-          style={{ height: `${subMenus.length * 26 * 1.25}px` }}
-        />
         <ul>
           {subMenus.length > 0
             ? subMenus.map((menu, index) => (
@@ -68,7 +64,6 @@ export default function FaqMenu() {
 
   return (
     <nav className={styles.container}>
-      <h2>Menu</h2>
       {loadingItems ? (
         <LoadingScreen />
       ) : (

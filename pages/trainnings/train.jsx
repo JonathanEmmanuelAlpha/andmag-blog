@@ -5,12 +5,16 @@ import TestsContainer, {
   QCMCard,
   TestResultCard,
 } from "../../components/trainning/TestsContainer";
+import { useAuth } from "../../context/AuthProvider";
 import { useTrain } from "../../context/TrainProvider";
 import useIsAurh from "../../hooks/useIsAurh";
 import useTrainning from "../../hooks/useTrainning";
 
 export default function trainning() {
+  const { userProfile } = useAuth();
+
   useIsAurh();
+
   const {
     currentTrainning,
     questions,
@@ -22,6 +26,15 @@ export default function trainning() {
     skipQuestion,
     finilizeTest,
   } = useTrain();
+
+  const router = useRouter();
+
+  if (
+    currentTrainning.doc &&
+    currentTrainning.doc.target !== "public" &&
+    !userProfile.followed.includes(currentTrainning.doc.blogId)
+  )
+    return router.push(`/trainnings/${currentTrainning.doc.blogId}`);
 
   return (
     <TestsContainer

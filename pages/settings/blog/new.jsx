@@ -78,14 +78,14 @@ export default function Blog() {
           />
           <Uploader
             label="banner"
-            message="Add a banner to your blog"
+            message="Ajouter une bannière"
             inforMessage="Click or Drag and drop an image here to add a banner"
             openUploader
             onFilesUpload={(files) => setBanner(files[0])}
           />
           <Uploader
             label="logo"
-            message="Add a logo to your blog"
+            message="Ajouter un logo"
             inforMessage="Click or Drag and drop an image here to add a logo"
             openUploader
             onFilesUpload={(files) => setLogo(files[0])}
