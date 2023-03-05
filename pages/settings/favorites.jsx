@@ -6,7 +6,7 @@ import LoadingScreen from "../../components/inputs/LoadingScreen";
 import SkeletonLayout from "../../components/skeleton-layout/SkeletonLayout";
 import { useAuth } from "../../context/AuthProvider";
 import { articlesCollection } from "../../firebase";
-import styles from "../../styles/settings/main..module.css";
+import styles from "../../styles/settings/base.module.css";
 
 export default function Subscriptions() {
   const { userProfile } = useAuth();

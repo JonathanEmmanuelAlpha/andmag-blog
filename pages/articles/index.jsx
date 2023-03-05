@@ -9,7 +9,7 @@ import SkeletonLayout, {
 import generateRSSFeed from "../../helpers/generateRSSFeed";
 import useArticlesSearch from "../../hooks/useArticlesSearch";
 import useOnScreen from "../../hooks/useOnScreen";
-import styles from "../../styles/article/main.module.css";
+import styles from "../../styles/article/base.module.css";
 
 function Articles() {
   const [title, setTitle] = useState("");
