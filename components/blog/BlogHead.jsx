@@ -64,16 +64,16 @@ export function SubButton({ blog, onSubscribe, onUnSubscribe }) {
   }
 
   useEffect(() => {
-    if (!userProfile) return;
-
     setIsFollower((prev) => {
+      if (!userProfile) return false;
+
       if (
         userProfile.followed &&
         userProfile.followed.find((f) => f === blog.id)
       ) {
         return true;
       }
-      return prev;
+      return false;
     });
 
     setLoading(false);
