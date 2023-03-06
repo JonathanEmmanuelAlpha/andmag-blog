@@ -11,7 +11,7 @@ import SkeletonLayout, {
 } from "../components/skeleton-layout/SkeletonLayout";
 import styles from "../styles/contact.module.css";
 
-export default function () {
+export default function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
