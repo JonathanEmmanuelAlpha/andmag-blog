@@ -267,7 +267,7 @@ template {
 
 @font-face {
   font-family: "ethnocentric";
-  src: url("/public/fonts/ethnocentric/ethnocentric\ rg.ttf") format("truetype");
+  src: url("/fonts/ethnocentric/ethnocentric\ rg.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }

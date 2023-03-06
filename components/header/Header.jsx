@@ -47,7 +47,7 @@ export default function Header({
         <meta property="og:type" content={ogType || "website"} />
         <meta property="og:url" content={`${domainName}${router.asPath}`} />
         <meta property="og:description" content={description || desc} />
-        <meta property="og:image" content={ogImage || "/images/AG.png"} />
+        <meta property="og:image" content={ogImage || "/logo/AG.png"} />
         <meta property="twitter:card" content="summary_large_image" />
         <meta
           property="twitter:url"
@@ -55,7 +55,7 @@ export default function Header({
         />
         <meta property="twitter:title" content={title || "Andmag-ground"} />
         <meta property="twitter:description" content={description || desc} />
-        <meta property="twitter:image" content={ogImage || "/images/AG.png"} />
+        <meta property="twitter:image" content={ogImage || "/logo/AG.png"} />
       </Head>
       <header className={styles.container}>
         <AppICon onOpen={onOpen} />
