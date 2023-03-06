@@ -339,7 +339,7 @@
 @media screen and (max-width: 680px) {
   .playlist_wrapper {
     width: 320px;
-    margin: 0 auto;
+    margin: 0 auto 30px auto;
   }
   .playlist_wrapper .head {
     flex-direction: column;

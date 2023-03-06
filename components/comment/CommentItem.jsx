@@ -56,11 +56,14 @@ function CommentItem({
     remove: deleteClap,
   } = useArray(comment.claps || []);
 
-  const hasLiked = typeof likes.find((l) => l == currentUser.uid) === "string";
+  const hasLiked =
+    currentUser && typeof likes.find((l) => l == currentUser.uid) === "string";
   const hasClapped =
-    typeof claps.find((c) => c == currentUser.uid) === "string";
+    currentUser && typeof claps.find((c) => c == currentUser.uid) === "string";
 
   function handleLike() {
+    if (!currentUser) return;
+
     /** Si l'utilisateur avait déjà liker la publication, resitrer son like */
     if (hasLiked) {
       toast.promise(
@@ -100,6 +103,8 @@ function CommentItem({
   }
 
   function handleClap() {
+    if (!currentUser) return;
+
     /** Si l'utilisateur avait déjà applaudit la publication, resitrer son like */
     if (hasClapped) {
       toast.promise(

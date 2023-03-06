@@ -15,8 +15,11 @@ import Header from "../header/Header";
 
 import { MdRssFeed } from "react-icons/md";
 import ToasComponent from "./ToasComponent";
+import { useAuth } from "../../context/AuthProvider";
+import Footer from "../footer/Footer";
 
 function SideBar({ open }) {
+  const { logout } = useAuth();
   return (
     <aside className={styles.sidebar} data-active={open}>
       <nav>
@@ -125,6 +128,7 @@ function SkeletonLayout({
         <main>{children}</main>
       </section>
       <ToasComponent />
+      <Footer />
     </div>
   );
 }

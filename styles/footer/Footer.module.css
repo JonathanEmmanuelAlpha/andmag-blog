@@ -1,5 +1,26 @@
-import React from "react";
+.container {
+  width: 100%;
+  background-color: var(--mainBgColor);
+  color: #dce3ef;
+}
 
-export default function Footer() {
-  return <div>Footer</div>;
+.container .rights {
+  width: 100%;
+  background-color: #26292e;
+  padding: 25px;
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 600;
+}
+.container .rights a {
+  color: var(--primColor);
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    margin-bottom: 50px;
+  }
 }

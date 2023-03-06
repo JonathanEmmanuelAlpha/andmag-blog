@@ -24,13 +24,23 @@ export default function Contact() {
     event.preventDefault();
     setError("");
     setSuccess("");
-    setLoading(true);
+
+    if (name.length < 3) return setError("Veuillez entrer un nom valide");
+    if (name.length > 125)
+      return setError("Le nom doit contenir au plus 125 charactères");
+
+    if (message.length < 25)
+      return setError("Veuillez taper un message valide");
+    if (message.length > 255)
+      return setError("Le message doit contenir au plus 255 charactères");
 
     const data = {
       name,
       email,
       message,
     };
+
+    setLoading(true);
 
     fetch("/api/contact", {
       method: "POST",
@@ -45,11 +55,13 @@ export default function Contact() {
           setName("");
           setEmail("");
           setMessage("");
-          setSuccess("Votre message a bien été envoyé");
+          setSuccess("Votre message a bien été envoyé !");
         }
       })
       .catch((error) => {
-        console.log("Error: ", error);
+        return setError(
+          "Echec de l'envoi de l'email. Réessayez s'il vous plait !"
+        );
       });
 
     setLoading(false);
