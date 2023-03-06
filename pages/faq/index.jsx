@@ -6,7 +6,7 @@ import SkeletonLayout from "../../components/skeleton-layout/SkeletonLayout";
 import FaqMenu from "../../components/faq/FaqMenu";
 import Link from "next/link";
 
-export default function () {
+export default function FAQ() {
   return (
     <SkeletonLayout
       title="Fréquement demandée"

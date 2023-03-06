@@ -215,7 +215,7 @@ function About() {
 
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [firstMask, secondMask, thirdMask]);
+  }, [firstMask, secondMask, thirdMask, handleScroll]);
 
   return (
     <section className={styles.about}>
@@ -363,9 +363,9 @@ function SkillList() {
         <h2>Frontend</h2>
         <div className={styles.skill_group}>
           <p>
-            J'ai appris et maîtrisé plusieurs langages pour des intégrations
-            UI/UX. J'aime coder à partir de zéro et donnez vie à toutes sortes
-            d'idées peu importe leurs complexités de réalisation.
+            {
+              "J'ai appris et maîtrisé plusieurs langages pour des intégrations UI/UX. J'aime coder à partir de zéro et donnez vie à toutes sortes d'idées peu importe leurs complexités de réalisation."
+            }
           </p>
           <ul>
             <li>HTML 5</li>
@@ -403,9 +403,9 @@ function SkillList() {
         <h2>Backend</h2>
         <div className={styles.skill_group}>
           <p>
-            Construire une API est une expérience enrichissante et plein
-            d'entrain. J'aime créer des API performantes et sécurisées qui
-            s'adaptent à tout type de projet sur lesquels je travaillent.
+            {
+              "Construire une API est une expérience enrichissante et plein d'entrain. J'aime créer des API performantes et sécurisées qui s'adaptent à tout type de projet sur lesquels je travaillent."
+            }
           </p>
           <ul>
             <li>JavaScript</li>
@@ -454,7 +454,7 @@ function SkillList() {
           </ul>
         </div>
         <div className={styles.skill_group}>
-          <p>Autres prestataires de services que j'utilise très souvent.</p>
+          <p>{"Autres prestataires de services que j'utilise très souvent."}</p>
           <ul>
             <li>Firebase</li>
             <li>Google Ads</li>

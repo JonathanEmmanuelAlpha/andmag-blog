@@ -6,7 +6,7 @@ import PPComponent from "../../components/edit-components/PPComponent";
 import { useAuth } from "../../context/AuthProvider";
 import styles from "../../styles/account/edit.module.css";
 
-export default function () {
+export default function ProfileEdit() {
   const { currentUser } = useAuth();
 
   return (

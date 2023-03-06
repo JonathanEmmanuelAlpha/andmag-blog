@@ -83,8 +83,6 @@ function Answer({
 }
 
 function AnswersQCM({ shwo, trainningDocRef, question }) {
-  if (!shwo) return null;
-
   const { currentUser } = useAuth();
   const { adminId, isAdmin } = useIsAdmin(currentUser);
 
@@ -286,11 +284,9 @@ function EditQCM({
         </button>
       </div>
       <div className={styles.answer_list}>
-        <AnswersQCM
-          trainningDocRef={trainningDocRef}
-          question={question}
-          shwo={answerShown}
-        />
+        {answerShown && (
+          <AnswersQCM trainningDocRef={trainningDocRef} question={question} />
+        )}
       </div>
     </div>
   );

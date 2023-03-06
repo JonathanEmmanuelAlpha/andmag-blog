@@ -33,7 +33,7 @@ import { blogsCollection, trainningsCollection } from "../../../../firebase";
 import { useTargetBlog } from "../../../../context/BlogProvider";
 import useTrainning from "../../../../hooks/useTrainning";
 
-export default function trainning() {
+export default function AddTrainning() {
   const { currentUser } = useAuth();
   const { blog, isOwner } = useTargetBlog();
   const { adminId, isAdmin } = useIsAdmin(currentUser);

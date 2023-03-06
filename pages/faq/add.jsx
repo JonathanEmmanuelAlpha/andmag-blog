@@ -29,7 +29,7 @@ export const CATEGORIES = [
   { type: "Others", name: "Autres préoccupations" },
 ];
 
-export default function index() {
+export default function AddFaq() {
   const router = useRouter();
 
   const [name, setName] = useState("");

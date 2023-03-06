@@ -10,7 +10,7 @@ import { useTrain } from "../../context/TrainProvider";
 import useIsAurh from "../../hooks/useIsAurh";
 import useTrainning from "../../hooks/useTrainning";
 
-export default function trainning() {
+export default function Trainning() {
   const { userProfile } = useAuth();
 
   useIsAurh();

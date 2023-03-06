@@ -41,8 +41,6 @@ function Stat({ icon, name }) {
 }
 
 function ProfileCard({ profile }) {
-  if (!profile) return null;
-
   const { blog, loadingBlog } = useBlog(profile.blogId);
   const followers = useBlogFollowers(blog?.id);
 

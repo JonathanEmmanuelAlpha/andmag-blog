@@ -21,12 +21,6 @@ export default function Trainnings(props) {
     pageNumber
   );
 
-  useEffect(() => {
-    if (loading) return;
-
-    console.log("Tests: ", trainnings);
-  }, [loading]);
-
   const divRef = useRef();
   useOnScreen("0px", divRef, () => {
     setPageNumber((prev) => prev + 1);
