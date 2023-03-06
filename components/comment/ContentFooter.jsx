@@ -43,11 +43,13 @@ function ContentFooter({ pub, commentShown, blog }) {
     remove: deleteClap,
   } = useArray(pub.claps || []);
 
-  const hasLiked = typeof likes.find((l) => l == currentUser.uid) === "string";
+  const hasLiked = typeof likes.find((l) => l == currentUser?.uid) === "string";
   const hasClapped =
-    typeof claps.find((c) => c == currentUser.uid) === "string";
+    typeof claps.find((c) => c == currentUser?.uid) === "string";
 
   function handleLike() {
+    if (!currentUser) return;
+
     /** Si l'utilisateur avait déjà liker la publication, resitrer son like */
     if (hasLiked) {
       toast.promise(
@@ -87,6 +89,8 @@ function ContentFooter({ pub, commentShown, blog }) {
   }
 
   function handleClap() {
+    if (!currentUser) return;
+
     /** Si l'utilisateur avait déjà applaudit la publication, resitrer son like */
     if (hasClapped) {
       toast.promise(
