@@ -50,13 +50,7 @@ export default function Register(props) {
         password
       );
       if (credential.user) {
-        await sendEmailVerification(credential.user, {
-          url:
-            typeof router.query.next === "string"
-              ? `${domainName}${router.query.next}`
-              : `${domainName}/account/profile-edit`,
-          handleCodeInApp: true,
-        });
+        await sendEmailVerification(credential.user);
 
         await initializeAccount(credential.user);
 

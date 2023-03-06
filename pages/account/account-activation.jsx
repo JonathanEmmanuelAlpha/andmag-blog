@@ -80,13 +80,7 @@ export default function Activation(props) {
         });
     } else {
       try {
-        await sendEmailVerification(currentUser, {
-          url:
-            typeof router.query.next === "string"
-              ? `${domainName}${router.query.next}`
-              : `${domainName}/account/profile-edit`,
-          handleCodeInApp: true,
-        });
+        await sendEmailVerification(currentUser);
         setSucces(
           "Un lien d'activation de compte vous a été envoyé par email."
         );

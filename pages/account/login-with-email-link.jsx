@@ -32,13 +32,7 @@ function Login(props) {
     setSuccess("");
 
     try {
-      await sendSignInLinkToEmail(auth, email, {
-        url:
-          typeof router.query.next === "string"
-            ? `${domainName}/account/account-activation?next=${router.query.next}`
-            : `${domainName}/account/account-activation`,
-        handleCodeInApp: true,
-      });
+      await sendSignInLinkToEmail(auth, email);
       window.localStorage.setItem("signin-email", email);
       setSuccess("Un lien de connexion vous a été envoyé par email.");
     } catch (error) {
