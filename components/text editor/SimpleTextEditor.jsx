@@ -63,9 +63,11 @@ function SimpleTextEditor({ onReady, initialDelta }) {
       if (initialDelta) q.setContents(initialDelta);
       setQuill(q);
 
+      console.log("Render !");
+
       if (typeof onReady === "function") onReady(q);
     },
-    [initialDelta, onReady]
+    [initialDelta]
   );
 
   return (
