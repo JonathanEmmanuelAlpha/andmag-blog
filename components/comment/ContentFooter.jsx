@@ -43,9 +43,10 @@ function ContentFooter({ pub, commentShown, blog }) {
     remove: deleteClap,
   } = useArray(pub.claps || []);
 
-  const hasLiked = typeof likes.find((l) => l == currentUser?.uid) === "string";
+  const hasLiked =
+    currentUser && typeof likes.find((l) => l == currentUser.uid) === "string";
   const hasClapped =
-    typeof claps.find((c) => c == currentUser?.uid) === "string";
+    currentUser && typeof claps.find((c) => c == currentUser.uid) === "string";
 
   function handleLike() {
     if (!currentUser) return;
