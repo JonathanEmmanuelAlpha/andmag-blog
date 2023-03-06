@@ -569,7 +569,7 @@ export default function Home() {
             linkUrl={"/faq#blog"}
           />
           <InfoCard
-            imageUrl={"/images/faq.webp"}
+            imageUrl={"/images/faq.WEBP"}
             title={"FAQ"}
             description={
               "Vous avez des préoccupations immédiates ? La FAQ est faite pour vous. Vous y trouverez un concentré des préoccupations les plus courantes de nos clients et membre de la communauté. N'hésitez pas à vous y rendre et si vous ne trouvez pas ce que vous cherchez, vous pouvez toujours me contacter."
