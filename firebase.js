@@ -74,7 +74,7 @@ export function handleAuthErrors(error) {
       return AUTH_ERRORS["auth/network-request-failed"];
 
     default:
-      return "Unknown error. Please try again.";
+      return "Unknown error. Please verify that you have an account.";
   }
 }
 
@@ -132,7 +132,7 @@ export function handleFirestoreErrors(error) {
       return FIRESTORE_ERRORS.unknown;
 
     default:
-      return "Unknown error. Please try again.";
+      return "Unknown error. Please try again later.";
   }
 }
 
@@ -164,7 +164,7 @@ export function handleStorageErrors(error) {
       return STORAGE_ERRORS["storage/unknown"];
 
     default:
-      return "Unknown error. Please try again.";
+      return "Unknown error. Please try again later.";
   }
 }
 //#endregion
