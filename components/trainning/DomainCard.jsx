@@ -9,7 +9,7 @@ function DomainCard(props) {
     <Link href={props.domainRoute}>
       <a className={styles.container}>
         <div className={styles.head}>
-          <Image src={props.banner} width={350} height={250} />
+          <img src={props.banner} />
           <div className={styles.banner_overlay} />
           <h1 className="thin-text-3d">{props.title}</h1>
         </div>

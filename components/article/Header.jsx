@@ -270,7 +270,7 @@ function Header({ article, blog }) {
       <div className={styles.action}>
         <Link href={`/blogs/${blog.id}`}>
           <a className={styles.left}>
-            <Image src={blog.logo} width={50} height={50} />
+            <img src={blog.logo} />
             <div>
               <h2>{blog.name}</h2>
               <span>{followers ? followers : 0} abonnés</span>

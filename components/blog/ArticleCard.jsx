@@ -80,7 +80,7 @@ export function ArticleCard({
             {blogUrl && blogLogo ? (
               <Link href={blogUrl}>
                 <a>
-                  <Image src={blogLogo} width={60} height={60} />
+                  <img src={blogLogo} />
                 </a>
               </Link>
             ) : (

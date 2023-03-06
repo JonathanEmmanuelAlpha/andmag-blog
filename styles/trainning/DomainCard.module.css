@@ -30,6 +30,8 @@
 }
 .head img {
   border-radius: 10px 10px 0 0;
+  width: 350px;
+  height: 250px;
 }
 .head h1 {
   position: absolute;

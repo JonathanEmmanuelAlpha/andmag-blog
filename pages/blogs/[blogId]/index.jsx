@@ -40,8 +40,8 @@ export default function Blog() {
                   createBy={article.createBy}
                   articleId={article.id}
                   blogUrl={`/blogs/${article.blogId}`}
-                  blogLogo={article.blog?.logo}
-                  blogName={article.blog?.name}
+                  blogLogo={article.blogLogo}
+                  blogName={article.blogName}
                   thumbnail={article.thumbnail}
                   title={article.title}
                   reads={article.readers}

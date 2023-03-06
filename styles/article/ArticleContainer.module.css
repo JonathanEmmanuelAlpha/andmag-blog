@@ -211,6 +211,8 @@
 }
 .header .action a.left img {
   border-radius: 50%;
+  width: 50px;
+  height: 50px;
 }
 .header .action a.left div {
   margin-left: 10px;

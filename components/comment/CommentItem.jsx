@@ -145,7 +145,7 @@ function CommentItem({
       }
     >
       <div className={styles.ppc}>
-        <Image
+        <img
           src={comment.userPP}
           width={40}
           height={40}

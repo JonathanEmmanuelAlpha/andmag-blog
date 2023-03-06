@@ -62,7 +62,7 @@ function BlogContainer({
 
   return (
     <SkeletonLayout
-      title={`${blog ? blog.name : "loding..."} - ${title}`}
+      title={`${blog ? blog.name : "loding..."} - ${title || ""}`}
       description={description}
       author={author}
       ogImage={ogImage}
