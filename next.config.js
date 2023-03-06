@@ -7,10 +7,7 @@ const nextConfig = {
     localeDetection: false,
   },
   images: {
-    domains: [
-      "https://andmag-ground.vercel.app",
-      "firebasestorage.googleapis.com",
-    ],
+    domains: ["firebasestorage.googleapis.com"],
   },
 };
 
