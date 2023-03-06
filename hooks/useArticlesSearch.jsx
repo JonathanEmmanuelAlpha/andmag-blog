@@ -51,7 +51,6 @@ export default function useBlogSearch(searchQuery, docLimit = 9, pageNumber) {
 
     getDocs(q)
       .then((snapshot) => {
-        console.log("Articles snapshot: ", snapshot);
         snapshot.forEach((snap) => {
           setDocs((prevDocs) => {
             let newDoc = { id: snap.id, ...snap.data() };

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ArticleCard } from "../../components/blog/ArticleCard";
 import Header from "../../components/header/Header";
 import LoadingScreen from "../../components/inputs/LoadingScreen";
@@ -30,6 +30,10 @@ function Articles() {
       return prev;
     })
   );
+
+  useEffect(() => {
+    console.log("Articles list: ", articles);
+  }, [articles]);
 
   return (
     <SkeletonLayout title={"Andmag-ground - Articles"}>

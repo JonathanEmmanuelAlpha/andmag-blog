@@ -20,7 +20,7 @@ export default function Blog() {
     docs: articles,
     hasMore,
     loading,
-  } = useArticles(router.query.blogId, 9, pageNumber);
+  } = useArticles(router.query.blogId, 10, pageNumber);
 
   const divRef = useRef();
   useOnScreen("50px", divRef, () => setPageNumber((prev) => prev + 1));
