@@ -28,8 +28,6 @@ function CommentItem({
   targetId,
   children,
 }) {
-  if (!comment) return null;
-
   const { currentUser } = useAuth();
 
   const [canResponse, setCanResponse] = useState(false);
@@ -147,7 +145,12 @@ function CommentItem({
       }
     >
       <div className={styles.ppc}>
-        <Image src={comment.userPP} width={40} height={40} />
+        <Image
+          src={comment.userPP}
+          width={40}
+          height={40}
+          alt={comment.userName + ".profile-picture"}
+        />
       </div>
       <div className={styles.cwrp}>
         <div className={styles.chd}>

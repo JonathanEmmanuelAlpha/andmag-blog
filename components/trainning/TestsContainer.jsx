@@ -22,7 +22,7 @@ export function TestResultCard(props) {
           <strong>{currentTrainning.doc.questionsNumber}</strong> questions
         </span>
         <span>
-          <strong>{currentTrainning.doc.time}</strong> min d'évaluation
+          <strong>{currentTrainning.doc.time}</strong> {"min d'évaluation"}
         </span>
         <span>
           <strong>{result.answers}</strong> réponses fournies
@@ -106,9 +106,10 @@ export function QCMCard({
   onSkip,
   onSendAnswer,
 }) {
+  const [choosedAnswer, setChoosedAnswer] = useState("");
+
   if (!active) return null;
 
-  const [choosedAnswer, setChoosedAnswer] = useState("");
   return (
     <div className={styles.qcm_wrapper}>
       <div className={styles.nbq}>

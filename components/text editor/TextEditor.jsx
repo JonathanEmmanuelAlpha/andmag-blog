@@ -84,7 +84,7 @@ function TextEditor({ channel, blogId }) {
     if (!article.content) quill.setText("");
 
     quill.enable();
-  }, [quill, loading, article]);
+  }, [quill, loading, article, error]);
 
   /** Save current document evry @param SAVE_INTERVAL seconds */
   useEffect(() => {
@@ -97,7 +97,7 @@ function TextEditor({ channel, blogId }) {
     return () => {
       clearInterval(interval);
     };
-  }, [quill, loading, article]);
+  }, [quill, loading, article, handleSave]);
 
   const wrapperRef = useCallback((wrapper) => {
     if (wrapper === null) return;

@@ -39,8 +39,9 @@ function AccountContainer(props) {
         <div className={styles.right}>
           <h1 className={styles.right_title}>ANDMAG GROUND</h1>
           <p className={styles.msg}>
-            En créant un compte, vous avez la possibilité d'interagir avec
-            d'autre utilisateurs de la communauté.
+            {
+              "En créant un compte, vous avez la possibilité d'interagir avec d'autre utilisateurs de la communauté."
+            }
           </p>
         </div>
         <div className={styles.left}>

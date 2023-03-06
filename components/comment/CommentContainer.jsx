@@ -32,8 +32,6 @@ function ReturnButton({ onClick }) {
 }
 
 function CommentContainer({ targetId, targetRef, isOpen, onClose }) {
-  if (isOpen === false) return null;
-
   const { currentUser } = useAuth();
 
   const [comments, setComments] = useState([]);
@@ -170,10 +168,5 @@ function CommentContainer({ targetId, targetRef, isOpen, onClose }) {
     </div>
   );
 }
-CommentContainer.propTypes = {
-  targetId: PropTypes.any,
-  targetRef: PropTypes.any,
-  isOpen: PropTypes.bool,
-};
 
 export default CommentContainer;

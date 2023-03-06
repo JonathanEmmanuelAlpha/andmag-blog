@@ -32,7 +32,7 @@ function Menu({ route, name, subMenus }) {
         <ul>
           {subMenus.length > 0
             ? subMenus.map((menu, index) => (
-                <li>
+                <li key={index}>
                   <div className={styles.sub_mark} />
                   <Link href={`${domainName}/faq/${route}#${menu?.route}`}>
                     <a

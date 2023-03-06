@@ -117,7 +117,7 @@ export default function InfosComponent() {
         <div>
           <FontAwesomeIcon icon={faInfoCircle} />
         </div>
-        <h1>Informations d'identifications</h1>
+        <h1>{"Informations d'identifications"}</h1>
       </div>
       <form method="post">
         <Input
@@ -137,9 +137,9 @@ export default function InfosComponent() {
         />
         <div className={styles.pers_foot}>
           <p>
-            Le pseudo est ce qui permet à la communauté de facilement vous
-            identifier, renez la peine d'en choisir un qui vous convient le
-            mieux remplir.
+            {
+              "Le pseudo est ce qui permet à la communauté de facilement vous identifier, renez la peine d'en choisir un qui vous convient le mieux remplir."
+            }
           </p>
           {error && <Alert type="danger" message={error} />}
           {success && <Alert type="success" message={success} />}

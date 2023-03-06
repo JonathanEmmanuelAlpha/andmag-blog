@@ -30,8 +30,6 @@ ResultItem.propTypes = {
 };
 
 function Uploader(props) {
-  if (!props.openUploader) return null;
-
   const inputRef = useRef();
   const [resultImages, setResultImages] = useState([]);
 

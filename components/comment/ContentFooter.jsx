@@ -179,12 +179,13 @@ function ContentFooter({ pub, commentShown, blog }) {
           </button>
         </div>
       </div>
-      <CommentContainer
-        isOpen={openComment}
-        onClose={() => setOpenComment(!openComment)}
-        targetRef={collection(blogsCollection, router.query.blogId, "posts")}
-        targetId={pub.id}
-      />
+      {openComment && (
+        <CommentContainer
+          onClose={() => setOpenComment(!openComment)}
+          targetRef={collection(blogsCollection, router.query.blogId, "posts")}
+          targetId={pub.id}
+        />
+      )}
     </div>
   );
 }

@@ -20,7 +20,7 @@ function BlogItem({ blog }) {
         className={styles.bi_left}
         style={{ backgroundImage: `url(${blog.banner})` }}
       >
-        <img src={blog.logo} />
+        <img src={blog.logo} alt={blog.name + ".logo"} />
       </div>
       <div className={styles.bi_right}>
         <BlogHead name={blog.name} />

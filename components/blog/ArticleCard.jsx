@@ -19,7 +19,7 @@ export function ArticleCardThin(props) {
       <a className={styles.card_thin}>
         <Skeleton />
         {props.thumbnail ? (
-          <img src={props.thumbnail} />
+          <img src={props.thumbnail} alt={props.title + ".thumbnail"} />
         ) : (
           <Skeleton height={100} width={150} />
         )}
@@ -69,7 +69,11 @@ export function ArticleCard({
           />
         )}
         <div className={styles.header}>
-          <img className="skeleton" src={thumbnail} />
+          <img
+            className="skeleton"
+            src={thumbnail}
+            alt={title + ".thumbnail"}
+          />
         </div>
         <div className={styles.body}>
           <div className={styles.blog_logo}>

@@ -77,7 +77,7 @@ export function SubButton({ blog, onSubscribe, onUnSubscribe }) {
     });
 
     setLoading(false);
-  }, [userProfile, isFollower]);
+  }, [blog, userProfile, isFollower]);
 
   return (
     <div className={styles.sub_btn}>
@@ -89,7 +89,7 @@ export function SubButton({ blog, onSubscribe, onUnSubscribe }) {
         </button>
       ) : (
         <button disabled={loading} onClick={async () => await subscribe()}>
-          S'abonner
+          {"S'abonner"}
         </button>
       )}
     </div>

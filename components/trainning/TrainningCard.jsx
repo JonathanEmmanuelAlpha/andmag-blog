@@ -48,7 +48,7 @@ function TrainningCard({ trainning }) {
         <Link
           href={`${domainName}/trainnings/train?testChannel=${trainning.id}`}
         >
-          S'entrainner
+          {"S'entrainner"}
         </Link>
       )}
       {false ? (

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { PostCard } from "./PostCard";
 import styles from "../../styles/post/PostContainer.module.css";
+import LoadingScreen from "../inputs/LoadingScreen";
 
 function PostContainer(props) {
   const { community } = useCommunity();

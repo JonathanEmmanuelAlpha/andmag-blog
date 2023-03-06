@@ -106,8 +106,6 @@ EffectButton.propTypes = {
 };
 
 function LightBoxGallery(props) {
-  if (!props.images || !props.isActive) return null;
-
   const lightBoxRef = useRef();
 
   const [filterOptions, setFilterOptions] = useState(DEFAULT_FILTERS_OPTIONS);

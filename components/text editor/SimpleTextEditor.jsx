@@ -65,7 +65,7 @@ function SimpleTextEditor({ onReady, initialDelta }) {
 
       if (typeof onReady === "function") onReady(q);
     },
-    [initialDelta]
+    [initialDelta, onReady]
   );
 
   return (

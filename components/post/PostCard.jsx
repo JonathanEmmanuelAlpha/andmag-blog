@@ -49,12 +49,13 @@ export function PostCard({ pub, commentShown }) {
         <div className={styles.msg}>
           <QuillContent delta={JSON.parse(pub.content).ops} />
         </div>
-        <LightBoxGallery
-          images={pub.thumbnails.map((file) => file.downloadURL)}
-          activeImage={currentImage}
-          isActive={showLightbox}
-          closeLightBox={() => setShowLightbox(false)}
-        />
+        {showLightbox && pub.thumbnails && (
+          <LightBoxGallery
+            images={pub.thumbnails.map((file) => file.downloadURL)}
+            activeImage={currentImage}
+            closeLightBox={() => setShowLightbox(false)}
+          />
+        )}
         <div
           className={`${styles.gal}`}
           data-both={pub.thumbnails.length === 2}

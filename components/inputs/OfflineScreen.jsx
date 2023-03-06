@@ -9,8 +9,9 @@ export default function OfflineScreen() {
       <FontAwesomeIcon icon={faWifi3} />
       <h1>Conneter vous à internet</h1>
       <p>
-        Vous n'êtes actuellement pas connecté à internet. Vérifier votre
-        connexion puis réessayez
+        {
+          "Vous n'êtes actuellement pas connecté à internet. Vérifier votre connexion puis réessayez"
+        }
       </p>
       <button onClick={() => window.location.reload()}>réessayer</button>
     </div>

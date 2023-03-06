@@ -130,12 +130,13 @@ function ArticleContainer({ article, blog, playlist, comments }) {
               )}
             </button>
           </div>
-          <CommentContainer
-            isOpen={open}
-            targetRef={articlesCollection}
-            targetId={article.id}
-            onClose={() => setOpen(!open)}
-          />
+          {open && (
+            <CommentContainer
+              targetRef={articlesCollection}
+              targetId={article.id}
+              onClose={() => setOpen(!open)}
+            />
+          )}
         </div>
       </div>
       {loadingArticles ? (
