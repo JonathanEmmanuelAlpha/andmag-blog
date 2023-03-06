@@ -64,9 +64,9 @@ export default function () {
         <section className={styles.info}>
           <h1>Entrez en contact</h1>
           <p>
-            Si vous souhaité entré en contact, parler nous d'un projet ou dites
-            juste salut. Si vous souhaité nous envoyer un mail, remplissez le
-            formulaire ci-dessous ou cliquez sur{" "}
+            {
+              "Si vous souhaité entré en contact, parler nous d'un projet ou dites juste salut. Si vous souhaité nous envoyer un mail, remplissez le formulaire ci-dessous ou cliquez sur "
+            }
             <a href="mailto:andmagground@gmail.com">andmagground@gmail</a>. Vous
             pouvez également nous trouvez sur les réseaux sociaux.
           </p>
@@ -115,8 +115,9 @@ export default function () {
         <section className={styles.info}>
           <h2>Réseaux sociaux</h2>
           <p>
-            suivez moi sur Whatsapp, Facebook et Twitter pour plus
-            d'informations
+            {
+              " suivez moi sur Whatsapp, Facebook et Twitter pour plus d'informations"
+            }
           </p>
           <div>
             <a
