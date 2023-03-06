@@ -267,7 +267,22 @@ template {
 
 @font-face {
   font-family: "ethnocentric";
-  src: url("/fonts/ethnocentric/ethnocentric\ rg.ttf") format("truetype");
+  src: url("/fonts/ethnocentric/@font-face/5e7e5b88452bacd9f8b087c3223619b5.woff2")
+      format("woff2"),
+    /* chrome、firefox */
+      url("/fonts/ethnocentric/@font-face/5e7e5b88452bacd9f8b087c3223619b5.woff")
+      format("woff"),
+    /* chrome、firefox */
+      url("/fonts/ethnocentric/@font-face/5e7e5b88452bacd9f8b087c3223619b5.ttf")
+      format("truetype"),
+    /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+      url("/fonts/ethnocentric/@font-face/5e7e5b88452bacd9f8b087c3223619b5.svg#Ethnocentrique V2")
+      format("svg"); /* iOS 4.1- */
+}
+
+@font-face {
+  font-family: "ethnocentric";
+  src: url("/public/fonts/ethnocentric/ethnocentric\ rg.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
