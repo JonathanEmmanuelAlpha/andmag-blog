@@ -38,7 +38,7 @@
 
 .logo h1 {
   width: 100%;
-  font-family: ethnocentric;
+  font-family: "ethnocentric";
   margin-bottom: 15px;
   font-size: 50px;
   color: var(--primColor);
@@ -98,7 +98,7 @@
   font-size: 18px;
   text-align: center;
   font-weight: 600;
-  font-family: ethnocentric;
+  font-family: "ethnocentric";
   color: var(--primColor);
   height: 20px;
   margin: 20px 0;
@@ -259,7 +259,7 @@
   font-size: 16px;
   font-weight: 500;
   display: block;
-  font-family: ethnocentric;
+  font-family: "ethnocentric";
 }
 .card_wrap .details h3 {
   font-size: 17px;
@@ -330,7 +330,7 @@
   z-index: 2;
 }
 .info_card h2 {
-  font-family: ethnocentric;
+  font-family: "ethnocentric";
   font-size: 20px;
   text-align: right;
   width: 100%;
@@ -406,7 +406,7 @@
 }
 .login_container > fieldset > legend {
   padding: 5px 10px;
-  font-family: ethnocentric;
+  font-family: "ethnocentric";
   font-size: 18px;
 }
 
