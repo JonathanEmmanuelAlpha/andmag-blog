@@ -31,10 +31,6 @@ function Articles() {
     })
   );
 
-  useEffect(() => {
-    console.log("Articles list: ", articles);
-  }, [articles]);
-
   return (
     <SkeletonLayout title={"Andmag-ground - Articles"}>
       <div className={styles.container}>
@@ -50,7 +46,7 @@ function Articles() {
           />
         </div>
         <div className={styles.wrapper}>
-          {loading ? (
+          {loading && articles.length === 0 ? (
             <LoadingScreen />
           ) : (
             articles.map((article) => {
