@@ -14,8 +14,11 @@
 .wrapper:hover,
 .wrapper[data-active="true"] {
   color: var(--primColor);
-  background-color: rgba(252, 192, 118, 0.1);
   border-color: var(--primColor) !important;
+}
+
+.wrapper:hover {
+  background-color: rgba(252, 192, 118, 0.1);
 }
 
 .wrapper svg {

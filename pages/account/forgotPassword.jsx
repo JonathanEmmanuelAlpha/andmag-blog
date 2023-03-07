@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import AccountContainer, {
   Input,
@@ -57,17 +56,11 @@ function ForgotPassword(props) {
           </>
         }
         btnMsg="commencer"
-        LinkOptions={
-          <>
-            <Link href="/account/login">Se connecter</Link>
-            <Link href="/account/account-activation">Activer mon compte</Link>
-            <Link href="/account/register">Créér un compte</Link>
-          </>
-        }
         handleSubmit={handleSubmit}
         loading={loading}
         error={error}
         success={success}
+        otherLinks={["register", "login", "with-email"]}
       />
     </SkeletonLayout>
   );

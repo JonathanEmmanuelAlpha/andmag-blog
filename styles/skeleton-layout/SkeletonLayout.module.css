@@ -16,7 +16,8 @@
 
 .sidebar {
   width: 0px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
   height: calc(100vh - var(--headerHeight));
   background-color: var(--mainBgColor);
   box-shadow: var(--rightShadow);
@@ -24,13 +25,17 @@
   top: var(--headerHeight);
   left: 0;
   z-index: 1000;
+  scrollbar-width: none;
+}
+.sidebar::-webkit-scrollbar {
+  display: none;
 }
 .sidebar[data-active="true"] {
   animation: open-sidebar 0.25s linear forwards;
 }
 
 .sidebar nav {
-  margin-top: 50px;
+  margin-top: 30px;
 }
 .sidebar nav ul {
   width: 100%;
@@ -88,8 +93,7 @@
   margin-right: 5px;
   fill: var(--themeButtonColor);
 }
-.theme_toggle_btn:hover,
-.theme_toggle_btn:focus {
+.theme_toggle_btn:hover {
   transform: scale(1.05);
 }
 
@@ -112,26 +116,26 @@
 .sun,
 .moon {
   position: absolute;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   transition: opacity, fill var(--transitionDelay);
 }
 
 .sun {
   bottom: 10px;
-  opacity: 1;
+  opacity: 0;
   fill: var(--primColor);
   transform: rotate(180deg);
 }
 .sidebar[data-light-theme] .sun {
-  opacity: 0;
+  opacity: 1;
 }
 
 .moon {
   top: 10px;
-  opacity: 0;
+  opacity: 1;
   fill: #3772c5;
 }
 .sidebar[data-light-theme] .moon {
-  opacity: 1;
+  opacity: 0;
 }

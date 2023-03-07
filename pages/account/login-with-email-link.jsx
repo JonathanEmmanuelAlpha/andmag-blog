@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Link from "next/link";
 import PropTypes from "prop-types";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -65,15 +64,8 @@ function Login(props) {
           </>
         }
         btnMsg="Connection"
-        LinkOptions={
-          <>
-            <Link href="/account/login">Se connecter autrement</Link>
-            <Link href="/account/account-activation">Activer mon compte</Link>
-            <Link href="/account/register">Créér un compte</Link>
-            <Link href="/account/forgotPassword">Mot de passe oublié ?</Link>
-          </>
-        }
         handleSubmit={handleSubmit}
+        otherLinks={["register", "forgot-password", "login"]}
       />
     </SkeletonLayout>
   );

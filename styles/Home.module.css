@@ -137,8 +137,8 @@
 }
 
 .oth a {
-  color: #fcc076;
-  border-color: #fcc076;
+  color: var(--primColor);
+  border-color: var(--primColor);
 }
 
 .about {
@@ -357,10 +357,11 @@
   justify-content: flex-end;
   margin-bottom: 5px;
 }
-.social_links img {
+.social_links svg {
   width: 35px;
-  height: auto;
+  height: 35px;
   margin-left: 10px;
+  fill: var(--color);
 }
 
 /*------------------------------------------------------------------------------------------------*/
@@ -377,10 +378,11 @@
   padding-right: 15px;
   z-index: 10;
 }
-.social_wrapper img {
+.social_wrapper svg {
   width: 35px;
-  height: auto;
+  height: 35px;
   margin-bottom: 10px;
+  fill: var(--color);
 }
 .social_wrapper div {
   width: 5px;
@@ -564,8 +566,9 @@
     padding-right: 10px;
     bottom: var(--headerHeight);
   }
-  .social_wrapper img {
+  .social_wrapper svg {
     width: 25px;
+    height: 25px;
   }
   .social_wrapper div {
     height: 75px;

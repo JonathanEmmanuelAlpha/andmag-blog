@@ -4,6 +4,16 @@ import styles from "../../styles/account/AccountContainer.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SubmitButton from "../inputs/SubmitButton";
 import Alert from "../inputs/Alert";
+import Link from "next/link";
+import { domainName } from "../links/AwesomeLink.type";
+import {
+  faContactCard,
+  faEnvelope,
+  faGear,
+  faSignInAlt,
+  faUserPlus,
+} from "@fortawesome/free-solid-svg-icons";
+
 export function Input(props) {
   return (
     <div className={styles.input}>
@@ -59,7 +69,50 @@ function AccountContainer(props) {
               />
             ) : null}
           </form>
-          <div className={styles.options}>{props.LinkOptions}</div>
+          {props.otherLinks && (
+            <div className={styles.options}>
+              {props.otherLinks.includes("login") && (
+                <Link href={`${domainName}/account/login`}>
+                  <a>
+                    <FontAwesomeIcon icon={faSignInAlt} />
+                    Se connecter
+                  </a>
+                </Link>
+              )}
+              {props.otherLinks.includes("register") && (
+                <Link href={`${domainName}/account/register`}>
+                  <a>
+                    <FontAwesomeIcon icon={faUserPlus} />
+                    Créer un compte
+                  </a>
+                </Link>
+              )}
+              {props.otherLinks.includes("with-email") && (
+                <Link href={`${domainName}/account/login-with-email-link`}>
+                  <a>
+                    <FontAwesomeIcon icon={faEnvelope} />
+                    Utiliser mon email
+                  </a>
+                </Link>
+              )}
+              {props.otherLinks.includes("forgot-password") && (
+                <Link href={`${domainName}/account/forgotPassword`}>
+                  <a>
+                    <FontAwesomeIcon icon={faGear} />
+                    Mot de passe oublié
+                  </a>
+                </Link>
+              )}
+              {props.otherLinks.includes("account-activation") && (
+                <Link href={`${domainName}/account/account-activation`}>
+                  <a>
+                    <FontAwesomeIcon icon={faContactCard} />
+                    Activer mon compte
+                  </a>
+                </Link>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -70,11 +123,11 @@ AccountContainer.propTypes = {
   title: PropTypes.string,
   message: PropTypes.string,
   btnMsg: PropTypes.string,
-  LinkOptions: PropTypes.element,
   handleSubmit: PropTypes.func,
   loading: PropTypes.bool,
   error: PropTypes.string,
   success: PropTypes.string,
+  otherLinks: PropTypes.array,
 };
 
 export default AccountContainer;

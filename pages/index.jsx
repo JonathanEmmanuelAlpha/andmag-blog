@@ -12,33 +12,39 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SkeletonLayout from "../components/skeleton-layout/SkeletonLayout";
+import {
+  EmailIcon,
+  FacebookIcon,
+  TwiterIcon,
+  WhatsappIcon,
+} from "../components/app-icon/AppICon";
 
 function SocialsWrapper() {
   return (
     <div className={styles.social_wrapper}>
       <a href="mailto:andmagground@gmail.com">
-        <img src="/icons/mail.png" alt="email.png" />
+        <EmailIcon />
       </a>
       <a
         href="https://wa.me/237620689433"
         target="_blank"
         rel="noopener noreferrer"
       >
-        <img src="/icons/whatsapp.png" alt="whatsapp.png" />
+        <WhatsappIcon />
       </a>
       <a
         href="https://facebook.com/AndmagGround"
         target="_blank"
         rel="noopener noreferrer"
       >
-        <img src="/icons/facebook.png" alt="facebook.png" />
+        <FacebookIcon />
       </a>
       <a
         href="https://twiter.com/AndmagGround"
         target="_blank"
         rel="noopener noreferrer"
       >
-        <img src="/icons/twiter.png" alt="twiter.png" />
+        <TwiterIcon />
       </a>
       <div />
     </div>
@@ -523,28 +529,28 @@ function Contact() {
     >
       <div className={styles.social_links}>
         <a href="mailto:andmagground@gmail.com">
-          <img src="/icons/mail.png" alt="email.png" />
+          <EmailIcon />
         </a>
         <a
           href="https://wa.me/237620689433"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img src="/icons/whatsapp.png" alt="whatsapp.png" />
+          <WhatsappIcon />
         </a>
         <a
-          href="https://facebook.com/AndmagGround"
+          href="https://www.facebook.com/AndmagGround"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img src="/icons/facebook.png" alt="facebook.png" />
+          <FacebookIcon />
         </a>
         <a
           href="https://twiter.com/AndmagGround"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img src="/icons/twiter.png" alt="twiter.png" />
+          <TwiterIcon />
         </a>
       </div>
     </InfoCard>

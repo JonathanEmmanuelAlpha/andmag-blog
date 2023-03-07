@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Link from "next/link";
 import { faEnvelope, faGear } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
@@ -77,20 +76,11 @@ function Login(props) {
           </>
         }
         btnMsg="Connection"
-        LinkOptions={
-          <>
-            <Link href="/account/login-with-email-link">
-              Utiliser mon email
-            </Link>
-            <Link href="/account/account-activation">Activer mon compte</Link>
-            <Link href="/account/register">Créér un compte</Link>
-            <Link href="/account/forgotPassword">Mot de passe oublié ?</Link>
-          </>
-        }
         handleSubmit={handleSubmit}
         loading={loading}
         error={error}
         success={success}
+        otherLinks={["register", "forgot-password", "with-email"]}
       />
     </SkeletonLayout>
   );

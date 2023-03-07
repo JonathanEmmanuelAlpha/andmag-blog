@@ -324,7 +324,7 @@ body {
 }
 
 body.light-theme {
-  --defBgColor: #fff;
+  --defBgColor: #f0f2f5;
   --mainBgColor: #fff;
   --overColor: #fff;
   --comColor: #f9f9f9;
@@ -332,7 +332,11 @@ body.light-theme {
   --color: #3b3b3b;
   --lightColor: #777c85;
 
-  --primColor: #ffa73b;
+  --primColor: #ff933b;
+  --linkColor: #2a73d9;
+
+  --accountBgColor: #f9f9f9;
+  --accountBaseColor: #8c4ea9;
 
   --shadow: 0 0.07rem 0.5rem 0 rgba(26, 26, 34, 0.5);
 

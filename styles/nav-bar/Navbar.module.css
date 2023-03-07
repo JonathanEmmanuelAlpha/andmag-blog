@@ -30,7 +30,7 @@
     width: 100%;
     height: var(--headerHeight);
     background-color: var(--mainBgColor);
-    border-top: 2px solid var(--overColor);
+    border-top: 1px solid rgb(177, 175, 190);
   }
   .container ul {
     width: 100%;
