@@ -288,11 +288,13 @@ export default function NewArticle() {
             text={article && article.id && isOwner ? "sauvegarder" : "créer"}
             progress={25}
           />
-          <Link
-            href={`/blogs/${router.query.blogId}/articles/edit?channel=${article.channel}`}
-          >
-            Editer le contenu
-          </Link>
+          {article && (
+            <Link
+              href={`/blogs/${router.query.blogId}/articles/edit?channel=${article.channel}`}
+            >
+              Editer le contenu
+            </Link>
+          )}
         </div>
       </Form>
     </BlogContainer>
