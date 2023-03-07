@@ -89,6 +89,21 @@
   max-width: 350px;
 }
 
+.edit_btns {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.edit_btns a {
+  color: var(--primColor);
+  border: 1.5px solid var(--primColor);
+  border-radius: 5px;
+  padding: 9px 10px;
+  margin: 10px 0 0 20px;
+}
+
 @media screen and (max-width: 400px) {
   .list > a {
     margin: 15px;

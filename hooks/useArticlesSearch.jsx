@@ -8,9 +8,12 @@ import {
   where,
 } from "firebase/firestore";
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useAuth } from "../context/AuthProvider";
 import { articlesCollection, blogsCollection } from "../firebase";
 
-export default function useBlogSearch(searchQuery, docLimit = 9, pageNumber) {
+export default function useBlogSearch(searchQuery, docLimit = 20, pageNumber) {
+  const { currentUser } = useAuth();
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -54,7 +57,12 @@ export default function useBlogSearch(searchQuery, docLimit = 9, pageNumber) {
         snapshot.forEach((snap) => {
           setDocs((prevDocs) => {
             let newDoc = { id: snap.id, ...snap.data() };
-            if (prevDocs.find((doc) => doc.id === newDoc.id)) return prevDocs;
+            if (
+              prevDocs.find((doc) => doc.id === newDoc.id) ||
+              (newDoc.published === false &&
+                newDoc.createBy !== currentUser?.uid)
+            )
+              return prevDocs;
             return [...prevDocs, newDoc];
           });
         });
@@ -76,7 +84,7 @@ export default function useBlogSearch(searchQuery, docLimit = 9, pageNumber) {
     setError(null);
 
     goToNextPage();
-  }, [pageNumber, searchQuery]);
+  }, [pageNumber, searchQuery, currentUser]);
 
   return { loading, docs, hasMore, error };
 }

@@ -280,24 +280,19 @@ template {
       format("svg"); /* iOS 4.1- */
 }
 
-@font-face {
-  font-family: "ethnocentric";
-  src: url("/public/fonts/ethnocentric/ethnocentric\ rg.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-
 body {
   --headerHeight: 50px;
+
   --defBgColor: #1e2227;
   --mainBgColor: #23272e;
   --overColor: #2d323b;
   --comColor: #373d48;
   --answerColor: #414a5b;
   --color: #d1dced;
-  --alertColor: #e13e3e;
   --lightColor: #7f848e;
+
   --primColor: #fcc076;
+  --alertColor: #e13e3e;
   --secdColor: rgb(205, 101, 92);
   --blueColor: #2f73d2;
   --secondary: #3772c5;
@@ -314,13 +309,35 @@ body {
   --accountBgColor: #23272e;
   --accountBaseColor: #c399cd;
 
-  --tesnAnswerColor: #24cba3;
-
   --shadow: 0 0.1rem 1.5rem 0 rgba(26, 26, 34, 0.9);
   --thinShadow: 0 0.05rem 1rem 0 rgba(19, 19, 23, 0.15);
   --lightShadow: var(--thinShadow);
   --bottomShadow: 0 5px 8px -8px #00000075;
   --rightShadow: 5px 0 8px -8px #00000075;
+
+  --themeButtonColor: #f3f3f3;
+  --themeButtonBgColor: #ff8234;
+
+  --transitionDelay: 0.5s;
+
+  transition: var(--transitionDelay);
+}
+
+body.light-theme {
+  --defBgColor: #fff;
+  --mainBgColor: #fff;
+  --overColor: #fff;
+  --comColor: #f9f9f9;
+  --answerColor: #f7f7f7;
+  --color: #3b3b3b;
+  --lightColor: #777c85;
+
+  --primColor: #ffa73b;
+
+  --shadow: 0 0.07rem 0.5rem 0 rgba(26, 26, 34, 0.5);
+
+  --themeButtonColor: #2f343d;
+  --themeButtonBgColor: #6da8fa;
 }
 
 html,

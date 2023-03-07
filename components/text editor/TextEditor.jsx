@@ -14,11 +14,15 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { articlesCollection } from "../../firebase";
+import { articlesCollection, storage } from "../../firebase";
 import { useRouter } from "next/router";
 import SubmitButton from "../inputs/SubmitButton";
 import Alert from "../inputs/Alert";
 import { useAuth } from "../../context/AuthProvider";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { v4 } from "uuid";
+import useIsAdmin from "../../hooks/useIsAdmin";
+import { useTargetBlog } from "../../context/BlogProvider";
 
 const TOOLBAR_OPTIONS = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -32,11 +36,14 @@ const TOOLBAR_OPTIONS = [
   ["code-block", "formula", "clean"],
 ];
 
-const SAVE_INTERVAL = 1000 * 60 * 5;
+const SAVE_INTERVAL = 1000 * 60 * 10;
 
 function TextEditor({ channel, blogId }) {
   const router = useRouter();
+
   const { currentUser } = useAuth();
+  const { adminId } = useIsAdmin(currentUser);
+  const { isOwner, blog } = useTargetBlog();
 
   const [quill, setQuill] = useState();
 
@@ -99,6 +106,18 @@ function TextEditor({ channel, blogId }) {
     };
   }, [quill, loading, article, handleSave]);
 
+  /** Quill editor image upload live cycle */
+  useEffect(() => {
+    if (quill == null || typeof selectLocalImage != "function") return;
+
+    // quill editor add image handler
+    quill.getModule("toolbar").addHandler("image", () => {
+      selectLocalImage();
+    });
+
+    const range = quill.getSelection();
+  }, [quill, selectLocalImage]);
+
   const wrapperRef = useCallback((wrapper) => {
     if (wrapper === null) return;
 
@@ -108,16 +127,24 @@ function TextEditor({ channel, blogId }) {
 
     const languages = [
       "javascript",
+      "typescript",
       "jsx",
       "js",
+      "ts",
+      "tsx",
       "c",
       "h",
       "hpp",
+      "hxx",
       "cpp",
-      "hpp",
-      "h",
       "java",
       "python",
+      "html",
+      "css",
+      "scss",
+      "csharp",
+      "ruby",
+      "xml",
     ];
 
     const q = new Quill(editor, {
@@ -130,11 +157,50 @@ function TextEditor({ channel, blogId }) {
       },
     });
 
-    q.setText("loading...");
+    q.setText("loading content...");
     q.disable();
 
     setQuill(q);
   }, []);
+
+  function selectLocalImage() {
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.click();
+
+    // Listen upload local image and save to server
+    input.onchange = () => {
+      const file = input.files[0];
+
+      // file type is only image.
+      if (/^image\//.test(file.type)) {
+        saveImageToServer(file);
+      } else {
+        setError("Importer uniquement des images !");
+      }
+    };
+  }
+
+  function saveImageToServer(file) {
+    if (!(file instanceof Blob)) return null;
+
+    const fileRef = ref(storage, `articles/${v4()}`);
+    uploadBytes(fileRef, file, {
+      customMetadata: { owner: isOwner ? blog.createBy : null, admin: adminId },
+    })
+      .then((snap) =>
+        getDownloadURL(snap.ref)
+          .then((url) => insertImageToEditor(url))
+          .catch((err) => setError("Echec de l'importation de l'image"))
+      )
+      .catch((err) => setError("Echec de l'importation de l'image"));
+  }
+
+  function insertImageToEditor(url) {
+    // push image url to rich editor.
+    const range = quill.getSelection();
+    quill.insertEmbed(range.index, "image", url);
+  }
 
   async function handleSave() {
     if (article.content === JSON.stringify(quill.getContents())) return;
@@ -149,7 +215,9 @@ function TextEditor({ channel, blogId }) {
       updateAt: serverTimestamp(),
     })
       .then(() => {
-        setSaveSuccess("Article content was updated successfully");
+        setSaveSuccess(
+          `Article content updated at ${new Date().toLocaleTimeString()}`
+        );
       })
       .catch((err) => setSaveError(err.message));
     setSaving(false);
@@ -168,17 +236,7 @@ function TextEditor({ channel, blogId }) {
             ? article.title
             : "Andmag-ground Text-editor"}
         </title>
-        <meta
-          name="description"
-          content={
-            loading
-              ? "loading..."
-              : article
-              ? article.description
-              : "Andmag-ground Text-editor"
-          }
-        />
-        <link rel="icon" href="/skill-upgrade.svg" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <div ref={wrapperRef} />
       <div className="auto-save">

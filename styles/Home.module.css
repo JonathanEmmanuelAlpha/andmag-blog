@@ -1,7 +1,7 @@
 .container {
   width: 100%;
   position: relative;
-  background-color: var(--mainBgColor);
+  background-color: var(--defBgColor);
 }
 
 .wrapper section {

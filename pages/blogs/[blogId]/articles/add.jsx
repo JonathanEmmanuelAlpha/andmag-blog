@@ -30,9 +30,14 @@ import {
   arrayUnion,
   collection,
   doc,
+  getDocs,
+  limit,
+  query,
   serverTimestamp,
   updateDoc,
+  where,
 } from "firebase/firestore";
+import Link from "next/link";
 
 export default function NewArticle() {
   const router = useRouter();
@@ -90,6 +95,15 @@ export default function NewArticle() {
     setLoading(true);
 
     try {
+      const existQ = query(
+        articlesCollection,
+        where("title", "==", title),
+        limit(1)
+      );
+      const exist = await getDocs(existQ);
+      if (!exist.empty)
+        return setError("The provided title is already in use.");
+
       const fileRef = v4();
       const channel = v4();
 
@@ -118,7 +132,7 @@ export default function NewArticle() {
 
       const res = await addDoc(articlesCollection, data);
 
-      await updateDoc(doc(blogsCollection, blog.id, "playlists", list), {
+      await updateDoc(doc(blogsCollection, blog.id, "playlists", list.id), {
         articles: arrayUnion(res.id),
         updateAt: serverTimestamp(),
       });
@@ -160,15 +174,19 @@ export default function NewArticle() {
         "Description may contain more than 64 and less than 255 characters."
       );
     }
-    if (!(thumbnail instanceof Blob)) {
-      return setError("You need to provide a thumbnail.");
-    }
 
     const list = playlists.find((list) => list.name === playlist);
     if (!list || !list.id) return setError("Selected an existing playlist");
 
     setLoading(true);
     try {
+      const existQ =
+        article.title !== title &&
+        query(articlesCollection, where("title", "==", title), limit(1));
+      const exist = existQ && (await getDocs(existQ));
+      if (exist && !exist.empty)
+        return setError("The provided title is already in use.");
+
       const channel = v4();
       let downloadURL = null;
       if (thumbnail instanceof Blob) {
@@ -264,11 +282,18 @@ export default function NewArticle() {
           inforMessage="Drag and drop an image file here"
           onFilesUpload={(files) => setThumbnail(files[0])}
         />
-        <SubmitButton
-          loading={loading}
-          text={article && article.id && isOwner ? "sauvegarder" : "créer"}
-          progress={25}
-        />
+        <div className={styles.edit_btns}>
+          <SubmitButton
+            loading={loading}
+            text={article && article.id && isOwner ? "sauvegarder" : "créer"}
+            progress={25}
+          />
+          <Link
+            href={`/blogs/${router.query.blogId}/articles/edit?channel=${article.channel}`}
+          >
+            Editer le contenu
+          </Link>
+        </div>
       </Form>
     </BlogContainer>
   );

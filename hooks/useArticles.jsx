@@ -8,9 +8,12 @@ import {
   where,
 } from "firebase/firestore";
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useAuth } from "../context/AuthProvider";
 import { articlesCollection, blogsCollection } from "../firebase";
 
-export default function useArticles(blogId, docLimit = 9, pageNumber) {
+export default function useArticles(blogId, docLimit = 20, pageNumber) {
+  const { currentUser } = useAuth();
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -27,7 +30,6 @@ export default function useArticles(blogId, docLimit = 9, pageNumber) {
     let q = query(
       articlesCollection,
       where("blogId", "==", blogId),
-      where("published", "==", true),
       orderBy("createAt"),
       startAfter(lastDoc || 0),
       limit(docLimit)
@@ -38,7 +40,12 @@ export default function useArticles(blogId, docLimit = 9, pageNumber) {
         snapshot.forEach((snap) => {
           setDocs((prevDocs) => {
             let newDoc = { id: snap.id, ...snap.data() };
-            if (prevDocs.find((doc) => doc.id === newDoc.id)) return prevDocs;
+            if (
+              prevDocs.find((doc) => doc.id === newDoc.id) ||
+              (newDoc.published === false &&
+                newDoc.createBy !== currentUser?.uid)
+            )
+              return prevDocs;
             return [...prevDocs, newDoc];
           });
         });
@@ -49,7 +56,6 @@ export default function useArticles(blogId, docLimit = 9, pageNumber) {
         setLastDoc(last);
       })
       .catch((error) => {
-        console.log("error: ", error);
         setError(error.message);
       });
   }
@@ -62,7 +68,7 @@ export default function useArticles(blogId, docLimit = 9, pageNumber) {
     goToNextPage();
 
     setLoading(false);
-  }, [pageNumber, blogId]);
+  }, [pageNumber, blogId, currentUser]);
 
   return { loading, docs, hasMore, error };
 }

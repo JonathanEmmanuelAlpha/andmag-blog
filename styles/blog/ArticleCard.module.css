@@ -74,6 +74,9 @@
   font-size: 13px;
   justify-content: flex-start;
 }
+.stats span {
+  line-height: 16px;
+}
 
 @media screen and (max-width: 500px) {
   .card {

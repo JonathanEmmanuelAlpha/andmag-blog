@@ -2,6 +2,7 @@
   width: 100%;
   background-color: var(--mainBgColor);
   color: #dce3ef;
+  text-align: center;
 }
 
 .container .rights {
@@ -14,6 +15,7 @@
   justify-content: center;
   font-size: 18px;
   font-weight: 600;
+  text-align: center;
 }
 .container .rights a {
   color: var(--primColor);

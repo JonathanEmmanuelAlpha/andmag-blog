@@ -101,6 +101,7 @@ export default function AddTrainning() {
       time: time,
       questionsNumber: questionsNumber,
       target: target,
+      published: false,
     };
 
     setLoading(true);

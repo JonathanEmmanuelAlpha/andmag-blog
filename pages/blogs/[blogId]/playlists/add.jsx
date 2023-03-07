@@ -24,8 +24,12 @@ import {
   addDoc,
   collection,
   doc,
+  getDocs,
+  limit,
+  query,
   serverTimestamp,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import useBlog from "../../../../hooks/useBlog";
 
@@ -76,6 +80,14 @@ export default function NewPlayList() {
     setLoading(true);
 
     try {
+      const existQ = query(
+        collection(blogsCollection, "playlists"),
+        where("name", "==", name),
+        limit(1)
+      );
+      const exist = await getDocs(existQ);
+      if (!exist.empty) return setError("The provided name is already in use.");
+
       const fileRef = v4();
       const downloadURL = await fileUpload(
         `playlists/${fileRef}`,
@@ -130,12 +142,21 @@ export default function NewPlayList() {
         "Description may contain more than 64 and less than 255 characters."
       );
     }
-    if (!(thumbnail instanceof Blob)) {
-      return setError("You need to provide a thumbnail.");
-    }
+
     setLoading(true);
 
     try {
+      const existQ =
+        playlist.name !== name &&
+        query(
+          collection(blogsCollection, "playlists"),
+          where("name", "==", name),
+          limit(1)
+        );
+      const exist = existQ && (await getDocs(existQ));
+      if (exist && !exist.empty)
+        return setError("The provided name is already in use.");
+
       let downloadURL = null;
       if (thumbnail instanceof Blob) {
         downloadURL = await fileUpload(
