@@ -97,7 +97,11 @@ function Uploader(props) {
           onDrop={handleDrop}
         >
           <h4>{props.message}</h4>
-          {props.inforMessage ? <span>{props.inforMessage}</span> : null}
+          {props.inforMessage ? (
+            <span>{props.inforMessage}</span>
+          ) : (
+            "Click, or drag and drop an image file here"
+          )}
         </label>
         <input
           type="file"

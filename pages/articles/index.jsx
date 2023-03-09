@@ -63,6 +63,8 @@ function Articles() {
                   title={article.title}
                   reads={article.readers}
                   at={article.updateAt ? article.updateAt : article.createAt}
+                  desc={article.description}
+                  tags={article.tags}
                 />
               );
             })

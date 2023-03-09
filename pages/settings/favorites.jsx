@@ -61,7 +61,9 @@ export default function Subscriptions() {
                 thumbnail={article.thumbnail}
                 title={article.title}
                 reads={article.readers}
-                at={article.updateAt}
+                at={article.updateAt ? article.updateAt : article.createAt}
+                desc={article.description}
+                tags={article.tags}
               />
             ))
           ) : (

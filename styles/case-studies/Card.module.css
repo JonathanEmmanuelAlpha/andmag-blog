@@ -1,0 +1,133 @@
+.container {
+  width: 800px;
+  height: 500px;
+  overflow: hidden;
+  margin: 20px 0;
+  position: relative;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+
+.container img {
+  width: 800px;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(61, 88, 146, 0.75),
+    rgba(6, 25, 79, 0.75)
+  );
+  z-index: 1;
+  transform: translateX(-800px);
+  transition: 1s;
+  border-radius: 10px;
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+.overlay span {
+  font-size: 6rem;
+  color: #ffff;
+  opacity: 0;
+  transition: 1s;
+}
+.container:hover .overlay,
+.container:focus .overlay {
+  transform: translateX(0px);
+}
+.container:hover .overlay span,
+.container:focus .overlay span {
+  opacity: 1;
+}
+
+.wrapper {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  z-index: 2;
+  padding: 10px 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+.wrapper span {
+  font-size: 2.1rem;
+  color: #ffff;
+  text-shadow: 1px -1px rgb(20, 20, 20), 2px -2px rgb(0, 0, 0);
+  margin-bottom: 10px;
+}
+.wrapper p {
+  font-size: 1.25rem;
+  color: #e0e0e0;
+  margin-bottom: 20px;
+}
+
+.exp_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.1rem;
+  padding: 8px 10px;
+  color: #ffff;
+  font-weight: 600;
+  border-radius: 3px;
+  background-image: linear-gradient(to right, rgb(255, 30, 0), rgb(255, 85, 0));
+  transition: 0.5s;
+}
+.exp_btn svg {
+  width: 25px;
+  height: 25px;
+  margin-left: 5px;
+}
+.exp_btn:hover {
+  box-shadow: 0 0.01em 2em 0 rgba(255, 136, 0);
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    width: 600px;
+    height: 350px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 80%;
+    height: 310px;
+  }
+  .overlay span {
+    font-size: 4rem;
+  }
+  .wrapper span {
+    font-size: 1.75rem;
+  }
+  .wrapper p {
+    font-size: 1rem;
+    line-height: 22px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .container {
+    width: 90%;
+    height: 270px;
+  }
+  .overlay span {
+    font-size: 3.5rem;
+  }
+  .wrapper span {
+    font-size: 1.5rem;
+  }
+}

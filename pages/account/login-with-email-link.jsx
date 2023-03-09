@@ -46,7 +46,7 @@ function Login(props) {
   return (
     <SkeletonLayout
       title="Se connecter"
-      description="Connectez en un clic. Entrez votre adresse email dans la zone ci-dessous, nous vous enverrons un lien pour vous connecter."
+      description="Connectez vous en un clic. Entrez votre adresse email dans la zone ci-dessous, nous vous enverrons un lien pour vous connecter."
     >
       <AccountContainer
         title="Bienvenue sur Andmag ground"
@@ -65,7 +65,7 @@ function Login(props) {
         }
         btnMsg="Connection"
         handleSubmit={handleSubmit}
-        otherLinks={["register", "forgot-password", "login"]}
+        otherLinks={["register", "forgot-password", "with-password"]}
       />
     </SkeletonLayout>
   );

@@ -19,6 +19,7 @@ export default function Header({
   ogImage,
   onOpen,
   robots,
+  isHome,
 }) {
   const router = useRouter();
   const { currentUser, loadingUser, logout } = useAuth();
@@ -56,6 +57,13 @@ export default function Header({
         <meta property="twitter:title" content={title || "Andmag-ground"} />
         <meta property="twitter:description" content={description || desc} />
         <meta property="twitter:image" content={ogImage || "/logo/AG.png"} />
+
+        {isHome && (
+          <meta
+            name="google-site-verification"
+            content="_vWfdPyu3FhlyaU6-0SE_aaEecwEICwLk4yhqqKxsX4"
+          />
+        )}
       </Head>
       <header className={styles.container}>
         <AppICon onOpen={onOpen} />

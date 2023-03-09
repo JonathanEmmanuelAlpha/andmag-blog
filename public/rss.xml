@@ -4,7 +4,7 @@
         <title>Andmag-ground</title>
         <link>http://localhost:3000</link>
         <description>Speed, efficiency, performance and safety are our pride. Whatever the difficulty of your project, we promise you support that meets your expectations</description>
-        <lastBuildDate>Tue, 07 Mar 2023 19:43:29 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 09 Mar 2023 16:31:32 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -17,7 +17,7 @@
             <title><![CDATA[Premiers pas avec le langage de programmation C]]></title>
             <link>http://localhost:3000/articles/Premiers pas avec le langage de programmation C-XvHo5JVCUSG7IfBaL7QO</link>
             <guid>XvHo5JVCUSG7IfBaL7QO</guid>
-            <pubDate>Tue, 07 Mar 2023 10:28:11 GMT</pubDate>
+            <pubDate>Wed, 08 Mar 2023 11:07:28 GMT</pubDate>
             <description><![CDATA[Premiers pas avec le langage de programmation C, configuration environnement de développement, installation compilateur, installation de l'éditeur, premier programme C, compiler en ligne de commende.]]></description>
         </item>
     </channel>

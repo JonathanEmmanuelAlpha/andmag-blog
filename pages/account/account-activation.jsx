@@ -118,7 +118,7 @@ export default function Activation(props) {
           error={error}
           loading={loading}
           success={success}
-          otherLinks={["login", "register", "forgot-password", "with-email"]}
+          otherLinks={["register"]}
         />
       )}
     </SkeletonLayout>

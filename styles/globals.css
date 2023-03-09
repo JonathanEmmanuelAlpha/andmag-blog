@@ -333,10 +333,10 @@ body.light-theme {
   --lightColor: #777c85;
 
   --primColor: #ff933b;
-  --linkColor: #2a73d9;
+  --linkColor: #2f73d2;
 
-  --accountBgColor: #f9f9f9;
-  --accountBaseColor: #8c4ea9;
+  --accountBgColor: #fff;
+  --accountBaseColor: #3867be;
 
   --shadow: 0 0.07rem 0.5rem 0 rgba(26, 26, 34, 0.5);
 
@@ -479,6 +479,14 @@ main section {
   height: 50vh;
   margin: 0;
 }
+
+@media screen and (max-width: 1024px) {
+  .text-editor-container .ql-editor {
+    width: 100%;
+    padding: 2em;
+  }
+}
+
 @media screen and (max-width: 550px) {
   .ql-container .ql-editor .ql-video {
     height: 40vh;

@@ -405,6 +405,7 @@
     width: 100%;
     margin: 0;
     height: 88px;
+    overflow-y: hidden;
   }
   .playlist[data-device="mobile"]::-webkit-scrollbar {
     display: none;
@@ -412,6 +413,7 @@
   }
   .playlist[data-mobile-active="true"] {
     animation: toggle-playlist 0.25s linear forwards;
+    overflow-y: scroll;
   }
   .playlist_info {
     position: relative;

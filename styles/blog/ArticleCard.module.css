@@ -1,86 +1,152 @@
 .card {
-  display: inline-block;
-  min-width: 320px;
-  max-width: 400px;
-  overflow: hidden;
-  margin: 30px;
-  box-shadow: var(--shadow);
-  background-color: var(--overColor);
-  border-radius: 10px;
-  text-decoration: none;
-  position: relative;
-}
-.card > * {
-  pointer-events: none;
-}
-.card a {
-  pointer-events: all;
-}
-.header {
-  width: 100%;
-  height: 200px;
-  border-radius: 10px;
-}
-.header img {
-  width: 100%;
-  height: 100%;
-  border-radius: 10px 10px 0 0;
-}
-
-.body {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 7px;
-}
-.blog_logo {
-  width: 60px;
-  height: 60px;
-  border-radius: 100%;
-  pointer-events: all !important;
-}
-.blog_logo img {
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-}
-.infos {
+  width: 800px;
+  background-color: var(--mainBgColor);
+  border-radius: 5px;
+  box-shadow: var(--thinShadow);
   display: flex;
   align-items: flex-start;
-  flex-direction: column;
-  justify-content: flex-start;
-  margin-left: 10px;
+  justify-content: space-between;
 }
-.infos h2 {
-  font-size: 16.5px;
-  font-weight: 600;
-  margin: 0;
-  line-height: 20px;
-  color: var(--color);
+
+.card > img {
+  width: 250px;
+  border-radius: 0 5px 0 0;
 }
-.stats {
+
+.card .wrapper {
+  padding: 15px;
+}
+
+.card header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card .logo {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  flex-wrap: wrap;
-  font-size: 13px;
-  font-weight: 600;
-  margin-top: 6px;
-  color: var(--lightColor);
 }
-.stats > a {
+.card .logo img {
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+}
+.card .logo a {
   color: var(--linkColor);
-  pointer-events: all;
-  font-size: 13px;
-  justify-content: flex-start;
+  text-transform: capitalize;
+  margin-left: 5px;
+  font-weight: 500;
+  font-size: 14px;
 }
-.stats span {
-  line-height: 16px;
+.card .logo a:hover {
+  border-bottom: 1px solid var(--linkColor);
 }
 
-@media screen and (max-width: 500px) {
+.card .tags {
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.card .tags span {
+  padding: 0 3px;
+}
+
+.card .title {
+  font-size: 1.5rem;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  padding: 10px 0;
+  color: var(--color);
+  display: block;
+}
+
+.card p {
+  color: var(--lightColor);
+  margin-bottom: 10px;
+  line-height: 22px;
+}
+
+.card .foot {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card .stats {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--lightColor);
+}
+
+.card .read_link {
+  width: max-content;
+  color: var(--primColor);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card .read_link svg {
+  width: 20px;
+  height: 20px;
+}
+
+@media screen and (max-width: 900px) {
   .card {
-    margin: 20px;
+    max-width: 600px;
+    flex-direction: column-reverse;
+  }
+  .card img {
+    width: 100%;
+    height: 180px;
+    border-radius: 5px 5px 0 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .card {
+    max-width: 400px;
+    margin: 15px;
+  }
+  .card header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .card .logo {
+    margin-bottom: 5px;
+  }
+  .card .title {
+    font-size: 1.25rem;
+  }
+  .card .stats {
+    font-size: 13px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .card {
+    max-width: 350px;
+  }
+  .card .title {
+    font-size: 1.15rem;
+  }
+  .card p {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .card {
+    max-width: 320px;
+  }
+  .card .title {
+    font-size: 1.1rem;
+  }
+  .card p {
+    font-size: 14px;
   }
 }
 

@@ -6,28 +6,28 @@ import SubmitButton from "../inputs/SubmitButton";
 import Alert from "../inputs/Alert";
 import Link from "next/link";
 import { domainName } from "../links/AwesomeLink.type";
-import {
-  faContactCard,
-  faEnvelope,
-  faGear,
-  faSignInAlt,
-  faUserPlus,
-} from "@fortawesome/free-solid-svg-icons";
 
 export function Input(props) {
   return (
-    <div className={styles.input}>
-      {props.LeftIcon}
-      <input
-        type={props.type}
-        required={props.isRequired}
-        placeholder={props.placeholder}
-        value={props.value}
-        onChange={props.handleChange}
-        disabled={props.disabled}
-        style={{ color: props.disabled ? "grey" : "initial" }}
-      />
-      {props.RightIcon}
+    <div className={styles.input_wrap}>
+      {props.withFGP && (
+        <Link href={`${domainName}/account/forgotPassword`}>
+          Mot de passe oublié ?
+        </Link>
+      )}
+      <div className={styles.input}>
+        {props.LeftIcon}
+        <input
+          type={props.type}
+          required={props.isRequired}
+          placeholder={props.placeholder}
+          value={props.value}
+          onChange={props.handleChange}
+          disabled={props.disabled}
+          style={{ color: props.disabled ? "grey" : "initial" }}
+        />
+        {props.RightIcon}
+      </div>
     </div>
   );
 }
@@ -35,6 +35,7 @@ Input.propTypes = {
   type: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
   isRequired: PropTypes.bool,
+  withFGP: PropTypes.string,
   placeholder: PropTypes.string,
   value: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
@@ -72,44 +73,32 @@ function AccountContainer(props) {
           {props.otherLinks && (
             <div className={styles.options}>
               {props.otherLinks.includes("login") && (
-                <Link href={`${domainName}/account/login`}>
-                  <a>
-                    <FontAwesomeIcon icon={faSignInAlt} />
-                    Se connecter
-                  </a>
-                </Link>
+                <div>
+                  <span>Déjà membre ?</span>
+                  <Link href={`${domainName}/account/login`}>Se connecter</Link>
+                </div>
               )}
               {props.otherLinks.includes("register") && (
-                <Link href={`${domainName}/account/register`}>
-                  <a>
-                    <FontAwesomeIcon icon={faUserPlus} />
+                <div>
+                  <span>Pas de compte ?</span>
+                  <Link href={`${domainName}/account/register`}>
                     Créer un compte
-                  </a>
-                </Link>
+                  </Link>
+                </div>
               )}
               {props.otherLinks.includes("with-email") && (
-                <Link href={`${domainName}/account/login-with-email-link`}>
-                  <a>
-                    <FontAwesomeIcon icon={faEnvelope} />
+                <div>
+                  <span>Accès rapide ?</span>
+                  <Link href={`${domainName}/account/login-with-email-link`}>
                     Utiliser mon email
-                  </a>
-                </Link>
+                  </Link>
+                </div>
               )}
-              {props.otherLinks.includes("forgot-password") && (
-                <Link href={`${domainName}/account/forgotPassword`}>
-                  <a>
-                    <FontAwesomeIcon icon={faGear} />
-                    Mot de passe oublié
-                  </a>
-                </Link>
-              )}
-              {props.otherLinks.includes("account-activation") && (
-                <Link href={`${domainName}/account/account-activation`}>
-                  <a>
-                    <FontAwesomeIcon icon={faContactCard} />
-                    Activer mon compte
-                  </a>
-                </Link>
+              {props.otherLinks.includes("with-password") && (
+                <div>
+                  <span>Connection classique ?</span>
+                  <Link href={`${domainName}/account/login`}>Se connecter</Link>
+                </div>
               )}
             </div>
           )}

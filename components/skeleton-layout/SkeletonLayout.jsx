@@ -174,6 +174,7 @@ function SkeletonLayout({
   ogType,
   ogImage,
   robots,
+  isHome,
   children,
 }) {
   const [open, setOpen] = useState(false);
@@ -188,6 +189,7 @@ function SkeletonLayout({
         title={title}
         onOpen={() => setOpen(!open)}
         robots={robots}
+        isHome={isHome}
       />
       <section className={styles.layout}>
         <SideBar open={open} />

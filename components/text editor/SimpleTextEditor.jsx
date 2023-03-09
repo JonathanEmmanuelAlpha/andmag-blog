@@ -23,50 +23,51 @@ const TOOLBAR_OPTIONS = [
 function SimpleTextEditor({ onReady, initialDelta }) {
   const [quill, setQuill] = useState();
 
-  const wrapperRef = useCallback(
-    (wrapper) => {
-      if (wrapper === null) return;
+  useEffect(() => {
+    if (!quill || !initialDelta) return;
 
-      wrapper.innerHTML = "";
-      const editor = document.createElement("div");
-      wrapper.append(editor);
+    quill.setContents(initialDelta);
+    if (typeof onReady === "function") onReady(quill);
+  }, [quill, initialDelta]);
 
-      const languages = [
-        "javascript",
-        "typescript",
-        "jsx",
-        "js",
-        "c",
-        "h",
-        "hpp",
-        "cpp",
-        "hpp",
-        "java",
-        "python",
-        "html",
-        "css",
-        "scss",
-        "csharp",
-        "ruby",
-        "xml",
-      ];
-      const q = new Quill(editor, {
-        theme: "snow",
-        modules: {
-          syntax: {
-            highlight: (text) => hljs.highlightAuto(text, languages).value,
-          },
-          toolbar: TOOLBAR_OPTIONS,
+  const wrapperRef = useCallback((wrapper) => {
+    if (wrapper === null) return;
+
+    wrapper.innerHTML = "";
+    const editor = document.createElement("div");
+    wrapper.append(editor);
+
+    const languages = [
+      "javascript",
+      "typescript",
+      "jsx",
+      "js",
+      "c",
+      "h",
+      "hpp",
+      "cpp",
+      "hpp",
+      "java",
+      "python",
+      "html",
+      "css",
+      "scss",
+      "csharp",
+      "ruby",
+      "xml",
+    ];
+    const q = new Quill(editor, {
+      theme: "snow",
+      modules: {
+        syntax: {
+          highlight: (text) => hljs.highlightAuto(text, languages).value,
         },
-      });
+        toolbar: TOOLBAR_OPTIONS,
+      },
+    });
 
-      if (initialDelta) q.setContents(initialDelta);
-      setQuill(q);
-
-      if (typeof onReady === "function") onReady(q);
-    },
-    [initialDelta]
-  );
+    setQuill(q);
+  }, []);
 
   return (
     <div className="simple-text-editor-container">

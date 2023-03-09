@@ -17,12 +17,12 @@ import {
 import { articlesCollection, storage } from "../../firebase";
 import { useRouter } from "next/router";
 import SubmitButton from "../inputs/SubmitButton";
-import Alert from "../inputs/Alert";
 import { useAuth } from "../../context/AuthProvider";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
 import useIsAdmin from "../../hooks/useIsAdmin";
 import { useTargetBlog } from "../../context/BlogProvider";
+import { toast } from "react-toastify";
 
 const TOOLBAR_OPTIONS = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -52,8 +52,6 @@ function TextEditor({ channel, blogId }) {
   const [error, setError] = useState("");
 
   const [saving, setSaving] = useState(false);
-  const [saveError, setSaveError] = useState("");
-  const [saveSuccess, setSaveSuccess] = useState("");
 
   /** Get document from target edition channel */
   useEffect(() => {
@@ -202,24 +200,23 @@ function TextEditor({ channel, blogId }) {
     quill.insertEmbed(range.index, "image", url);
   }
 
-  async function handleSave() {
+  function handleSave() {
     if (article.content === JSON.stringify(quill.getContents())) return;
-
-    setSaveError("");
-    setSaveSuccess("");
     setSaving(true);
 
-    updateDoc(doc(articlesCollection, article.id), {
-      content: JSON.stringify(quill.getContents()),
-      published: true,
-      updateAt: serverTimestamp(),
-    })
-      .then(() => {
-        setSaveSuccess(
-          `Article content updated at ${new Date().toLocaleTimeString()}`
-        );
-      })
-      .catch((err) => setSaveError(err.message));
+    toast.promise(
+      updateDoc(doc(articlesCollection, article.id), {
+        content: JSON.stringify(quill.getContents()),
+        published: true,
+        updateAt: serverTimestamp(),
+      }),
+      {
+        pending: "Sauvegarde en cours...",
+        success: `Contenu mis à jour | ${new Date().toLocaleTimeString()}`,
+        error: "Echec de la mise à jour du contenu",
+      }
+    );
+
     setSaving(false);
   }
 
@@ -246,16 +243,10 @@ function TextEditor({ channel, blogId }) {
           progress={25}
           text="save"
           onClick={async () => {
-            try {
-              await handleSave();
-              return router.push(`/articles/${article.id}`);
-            } catch (error) {
-              setSaveError(error.message);
-            }
+            handleSave();
+            return router.push(`/articles/${article.id}`);
           }}
         />
-        {saveError && <Alert type="danger" message={saveError} />}
-        {saveSuccess && <Alert type="success" message={saveSuccess} />}
       </div>
     </div>
   );

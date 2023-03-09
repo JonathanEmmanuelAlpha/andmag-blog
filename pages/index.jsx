@@ -18,6 +18,8 @@ import {
   TwiterIcon,
   WhatsappIcon,
 } from "../components/app-icon/AppICon";
+import Link from "next/link";
+import { domainName } from "../components/links/AwesomeLink.type";
 
 function SocialsWrapper() {
   return (
@@ -55,9 +57,15 @@ function HeadSection() {
   return (
     <section className={styles.hm}>
       <div className={styles.wrapper}>
-        <div className={styles.logo}>
-          <h1>Andmag Ground</h1>
-          <p>Full stack developer & UI/UX Designer.</p>
+        <h1>Andmag Ground</h1>
+        <p>Full stack developer & UI/UX Designer.</p>
+        <div className={styles.mor_links}>
+          <Link href={`${domainName}/recent-works`}>
+            <a className={styles.cs}>Travaux récents</a>
+          </Link>
+          <Link href={`${domainName}/case-studies`}>
+            <a className={styles.re}>Réalistations</a>
+          </Link>
         </div>
       </div>
     </section>
@@ -559,7 +567,7 @@ function Contact() {
 
 export default function Home() {
   return (
-    <SkeletonLayout>
+    <SkeletonLayout isHome={true}>
       <div className={styles.container}>
         <div className={styles.wrapper}>
           <HeadSection />

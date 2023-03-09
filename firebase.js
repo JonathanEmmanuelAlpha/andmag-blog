@@ -27,6 +27,7 @@ export const blogsCollection = collection(database, "blogs");
 export const articlesCollection = collection(database, "articles");
 export const trainningsCollection = collection(database, "trainnings");
 export const faqsCollection = collection(database, "faqs");
+export const studiesCollection = collection(database, "caseStudies");
 
 //#region HELPERS
 export const AUTH_ERRORS = {

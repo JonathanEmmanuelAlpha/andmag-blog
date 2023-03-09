@@ -70,6 +70,7 @@ function Login(props) {
               placeholder="Mot de passe"
               value={password}
               isRequired
+              withFGP
               handleChange={(e) => setPassword(e.target.value)}
               LeftIcon={<FontAwesomeIcon icon={faGear} />}
             />

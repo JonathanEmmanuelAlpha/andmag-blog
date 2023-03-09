@@ -5,7 +5,7 @@
   width: 80%;
   max-width: 800px;
   margin: 0 auto 20px auto;
-  background-color: var(--comColor);
+  background-color: var(--mainBgColor) !important;
   padding: 5px;
   border-radius: 5px;
 }
