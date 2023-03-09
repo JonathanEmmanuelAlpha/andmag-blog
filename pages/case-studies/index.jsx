@@ -35,6 +35,7 @@ export default function Studies() {
           studies.map((study, index) => {
             return (
               <Card
+                key={index}
                 index={index + 1}
                 name={study.name}
                 imageUrl={study.screenShoot}
