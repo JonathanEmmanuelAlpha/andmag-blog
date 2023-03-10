@@ -1,9 +1,10 @@
+import fs from "fs";
 import dashify from "dashify";
 import { format } from "date-fns";
 import { domainName } from "../components/links/AwesomeLink.type";
 import { articlesCollection } from "../libs/database";
 
-export default function Sitemap() {
+export default function GenerateSitemap() {
   return null;
 }
 
@@ -11,6 +12,8 @@ export async function getServerSideProps(ctx) {
   ctx.res.setHeader("Content-Type", "text/xml");
 
   const xml = await generateSitemap();
+  fs.writeFileSync("./public/sitemap.xml", xml);
+
   ctx.res.write(xml);
   ctx.res.end(0);
 
