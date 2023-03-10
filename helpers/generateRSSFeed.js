@@ -1,6 +1,7 @@
 import fs from "fs";
 import { Feed } from "feed";
 import { articlesCollection } from "../libs/database";
+import dashify from "dashify";
 
 export default async function generateRSSFeed() {
   const result = await articlesCollection.orderBy("createAt", "desc").get();
@@ -32,7 +33,9 @@ export default async function generateRSSFeed() {
     feed.addItem({
       title: article.data().title,
       id: article.id,
-      link: `${site_url}/articles/${article.data().title}-${article.id}`,
+      link: `${site_url}/articles/${dashify(article.data().title)}-${
+        article.id
+      }`,
       description: article.data().description,
       date: new Date(article.data().updateAt.seconds * 1000),
       author: article.data().blogName,

@@ -23,6 +23,7 @@ import { v4 } from "uuid";
 import useIsAdmin from "../../hooks/useIsAdmin";
 import { useTargetBlog } from "../../context/BlogProvider";
 import { toast } from "react-toastify";
+import ToasComponent from "../skeleton-layout/ToasComponent";
 
 const TOOLBAR_OPTIONS = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -248,6 +249,8 @@ function TextEditor({ channel, blogId }) {
           }}
         />
       </div>
+
+      <ToasComponent closeDelay={false} />
     </div>
   );
 }
