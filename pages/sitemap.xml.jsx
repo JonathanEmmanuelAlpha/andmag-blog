@@ -56,7 +56,11 @@ async function generateSitemap() {
                   article.data().title
                 )}-${article.id}</loc>
                             <lastmod>${format(
-                              new Date(article.data().createAt.seconds * 1000),
+                              new Date(
+                                article.data().updateAt
+                                  ? article.data().updateAt.seconds * 1000
+                                  : article.data().createAt.seconds * 1000
+                              ),
                               "yyyy-MM-dd"
                             )}</lastmod>
                         </url>`;
