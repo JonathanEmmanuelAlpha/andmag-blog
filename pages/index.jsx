@@ -510,12 +510,7 @@ function InfoCard({
   return (
     <section className={styles.info_card}>
       <div className={styles.left}>
-        <img
-          className="skeleton"
-          src={imageUrl}
-          alt={title + ".png"}
-          priority
-        />
+        <img className="skeleton" src={imageUrl} alt={title + ".png"} />
         <div className={styles.over} />
       </div>
       <div className={styles.right}>

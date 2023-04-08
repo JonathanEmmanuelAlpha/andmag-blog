@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 
-export default function (req, res) {
+export default function handler(req, res) {
   const data = req.body;
 
   if (

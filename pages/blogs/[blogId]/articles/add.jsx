@@ -67,7 +67,7 @@ export default function NewArticle() {
       if (list) return list.name;
       return prev;
     });
-  }, [loadingArticle, article]);
+  }, [loadingArticle, article, playlists]);
 
   const [error, setError] = useState();
   const [success, setSuccess] = useState();

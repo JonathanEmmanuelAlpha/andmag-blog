@@ -97,7 +97,7 @@ function AnswersQCM({ shwo, trainningDocRef, question }) {
 
   /** Chargement des reponses */
   useEffect(() => {
-    if (!question) return;
+    if (!question || !trainningDocRef) return;
 
     const q = query(
       collection(
@@ -119,7 +119,7 @@ function AnswersQCM({ shwo, trainningDocRef, question }) {
     setLoadingAnswers(false);
 
     return unsubscriber;
-  }, [question]);
+  }, [question, trainningDocRef]);
 
   async function saveAnswer() {
     const answer = {
@@ -319,7 +319,7 @@ export default function Questions() {
       if (!test.exists()) return router.push("/");
       setTrainningDoc({ id: test.id, ...test.data() });
     });
-  }, [router.query.channel]);
+  }, [router, router.query.channel]);
 
   /** Update questions array for each modifications */
   useEffect(() => {
