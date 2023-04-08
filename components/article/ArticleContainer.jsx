@@ -63,9 +63,7 @@ function ArticleContainer({ article, blog, playlist, comments }) {
         setArticles([]);
         snaps.forEach((snap) => {
           setArticles((prev) => {
-            if (snap.exists())
-              return [...prev, { id: snap.id, ...snap.data() }];
-            return prev;
+            return [...prev, { id: snap.id, ...snap.data() }];
           });
         });
       })
@@ -93,12 +91,18 @@ function ArticleContainer({ article, blog, playlist, comments }) {
         <div className={styles.section}>
           <Header article={article} blog={blog} />
           <article>
-            <PlayListFull
-              playlist={playlist}
-              articles={articles}
-              totalReaders={totalReaders}
-              mobileDevice={true}
-            />
+            {typeof window !== "undefined" && window.outerWidth <= 1200 ? (
+              loadingArticles ? (
+                <LoadingScreen />
+              ) : (
+                <PlayListFull
+                  playlist={playlist}
+                  articles={articles}
+                  totalReaders={totalReaders}
+                  mobileDevice={true}
+                />
+              )
+            ) : null}
             <QuillContent delta={JSON.parse(article.content)} />
           </article>
           <PostEndSeparator />
@@ -107,7 +111,9 @@ function ArticleContainer({ article, blog, playlist, comments }) {
             playlist={playlist}
             totalReaders={totalReaders}
           />
-          <PageNavigation article={article} articles={articles} />
+          {articles.length > 1 && (
+            <PageNavigation article={article} articles={articles} />
+          )}
           <div className={styles.com_show}>
             <div>
               <span>Commentaires</span>
@@ -139,15 +145,17 @@ function ArticleContainer({ article, blog, playlist, comments }) {
           )}
         </div>
       </div>
-      {loadingArticles ? (
-        <LoadingScreen />
-      ) : (
-        <PlayListFull
-          playlist={playlist}
-          articles={articles}
-          totalReaders={totalReaders}
-        />
-      )}
+      {typeof window !== "undefined" && window.outerWidth > 1200 ? (
+        loadingArticles ? (
+          <LoadingScreen />
+        ) : (
+          <PlayListFull
+            playlist={playlist}
+            articles={articles}
+            totalReaders={totalReaders}
+          />
+        )
+      ) : null}
     </div>
   );
 }

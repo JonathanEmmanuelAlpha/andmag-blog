@@ -44,6 +44,7 @@ export default function AddTrainning() {
   const [time, setTime] = useState(0);
   const [questionsNumber, setQuestionNumber] = useState(0);
   const [target, setTarget] = useState("public");
+  const [level, setLevel] = useState("easy");
 
   const { currentTrainning } = useTrainning(
     router.query.blogId,
@@ -59,6 +60,7 @@ export default function AddTrainning() {
     setTime(currentTrainning.doc.time);
     setQuestionNumber(currentTrainning.doc.questionsNumber);
     setTarget(currentTrainning.doc.target);
+    setLevel(currentTrainning.doc.level);
   }, [currentTrainning, currentTrainning.doc]);
 
   const [error, setError] = useState();
@@ -71,6 +73,9 @@ export default function AddTrainning() {
 
     if (target !== "public" && target !== "community") {
       return setError("Portée de session invalide");
+    }
+    if (level !== "easy" && level !== "medium" && level !== "hard") {
+      return setError("Niveau de difficulté invalide");
     }
     if (title.length > 30 || title.length < 10) {
       return setError(
@@ -101,6 +106,7 @@ export default function AddTrainning() {
       time: time,
       questionsNumber: questionsNumber,
       target: target,
+      level: level,
       published: false,
     };
 
@@ -149,6 +155,7 @@ export default function AddTrainning() {
     let data = {};
     if (target !== currentTrainning.doc.target)
       data = { ...data, target: target };
+    if (level !== currentTrainning.doc.level) data = { ...data, level: level };
     if (title !== currentTrainning.doc.title) data = { ...data, title: title };
     if (description !== currentTrainning.doc.description)
       data = { ...data, description: description };
@@ -230,6 +237,45 @@ export default function AddTrainning() {
               onChange={(e) => setQuestionNumber(parseInt(e.target.value))}
             />
           </div>
+
+          <fieldset>
+            <legend>Niveau de difficulté</legend>
+            <div>
+              <RadioInput
+                label="Easy"
+                icon={<FontAwesomeIcon icon={faUsers} />}
+                styleWidth="150px"
+                styleHeight="100px"
+                name="test-level"
+                id="easy"
+                value={level}
+                active={"easy" === level}
+                handleChange={(event) => setLevel("easy")}
+              />
+              <RadioInput
+                label="Medium"
+                icon={<FontAwesomeIcon icon={faPeopleGroup} />}
+                styleWidth="150px"
+                styleHeight="100px"
+                name="test-level"
+                id="medium"
+                value={level}
+                active={"medium" === level}
+                handleChange={(event) => setLevel("medium")}
+              />
+              <RadioInput
+                label="Hard"
+                icon={<FontAwesomeIcon icon={faPeopleGroup} />}
+                styleWidth="150px"
+                styleHeight="100px"
+                name="test-level"
+                id="hard"
+                value={level}
+                active={"hard" === level}
+                handleChange={(event) => setLevel("hard")}
+              />
+            </div>
+          </fieldset>
 
           <fieldset>
             <legend>Portée de la session</legend>

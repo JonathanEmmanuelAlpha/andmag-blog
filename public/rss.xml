@@ -4,7 +4,7 @@
         <title>Andmag-ground</title>
         <link>http://localhost:3000</link>
         <description>Speed, efficiency, performance and safety are our pride. Whatever the difficulty of your project, we promise you support that meets your expectations</description>
-        <lastBuildDate>Thu, 09 Mar 2023 16:31:32 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 05 Apr 2023 21:42:34 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -14,10 +14,31 @@
         </image>
         <copyright>All rights reserved 2023, Andmag-ground</copyright>
         <item>
+            <title><![CDATA[Langage C - Structures conditionnelles et itératives]]></title>
+            <link>http://localhost:3000/articles/langage-c---structures-conditionnelles-et-itératives-DAh0AK1i91a8JiOTGL3D</link>
+            <guid>DAh0AK1i91a8JiOTGL3D</guid>
+            <pubDate>Wed, 05 Apr 2023 19:45:55 GMT</pubDate>
+            <description><![CDATA[Structures conditionnelles et itératives en c expliquée très en profondeur]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Langage C - les entrées & sorties]]></title>
+            <link>http://localhost:3000/articles/langage-c---les-entrées---sorties-TtOGiteAnlv3ft3vFLyt</link>
+            <guid>TtOGiteAnlv3ft3vFLyt</guid>
+            <pubDate>Wed, 05 Apr 2023 19:47:36 GMT</pubDate>
+            <description><![CDATA[Nous vous présentons ici tout les aspects et les rouages des entrées/sorties offerts par le langage C. Vous serez à même de pouvoir comprendre dans les détails les concepts de flots et de buffer et vous serez capable d’effectuer une lecture sécurisée.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Langage C - les variables & opérateurs arithmétiques et logiques]]></title>
+            <link>http://localhost:3000/articles/langage-c---les-variables---opérateurs-arithmétiques-et-logiques-AfBHKXdVW8StuuBi2z9A</link>
+            <guid>AfBHKXdVW8StuuBi2z9A</guid>
+            <pubDate>Wed, 05 Apr 2023 19:46:57 GMT</pubDate>
+            <description><![CDATA[Dans cet article, vous apprendrez la notion de variable, les différentes portées des variables en C, tout en effectuant quelques opérations plus ou moins complexes sur celles-ci.]]></description>
+        </item>
+        <item>
             <title><![CDATA[Premiers pas avec le langage de programmation C]]></title>
-            <link>http://localhost:3000/articles/Premiers pas avec le langage de programmation C-XvHo5JVCUSG7IfBaL7QO</link>
+            <link>http://localhost:3000/articles/premiers-pas-avec-le-langage-de-programmation-c-XvHo5JVCUSG7IfBaL7QO</link>
             <guid>XvHo5JVCUSG7IfBaL7QO</guid>
-            <pubDate>Wed, 08 Mar 2023 11:07:28 GMT</pubDate>
+            <pubDate>Wed, 05 Apr 2023 19:43:43 GMT</pubDate>
             <description><![CDATA[Premiers pas avec le langage de programmation C, configuration environnement de développement, installation compilateur, installation de l'éditeur, premier programme C, compiler en ligne de commende.]]></description>
         </item>
     </channel>

@@ -50,11 +50,15 @@ function CommentContainer({ targetId, targetRef, isOpen, onClose }) {
       orderBy("createAt")
     );
     const unsubscriber = onSnapshot(q, (querySnapshot) => {
-      const currentComments = [];
-      querySnapshot.forEach((doc) => {
-        currentComments.push({ id: doc.id, ...doc.data() });
+      setComments([]);
+      querySnapshot.docChanges().forEach((change) => {
+        setComments((prev) => {
+          if (change.type === "modified") return prev;
+
+          if (prev.find((c) => c.id === change.doc.id)) return prev;
+          return [{ id: change.doc.id, ...change.doc.data() }, ...prev];
+        });
       });
-      setComments(currentComments);
     });
 
     return unsubscriber;

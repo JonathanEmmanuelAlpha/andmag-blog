@@ -1,9 +1,17 @@
-import { faArrowLeft, faBell } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faArrowRight,
+  faBell,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import dashify from "dashify";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useNotification } from "../../context/NotificationProvider";
 import toTimeString from "../../helpers/toTimeString";
 import styles from "../../styles/app-icon/app.module.css";
+import LoadingScreen from "../inputs/LoadingScreen";
+import { domainName } from "../links/AwesomeLink.type";
 
 export function FacebookIcon() {
   return (
@@ -64,7 +72,28 @@ export default function AppICon({ onOpen }) {
   return (
     <div className={styles.container}>
       <MenuIcons color={"var(--color)"} onClick={onOpen} />
-      <img src="/logo/AG.png" alt="andmag-ground logo" />
+      <img src="/logo/AG.png" alt="andmag-ground logo" width={40} height={40} />
+    </div>
+  );
+}
+
+export function NotificationToast({ logo, blog, title, url, at }) {
+  return (
+    <div className={styles.toast_container}>
+      <header>
+        <img src={logo} alt="blog - logo" />
+        <span>{blog}</span>
+      </header>
+      <div className={styles.content}>
+        <span>{title}</span>
+      </div>
+      <footer>
+        <Link href={url}>
+          <a>
+            consulter <FontAwesomeIcon icon={faArrowRight} />
+          </a>
+        </Link>
+      </footer>
     </div>
   );
 }
@@ -86,7 +115,7 @@ function NotificationItem({ url, blogLogo, title, at, thumbnail }) {
   );
 }
 
-function NotificationWrapper({ open, handleClick }) {
+function NotificationWrapper({ loading, notifications, open, handleClick }) {
   if (!open) return null;
 
   return (
@@ -98,28 +127,68 @@ function NotificationWrapper({ open, handleClick }) {
           <span>Retour</span>
         </button>
       </div>
-      <NotificationItem
-        blogLogo={"/logo/AG.png"}
-        at={{ seconds: new Date().getTime() }}
-        thumbnail={"/images/about/android.jpg"}
-        title={"Débuter la programmation par le C."}
-      />
+      {loading ? (
+        <LoadingScreen />
+      ) : notifications.length > 0 ? (
+        notifications.map((notif) => {
+          return (
+            <NotificationItem
+              key={notif.id}
+              blogLogo={notif.logo}
+              at={{ seconds: notif.createAt.seconds }}
+              thumbnail={notif.thumbnail}
+              title={notif.title}
+              url={
+                notif.thumbnail
+                  ? `${domainName}/articles/${dashify(notif.title, {
+                      condense: true,
+                    })}-${notif.targetId}`
+                  : `${domainName}/trainnings/train?testChannel=${notif.targetId}`
+              }
+            />
+          );
+        })
+      ) : (
+        <p className={styles.none}>Aucune nouvelles notifications !</p>
+      )}
     </div>
   );
 }
 
 export function NotificationButton() {
+  const { loading, notifications, onRead, onClose } = useNotification();
+
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className={styles.notifs_container}>
-      <button className={styles.notifs} onClick={() => setIsOpen(!isOpen)}>
+      <button
+        className={styles.notifs}
+        onClick={() => {
+          setIsOpen(true);
+          onRead();
+        }}
+      >
         <FontAwesomeIcon icon={faBell} />
-        <div className={styles.nb}>
-          <span>23</span>
-        </div>
+        {notifications.length > 0 && (
+          <div className={styles.nb}>
+            <span>
+              {notifications.length > 10
+                ? notifications.length
+                : `0${notifications.length}`}
+            </span>
+          </div>
+        )}
       </button>
-      <NotificationWrapper open={isOpen} handleClick={() => setIsOpen(false)} />
+      <NotificationWrapper
+        notifications={notifications}
+        loading={loading}
+        open={isOpen}
+        handleClick={() => {
+          setIsOpen(false);
+          onClose();
+        }}
+      />
     </div>
   );
 }

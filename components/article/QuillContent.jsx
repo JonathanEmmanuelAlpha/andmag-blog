@@ -17,16 +17,23 @@ function QuillContent({ delta }) {
 
       const languages = [
         "javascript",
-        "jsx",
-        "js",
-        "c",
-        "h",
-        "hpp",
-        "cpp",
-        "hpp",
-        "h",
-        "java",
-        "python",
+      "typescript",
+      "jsx",
+      "js",
+      "c",
+      "h",
+      "hpp",
+      "cpp",
+      "hpp",
+      "java",
+      "python",
+      "html",
+      "css",
+      "scss",
+      "csharp",
+      "ruby",
+      "xml",
+      "kotlin",
       ];
 
       const q = new Quill(editor, {

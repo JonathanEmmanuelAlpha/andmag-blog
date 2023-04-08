@@ -26,6 +26,7 @@ export const profilesCollection = collection(database, "profiles");
 export const blogsCollection = collection(database, "blogs");
 export const articlesCollection = collection(database, "articles");
 export const trainningsCollection = collection(database, "trainnings");
+export const notificationsCollection = collection(database, "notifications");
 export const faqsCollection = collection(database, "faqs");
 export const studiesCollection = collection(database, "caseStudies");
 

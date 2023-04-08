@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faAngleDown,
+  faAngleUp,
   faHandsClapping,
   faShare,
   faStar,
@@ -42,6 +44,8 @@ function Header({ article, blog }) {
   const followers = useBlogFollowers(blog.id);
 
   const [readers, setReaders] = useState(0);
+
+  const [open, setOpen] = useState(false);
 
   const {
     array: likes,
@@ -228,16 +232,47 @@ function Header({ article, blog }) {
 
   return (
     <div className={styles.header}>
-      <div
-        className={styles.thumb}
-        style={{ backgroundImage: `url(${article.thumbnail})` }}
+      <img
+        className={`${styles.thumb} skeleton`}
+        src={article.thumbnail}
+        alt={article.title + " - thumnail"}
+        width={"100%"}
+        height={"200px"}
       />
       <div className={styles.infos}>
         <h1>{article.title}</h1>
         <div className={styles.post_view}>
           <span>{readers} lecteurs</span>
           <CircleSeparator />
-          <span>{toTimeString(article.createAt * 1000)}</span>
+          <span>
+            {toTimeString(
+              article.updateAt
+                ? article.updateAt * 1000
+                : article.createAt * 1000
+            )}
+          </span>
+        </div>
+        <div className={styles.details}>
+          <div className={styles.actions}>
+            <div className={styles.tags}>
+              {article.tags.map(
+                (tag, index) =>
+                  index < 5 && (
+                    <Link
+                      key={index}
+                      href={`/articles/results?search_query=${tag}`}
+                    >
+                      {tag}
+                    </Link>
+                  )
+              )}
+            </div>
+            <button onClick={() => setOpen(!open)}>
+              <span>Description - {open ? "Masquer" : "Afficher"}</span>
+              <FontAwesomeIcon icon={open ? faAngleUp : faAngleDown} />
+            </button>
+          </div>
+          <p data-active={open}>{article.description}</p>
         </div>
         <div className={styles.btns}>
           <button

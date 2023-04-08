@@ -24,10 +24,15 @@ function SimpleTextEditor({ onReady, initialDelta }) {
   const [quill, setQuill] = useState();
 
   useEffect(() => {
+    if (!quill || typeof onReady !== "function") return;
+
+    onReady(quill);
+  }, [quill, onReady]);
+
+  useEffect(() => {
     if (!quill || !initialDelta) return;
 
     quill.setContents(initialDelta);
-    if (typeof onReady === "function") onReady(quill);
   }, [quill, initialDelta]);
 
   const wrapperRef = useCallback((wrapper) => {
@@ -55,6 +60,7 @@ function SimpleTextEditor({ onReady, initialDelta }) {
       "csharp",
       "ruby",
       "xml",
+      "kotlin",
     ];
     const q = new Quill(editor, {
       theme: "snow",

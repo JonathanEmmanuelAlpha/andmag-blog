@@ -57,12 +57,12 @@ export const showWarningToast = (msg, loading = false) => {
   });
 };
 
-function ToasComponent({ closeDelay, position, hideProgress }) {
+function ToasComponent({ closeDelay, hideProgress }) {
   return (
     <ToastContainer
-      position={position || "top-right"}
-      autoClose={closeDelay || CLOSE_DELAY}
-      hideProgressBar={hideProgress || false}
+      position={"top-right"}
+      autoClose={closeDelay}
+      hideProgressBar={hideProgress}
     />
   );
 }

@@ -7,15 +7,15 @@ import SearchBar from "../../components/nav-bar/SearchBar";
 import SkeletonLayout, {
   Layout,
 } from "../../components/skeleton-layout/SkeletonLayout";
-import generateRSSFeed from "../../helpers/generateRSSFeed";
 import useArticlesSearch from "../../hooks/useArticlesSearch";
 import useOnScreen from "../../hooks/useOnScreen";
 import styles from "../../styles/article/base.module.css";
 
-function Articles() {
+function ArticleResults() {
   const router = useRouter();
 
   const [title, setTitle] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
 
   const {
@@ -23,7 +23,7 @@ function Articles() {
     error,
     hasMore,
     loading,
-  } = useArticlesSearch(null, 10, pageNumber);
+  } = useArticlesSearch(router.query.search_query, 10, pageNumber);
 
   const divRef = useRef();
   useOnScreen("50px", divRef, () =>
@@ -34,7 +34,7 @@ function Articles() {
   );
 
   return (
-    <SkeletonLayout title={"Andmag-ground - Articles"}>
+    <SkeletonLayout title={"Articles ? " + router.query.search_query}>
       <div className={styles.container}>
         <div className={styles.search}>
           <SearchBar
@@ -60,8 +60,8 @@ function Articles() {
                   createBy={article.createBy}
                   articleId={article.id}
                   blogUrl={`/blogs/${article.blogId}`}
-                  blogLogo={article.blog?.logo}
-                  blogName={article.blog?.name}
+                  blogLogo={article.blogLogo}
+                  blogName={article.blogName}
                   thumbnail={article.thumbnail}
                   title={article.title}
                   reads={article.readers}
@@ -78,16 +78,4 @@ function Articles() {
   );
 }
 
-export async function getStaticProps() {
-  try {
-    await generateRSSFeed();
-  } catch (error) {
-    console.log("Feed Error: ", error);
-  }
-
-  return {
-    props: {},
-  };
-}
-
-export default Articles;
+export default ArticleResults;

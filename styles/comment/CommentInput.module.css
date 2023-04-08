@@ -1,44 +1,40 @@
 .container {
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
   margin: 10px 0 5px 0;
 }
 
-.container button {
-  width: 40px;
-  height: 40px;
+.container .btns {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.container .btns > button,
+.container .btns > a {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 5px;
-  background-color: var(--answerColor);
-  box-shadow: var(--thinShadow);
-  border: none;
-  border-radius: 100%;
-  color: var(--linkColor);
+  padding: 7.5px 12.5px;
+  font-weight: 600;
+  border-radius: 2px;
 }
-.container button svg {
+.container .btns > button svg,
+.container .btns > a svg {
   width: 20px;
   height: 20px;
+  margin-left: 5px;
 }
 
-.container textarea {
-  background-color: var(--answerColor);
-  color: inherit;
-  width: calc(100% - 40px);
-  height: 40px;
-  border: 1.5px solid var(--lightColor);
-  border-radius: 30px;
-  resize: none;
-  padding: 10px 15px;
-  outline: none;
+.container .btns button {
+  background-color: #0e60be;
+  color: #eaf5ff;
+  border: none;
 }
-.container textarea::-webkit-scrollbar {
-  display: none;
-  scrollbar-width: none;
-}
-.container textarea::placeholder {
-  color: var(--lightColor);
+
+.container .btns > a {
+  background-color: var(--primColor);
+  color: #3e291c;
+  border: none;
+  margin-left: 20px;
 }

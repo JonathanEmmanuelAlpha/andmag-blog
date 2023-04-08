@@ -77,6 +77,7 @@ export default function AuthProvider({ children }) {
       pp: "/images/default-pp.png",
       pseudo: "Unknown-pseudo",
       createAt: serverTimestamp(),
+      followed: [],
     });
   }
 

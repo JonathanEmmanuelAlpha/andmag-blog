@@ -186,6 +186,7 @@ export default function useBlog(
         logo: logoUrl,
         createBy: currentUser.uid,
         createAt: serverTimestamp(),
+        mostRecentArticle: null,
       });
 
       await updateDoc(doc(profilesCollection, userProfile.id), {

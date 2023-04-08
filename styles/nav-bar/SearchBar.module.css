@@ -3,32 +3,38 @@
   align-items: center;
   justify-content: flex-start;
   width: 80%;
-  max-width: 800px;
-  margin: 0 auto 20px auto;
+  max-width: 600px;
+  height: 40px;
+  margin: 0 auto 50px auto;
   background-color: var(--mainBgColor) !important;
-  padding: 5px;
-  border-radius: 5px;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
 }
 .wrapper input {
   border: none;
   outline: none;
-  background-color: inherit;
   width: 100%;
-  padding: 5px 0;
+  padding: 5px 10px;
   font-weight: 600;
-  color: inherit;
+  background-color: transparent;
   color: var(--color);
 }
 .wrapper button {
   padding: 0;
-  background-color: transparent;
+  background-color: var(--answerColor);
   border: none;
   outline: none;
-  padding: 0 10px 0 5px;
+  height: 100%;
+  padding: 7px 15px;
+  border-radius: 0 20px 20px 0;
+}
+.wrapper button:nth-child(1) {
+  padding: 7px 12px;
+  border-radius: 20px 0 0 20px;
 }
 .wrapper button svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   color: var(--color);
   pointer-events: none;
 }

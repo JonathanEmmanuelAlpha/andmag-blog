@@ -52,14 +52,16 @@ export default function NewArticle() {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [tags, setTags] = useState("");
   const [thumbnail, setThumbnail] = useState();
   const [playlist, setPlaylist] = useState("");
 
   useEffect(() => {
     if (loadingArticle || !article) return;
 
-    setTitle(article.title);
-    setDescription(article.description);
+    setTitle(article.title || "");
+    setDescription(article.description || "");
+    setTags(article.tags || "");
     setPlaylist((prev) => {
       const list = playlists.find((art) => art.id === article.playlist);
       if (list) return list.name;
@@ -101,8 +103,11 @@ export default function NewArticle() {
         limit(1)
       );
       const exist = await getDocs(existQ);
-      if (!exist.empty)
-        return setError("The provided title is already in use.");
+      if (!exist.empty) {
+        return (
+          setError("The provided title is already in use.") && setLoading(false)
+        );
+      }
 
       const fileRef = v4();
       const channel = v4();
@@ -116,13 +121,15 @@ export default function NewArticle() {
 
       const data = {
         blogId: blog.id,
-        blogName: blog.name,
-        blogLogo: blog.logo,
         playlist: list.id,
         createBy: currentUser.uid,
         adminId: adminId,
         title: title,
         description: description,
+        tags: tags
+          .toLowerCase()
+          .split(" ")
+          .filter((t, i) => i < 10),
         thumbnail: downloadURL,
         fileRef: fileRef,
         channel: channel,
@@ -144,7 +151,7 @@ export default function NewArticle() {
       });
 
       setSuccess("Article added successfully");
-      return router.push(
+      router.push(
         `/blogs/${router.query.blogId}/articles/edit?channel=${channel}`
       );
     } catch (error) {
@@ -185,7 +192,9 @@ export default function NewArticle() {
         query(articlesCollection, where("title", "==", title), limit(1));
       const exist = existQ && (await getDocs(existQ));
       if (exist && !exist.empty)
-        return setError("The provided title is already in use.");
+        return (
+          setError("The provided title is already in use.") && setLoading(false)
+        );
 
       const channel = v4();
       let downloadURL = null;
@@ -198,18 +207,25 @@ export default function NewArticle() {
         );
       }
 
+      const __tags = tags
+        .toLowerCase()
+        .split(" ")
+        .filter((t, i) => i < 10);
+
       let data = { updateAt: serverTimestamp(), channel: channel };
       if (article.title !== title) data = { ...data, title };
       if (article.description !== description) data = { ...data, description };
+      if (
+        !(article.tags instanceof Array) ||
+        article.tags.join(" ") !== tags.toLowerCase()
+      )
+        data = { ...data, tags: __tags };
       if (article.playlist !== playlist) data = { ...data, playlist: list.id };
       if (downloadURL !== null) data = { ...data, thumbnail: downloadURL };
 
       await updateDoc(doc(articlesCollection, article.id), { ...data });
 
       setSuccess("Article updated successfully");
-      return router.push(
-        `/blogs/${router.query.blogId}/articles/edit?channel=${channel}`
-      );
     } catch (error) {
       setError((prev) => {
         const store = handleFirestoreErrors(error);
@@ -218,6 +234,7 @@ export default function NewArticle() {
         if (storage) return storage;
         return prev;
       });
+      console.log("Err: ", error);
     }
 
     setLoading(false);
@@ -227,7 +244,7 @@ export default function NewArticle() {
     <BlogContainer
       title={
         article && article.id
-          ? "Mise ç jour d'un article"
+          ? "Mise à jour d'un article"
           : "Ajouter un article"
       }
       robots={"noindex,nofollow"}
@@ -254,13 +271,22 @@ export default function NewArticle() {
         />
         <Textarea
           label="Description"
-          placeholder="Description *"
           required
           id="description"
           name="description"
           maxChar={255}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+        />
+        <Textarea
+          label="Mots clés (ex: #key #another)"
+          required
+          id="tags"
+          name="tags"
+          rows={"3"}
+          maxChar={128}
+          value={tags}
+          onChange={(e) => setTags(e.target.value)}
         />
         <Select
           list="playlist"

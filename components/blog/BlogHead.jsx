@@ -1,3 +1,5 @@
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   addDoc,
   arrayRemove,
@@ -84,12 +86,18 @@ export function SubButton({ blog, onSubscribe, onUnSubscribe }) {
       {loading ? (
         <LoadingScreen />
       ) : isFollower ? (
-        <button disabled={loading} onClick={async () => await unsubscribe()}>
-          Se désabonner
+        <button
+          data-follow
+          disabled={loading}
+          onClick={async () => await unsubscribe()}
+        >
+          <span>Suivie |</span>
+          <FontAwesomeIcon icon={faCheck} />
         </button>
       ) : (
         <button disabled={loading} onClick={async () => await subscribe()}>
-          {"S'abonner"}
+          <span>Suivre |</span>
+          <FontAwesomeIcon icon={faCheck} />
         </button>
       )}
     </div>

@@ -6,7 +6,10 @@ import {
   faAngleDown,
   faAngleUp,
   faHandsClapping,
+  faPenAlt,
   faThumbsUp,
+  faTrash,
+  faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "../../styles/comment/CommentItem.module.css";
 import toTimeString from "../../helpers/toTimeString";
@@ -19,6 +22,18 @@ import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import useArray from "../../hooks/useArray";
 import { useAuth } from "../../context/AuthProvider";
+import { CircleSeparator } from "../article/ArticleContainer";
+
+const QuillContent = dynamic(() => import("../article/QuillContent"), {
+  ssr: false,
+});
+
+const SimpleTextEditor = dynamic(
+  () => import("../text editor/SimpleTextEditor"),
+  {
+    ssr: false,
+  }
+);
 
 function CommentItem({
   isAnswer,
@@ -143,6 +158,34 @@ function CommentItem({
     return addClap(currentUser.uid);
   }
 
+  const [inEdit, setInEdit] = useState(false);
+  const [editor, setEditor] = useState(null);
+
+  function saveChanges(comment) {
+    console.log(
+      "Starting opération | UID: ",
+      currentUser.uid,
+      " | Comment UID: ",
+      comment.userId
+    );
+    if (!currentUser || currentUser.uid !== comment.userId) return;
+
+    console.log("Try to save changes...");
+
+    toast.promise(
+      updateDoc(doc(collectionRoot, targetId, "comments", comment.id), {
+        content: JSON.stringify(editor.getContents()),
+      }),
+      {
+        pending: "Sauvegarde en cours...",
+        success: "Commentaire mis à jour",
+        error: "Echec de la mise à jour",
+      }
+    );
+
+    setInEdit(false);
+  }
+
   return (
     <div
       className={
@@ -159,19 +202,46 @@ function CommentItem({
       </div>
       <div className={styles.cwrp}>
         <div className={styles.chd}>
-          <Link
-            href={`${domainName}/account/profile?pseudo=${comment.userName}`}
-          >
-            {comment.userName}
-          </Link>
-          <span>
-            {toTimeString(
-              comment.createAt ? comment.createAt.seconds * 1000 : 1000
-            )}
-          </span>
+          <div className={styles.inf}>
+            <Link
+              href={`${domainName}/account/profile?pseudo=${comment.userName}`}
+            >
+              {comment.userName}
+            </Link>
+            <CircleSeparator />
+            <span>
+              {toTimeString(
+                comment.createAt ? comment.createAt.seconds * 1000 : 1000
+              )}
+            </span>
+          </div>
+          {currentUser.uid === comment.userId && (
+            <div className={styles.actions}>
+              <button title="Modifier" onClick={() => setInEdit(true)}>
+                <FontAwesomeIcon icon={faPenAlt} />
+              </button>
+              <button title="Supprimer">
+                <FontAwesomeIcon icon={faTrashAlt} />
+              </button>
+            </div>
+          )}
         </div>
         <div className={styles.cbd}>
-          <p>{comment.content}</p>
+          {!inEdit && <QuillContent delta={JSON.parse(comment.content)} />}
+          {inEdit && currentUser.uid === comment.userId && (
+            <div className={styles.edit_wrap}>
+              <SimpleTextEditor
+                initialDelta={JSON.parse(comment.content)}
+                onReady={(e) => setEditor(e)}
+              />
+              <div>
+                <button onClick={() => setInEdit(false)}>Annuler</button>
+                <button onClick={() => saveChanges(comment)}>
+                  Sauvegarder
+                </button>
+              </div>
+            </div>
+          )}
         </div>
         <div className={styles.cft}>
           <div>

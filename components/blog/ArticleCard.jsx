@@ -17,7 +17,11 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 export function ArticleCardThin(props) {
   return (
-    <Link href={`/posts/${dashify(props.title)}-${props.postId}`}>
+    <Link
+      href={`/articles/${dashify(props.title, {
+        condense: true,
+      })}-${props.postId}`}
+    >
       <a className={styles.card_thin}>
         <Skeleton />
         {props.thumbnail ? (
@@ -73,14 +77,39 @@ export function ArticleCard({
       )}
       <div className={styles.wrapper}>
         <header>
-          <div className={styles.logo}>
+          {blogLogo ? (
             <img className="skeleton" src={blogLogo} alt={blogName + ".logo"} />
-            <Link href={`${domainName}/blogs/${blogId}`}>{blogName}</Link>
-          </div>
-          <div className={styles.tags}>
-            {tags && <span>{tags[0]}</span>}
-            {tags && <span>{tags[1]}</span>}
-            {tags && <span>{tags[2]}</span>}
+          ) : (
+            <Skeleton width={35} height={35} baseColor={"grey"} circle />
+          )}
+          <div className={styles.infos}>
+            <Link href={`${domainName}/blogs/${blogId}`}>
+              {blogName || (
+                <Skeleton
+                  width={175}
+                  height={7}
+                  borderRadius={7}
+                  baseColor={"grey"}
+                />
+              )}
+            </Link>
+            <div className={styles.tags}>
+              {tags &&
+                tags.map(
+                  (tag, index) =>
+                    index < 5 && (
+                      <Link
+                        href={`${domainName}/articles/results?search_query=${tag.slice(
+                          1,
+                          tag.length
+                        )}`}
+                        key={index}
+                      >
+                        {tag}
+                      </Link>
+                    )
+                )}
+            </div>
           </div>
         </header>
         <span className={styles.title}>{title}</span>
@@ -90,10 +119,20 @@ export function ArticleCard({
             <span>{toTimeString(at.seconds * 1000)}</span>
             <CircleSeparator />
             <span>
-              {reads < 10 ? `0${reads} lectures` : `${reads} lectures`}
+              {reads === 1
+                ? `0${reads} lecture`
+                : reads < 10
+                ? `0${reads} lectures`
+                : reads
+                ? `${reads} lectures`
+                : "aucune lecture"}
             </span>
           </div>
-          <Link href={`${domainName}/articles/${dashify(title)}-${articleId}`}>
+          <Link
+            href={`${domainName}/articles/${dashify(title, {
+              condense: true,
+            })}-${articleId}`}
+          >
             <a className={styles.read_link}>
               Lire l'article
               <FontAwesomeIcon icon={faArrowRight} />

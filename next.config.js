@@ -4,7 +4,6 @@ const nextConfig = {
   i18n: {
     locales: ["en", "fr"],
     defaultLocale: "fr",
-    localeDetection: false,
   },
   images: {
     domains: [
@@ -14,14 +13,4 @@ const nextConfig = {
   },
 };
 
-const withPWA = require("next-pwa");
-const pwaConfig = withPWA({
-  pwa: {
-    dest: "public",
-    register: true,
-    disable: process.env.NODE_ENV === "development",
-    skipWaiting: true,
-  },
-});
-
-module.exports = { nextConfig, pwaConfig };
+module.exports = nextConfig;

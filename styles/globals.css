@@ -298,6 +298,13 @@ body {
   --secondary: #3772c5;
   --linkColor: #6da8fa;
 
+  --danger: rgba(230, 91, 91, 0.1);
+  --warning: rgba(207, 170, 57, 0.1);
+  --success: rgba(74, 179, 106, 0.1);
+  --dangerColor: #ffa9a9;
+  --warningColor: #ffe083;
+  --successColor: #94e6ac;
+
   --editProfileLinGrad: linear-gradient(
     to bottom,
     #2a466db8 5%,
@@ -319,8 +326,7 @@ body {
   --themeButtonBgColor: #ff8234;
 
   --transitionDelay: 0.5s;
-
-  transition: var(--transitionDelay);
+  --deft: 35px;
 }
 
 body.light-theme {
@@ -334,6 +340,10 @@ body.light-theme {
 
   --primColor: #ff933b;
   --linkColor: #2f73d2;
+
+  --dangerColor: #b57a7a;
+  --warningColor: #ac9962;
+  --successColor: #55996a;
 
   --accountBgColor: #fff;
   --accountBaseColor: #3867be;
@@ -548,9 +558,10 @@ main section {
 }
 .quill-content-wrapper .ql-container.ql-snow p,
 .quill-content-wrapper .ql-container.ql-snow pre,
+.quill-content-wrapper .ql-container.ql-snow li,
 .quill-content-wrapper .ql-container.ql-snow p span,
 .quill-content-wrapper .ql-container.ql-snow p strong {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 25px;
 }
 

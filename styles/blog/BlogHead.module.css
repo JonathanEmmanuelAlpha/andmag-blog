@@ -17,19 +17,30 @@
 }
 
 .sub_btn button {
-  width: max-content;
-  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7.5px 12.5px 7.5px 15px;
   text-align: center;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   background-color: transparent;
-  border: 2px solid var(--primColor);
+  border: 1.5px solid var(--primColor);
   border-radius: 20px;
   color: var(--primColor);
   letter-spacing: 1px;
-  transition: box-shadow 250ms ease-in-out;
+  transition: all 250ms ease-in-out;
 }
 
-.sub_btn button:hover {
-  box-shadow: 0 0 12px 0 var(--primColor);
+.sub_btn button:hover,
+.sub_btn button[data-follow] {
+  background-color: var(--primColor);
+  color: rgb(69, 54, 27);
+  border: none;
+}
+
+.sub_btn button svg {
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
 }

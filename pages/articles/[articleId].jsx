@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ArticleContainer from "../../components/article/ArticleContainer";
 import SkeletonLayout from "../../components/skeleton-layout/SkeletonLayout";
-import { articlesCollection, blogsCollection } from "../../libs/database";
+import { articlesCollection, blogsCollection, db } from "../../libs/database";
 
 function ArticleId({ article, blog, playlist, comments }) {
   return (
@@ -69,10 +69,11 @@ export async function getServerSideProps(context) {
     };
   }
 
-  const comments = await articlesCollection
-    .doc(article.id)
-    .collection("comments")
-    .listDocuments();
+  const snaps = await db
+    .collection(`articles/${article.id}/comments`)
+    .count()
+    .get();
+  const comments = snaps.data().count;
 
   return {
     props: {
@@ -98,7 +99,7 @@ export async function getServerSideProps(context) {
           ? playlist.data().updateAt.seconds
           : null,
       },
-      comments: comments.length,
+      comments: comments,
     },
   };
 }

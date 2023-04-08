@@ -195,7 +195,7 @@ function SkeletonLayout({
         <SideBar open={open} />
         <main>{children}</main>
       </section>
-      <ToasComponent />
+      <ToasComponent hideProgress={true} closeDelay={false} />
       <Footer />
     </div>
   );
