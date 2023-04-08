@@ -5,11 +5,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import dashify from "dashify";
+import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useNotification } from "../../context/NotificationProvider";
 import toTimeString from "../../helpers/toTimeString";
 import styles from "../../styles/app-icon/app.module.css";
+import { CircleSeparator } from "../article/ArticleContainer";
 import LoadingScreen from "../inputs/LoadingScreen";
 import { domainName } from "../links/AwesomeLink.type";
 
@@ -72,27 +74,46 @@ export default function AppICon({ onOpen }) {
   return (
     <div className={styles.container}>
       <MenuIcons color={"var(--color)"} onClick={onOpen} />
-      <img src="/logo/AG.png" alt="andmag-ground logo" width={40} height={40} />
+      <Image
+        src="/logo/AG.png"
+        alt="andmag-ground logo"
+        width={"40px"}
+        height={"40px"}
+        priority
+      />
     </div>
   );
 }
 
-export function NotificationToast({ logo, blog, title, url, at }) {
+export function NotificationToast({ logo, thumbnail, blog, title, url, at }) {
   return (
     <div className={styles.toast_container}>
       <header>
-        <img src={logo} alt="blog - logo" />
-        <span>{blog}</span>
+        <div className={styles.content}>
+          <Link href={url}>{title}</Link>
+        </div>
+        {thumbnail && (
+          <div className={styles.img}>
+            <Image
+              className="skeleton"
+              src={thumbnail}
+              alt="thumbnail"
+              priority
+              layout="fill"
+            />
+          </div>
+        )}
       </header>
-      <div className={styles.content}>
-        <span>{title}</span>
-      </div>
       <footer>
-        <Link href={url}>
-          <a>
-            consulter <FontAwesomeIcon icon={faArrowRight} />
-          </a>
-        </Link>
+        <Image
+          className="skeleton"
+          src={logo}
+          alt="blog - logo"
+          priority
+          width={"30px"}
+          height={"30px"}
+        />
+        <Link href={`/blogs/${blog}`}>{blog}</Link>
       </footer>
     </div>
   );
@@ -102,13 +123,29 @@ function NotificationItem({ url, blogLogo, title, at, thumbnail }) {
   return (
     <Link href={url || "/"}>
       <a className={styles.item}>
-        <img className={styles.logo} src={blogLogo} />
+        <Image
+          className={`${styles.logo} skeleton`}
+          src={blogLogo}
+          alt={title + " - logo"}
+          priority
+          width={"50px"}
+          height={"50px"}
+        />
         <div className={styles.det}>
           <div>
             <strong>{title}</strong>
             <span>{toTimeString(at.seconds * 1000)}</span>
           </div>
-          {thumbnail && <img src={thumbnail} className={styles.thumb} />}
+          {thumbnail && (
+            <Image
+              src={thumbnail}
+              className={styles.thumb + " skeleton"}
+              alt={title + " - thumbnail"}
+              priority
+              width={"120px"}
+              height={"70px"}
+            />
+          )}
         </div>
       </a>
     </Link>

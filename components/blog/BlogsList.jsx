@@ -17,10 +17,16 @@ function BlogItem({ blog }) {
   return (
     <div className={styles.bi_c}>
       <div
-        className={styles.bi_left}
+        className={styles.bi_left + " skeleton"}
         style={{ backgroundImage: `url(${blog.banner})` }}
       >
-        <img src={blog.logo} alt={blog.name + ".logo"} />
+        <Image
+          className="skeleton"
+          src={blog.logo}
+          alt={blog.name + ".logo"}
+          width={120}
+          height={120}
+        />
       </div>
       <div className={styles.bi_right}>
         <BlogHead name={blog.name} />

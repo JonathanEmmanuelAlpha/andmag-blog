@@ -25,6 +25,7 @@ import { profilesCollection } from "../../libs/database";
 import dynamic from "next/dynamic";
 import useBlog from "../../hooks/useBlog";
 import useBlogFollowers from "../../hooks/useBlogFollowers";
+import Image from "next/image";
 
 const QuillContent = dynamic(
   () => import("../../components/article/QuillContent"),
@@ -46,7 +47,14 @@ function ProfileCard({ profile }) {
 
   return (
     <div className={styles.wrapper}>
-      <img src={profile.pp} alt={`${profile.pseudo}.png`} />
+      <Image
+        className="skeleton"
+        src={profile.pp}
+        alt={`${profile.pseudo} - pseudo`}
+        priority
+        width={150}
+        height={150}
+      />
       <section>
         <div className={styles.infos_gp}>
           <div className={styles.group}>

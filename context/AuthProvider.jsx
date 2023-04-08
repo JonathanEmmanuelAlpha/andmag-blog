@@ -66,8 +66,10 @@ export default function AuthProvider({ children }) {
   }, [currentUser]);
 
   async function initializeAccount(user) {
+    const autoGenerate = `Unknown-${Math.floor(Math.random() * 10_000_000)}`;
+
     await updateProfile(user, {
-      displayName: "Unknown-pseudo",
+      displayName: autoGenerate,
       photoURL: "/images/default-pp.png",
     });
 
@@ -75,7 +77,7 @@ export default function AuthProvider({ children }) {
       ppRef: null,
       userId: user.uid,
       pp: "/images/default-pp.png",
-      pseudo: "Unknown-pseudo",
+      pseudo: autoGenerate,
       createAt: serverTimestamp(),
       followed: [],
     });

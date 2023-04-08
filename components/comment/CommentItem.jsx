@@ -193,11 +193,13 @@ function CommentItem({
       }
     >
       <div className={styles.ppc}>
-        <img
+        <Image
+          className="skeleton"
           src={comment.userPP}
           width={40}
           height={40}
           alt={comment.userName + ".profile-picture"}
+          priority
         />
       </div>
       <div className={styles.cwrp}>

@@ -5,6 +5,7 @@ import InfosComponent from "../../components/edit-components/InfosComponent";
 import PPComponent from "../../components/edit-components/PPComponent";
 import { useAuth } from "../../context/AuthProvider";
 import styles from "../../styles/account/edit.module.css";
+import Image from "next/image";
 
 export default function ProfileEdit() {
   const { currentUser } = useAuth();
@@ -22,7 +23,14 @@ export default function ProfileEdit() {
           {currentUser && currentUser.photoURL && (
             <div className={styles.banner_pp}>
               <div className={styles.pp}>
-                <img src={currentUser.photoURL} />
+                <Image
+                  className="skeleton"
+                  src={currentUser.photoURL}
+                  alt="profile picture"
+                  width={150}
+                  height={150}
+                  priority
+                />
               </div>
             </div>
           )}

@@ -9,6 +9,7 @@ import LightBoxGallery from "../images-manipulation/LightBoxGallery";
 import EditLink from "../links/EditLink";
 import { useRouter } from "next/router";
 import { useTargetBlog } from "../../context/BlogProvider";
+import Image from "next/image";
 
 const QuillContent = dynamic(() => import("../article/QuillContent"), {
   ssr: false,
@@ -33,7 +34,7 @@ export function PostCard({ pub, commentShown }) {
         />
       )}
       <div className={styles.pp}>
-        <img src={pub.userPP} width={50} height={50} className="skeleton" />
+        <Image src={pub.userPP} width={50} height={50} className="skeleton" />
       </div>
       <div className={styles.pub_wrapper}>
         <div className={styles.head}>

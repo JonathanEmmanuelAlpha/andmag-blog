@@ -232,12 +232,13 @@ function Header({ article, blog }) {
 
   return (
     <div className={styles.header}>
-      <img
-        className={`${styles.thumb} skeleton`}
+      <Image
+        className={styles.thumb + " skeleton"}
         src={article.thumbnail}
         alt={article.title + " - thumnail"}
-        width={"100%"}
-        height={"200px"}
+        width={700}
+        height={200}
+        priority
       />
       <div className={styles.infos}>
         <h1>{article.title}</h1>
@@ -305,7 +306,14 @@ function Header({ article, blog }) {
       <div className={styles.action}>
         <Link href={`/blogs/${blog.id}`}>
           <a className={styles.left}>
-            <img src={blog.logo} />
+            <Image
+              className="skeleton"
+              src={blog.logo}
+              alt={blog.name + " - logo"}
+              priority
+              width={50}
+              height={50}
+            />
             <div>
               <h2>{blog.name}</h2>
               <span>{followers ? followers : 0} abonnés</span>

@@ -79,6 +79,7 @@ export default function NotificationProvider({ children }) {
                       }`}
                       at={notif.createAt || { seconds: new Date().getTime() }}
                       blog={notif.blog}
+                      thumbnail={article.data().thumbnail}
                     />,
                     {
                       icon: false,

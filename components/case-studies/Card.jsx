@@ -3,6 +3,7 @@ import {
   faExternalLink,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
 import Link from "next/link";
 import styles from "../../styles/case-studies/Card.module.css";
 import { domainName } from "../links/AwesomeLink.type";
@@ -33,7 +34,14 @@ export function ExternalLink({ url }) {
 export default function Card({ index, name, imageUrl, id, summary }) {
   return (
     <div className={styles.container}>
-      <img src={imageUrl} alt={name + " - screen shoot"} />
+      <Image
+        className="skeleton"
+        src={imageUrl}
+        alt={name + " - screen shoot"}
+        priority
+        width={800}
+        layout="fill"
+      />
       <div className={styles.overlay}>
         <span>{index < 10 ? `0${index}` : index}</span>
       </div>

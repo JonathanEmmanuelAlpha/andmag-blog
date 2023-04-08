@@ -25,7 +25,15 @@ export function ArticleCardThin(props) {
       <a className={styles.card_thin}>
         <Skeleton />
         {props.thumbnail ? (
-          <img src={props.thumbnail} alt={props.title + ".thumbnail"} />
+          <div className={styles.thumb}>
+            <Image
+              src={props.thumbnail}
+              alt={props.title + ".thumbnail"}
+              layout="fill"
+              priority
+              className="skeleton"
+            />
+          </div>
         ) : (
           <Skeleton height={100} width={150} />
         )}
@@ -78,7 +86,13 @@ export function ArticleCard({
       <div className={styles.wrapper}>
         <header>
           {blogLogo ? (
-            <img className="skeleton" src={blogLogo} alt={blogName + ".logo"} />
+            <Image
+              className="skeleton"
+              src={blogLogo}
+              alt={blogName + ".logo"}
+              width={35}
+              height={35}
+            />
           ) : (
             <Skeleton width={35} height={35} baseColor={"grey"} circle />
           )}
@@ -140,7 +154,14 @@ export function ArticleCard({
           </Link>
         </div>
       </div>
-      <img className="skeleton" src={thumbnail} alt={title + ".thumbnail"} />
+      <div className={styles.thumb_fill}>
+        <Image
+          className="skeleton"
+          src={thumbnail}
+          alt={title + ".thumbnail"}
+          layout="fill"
+        />
+      </div>
     </div>
   );
 }

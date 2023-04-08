@@ -6,6 +6,7 @@ import {
   faPlayCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -29,7 +30,13 @@ function AsideHeader({ blog }) {
 
   return (
     <header>
-      <img src={blog.logo} alt={`${blog.name}.png`} />
+      <Image
+        src={blog.logo}
+        alt={`${blog.name}.png`}
+        width={100}
+        height={100}
+        className="skeleton"
+      />
       <h1>{blog.name}</h1>
       <h2>{followers ? followers : 0} abonnés</h2>
       <SubButton

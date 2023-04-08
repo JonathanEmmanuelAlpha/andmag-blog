@@ -91,18 +91,13 @@ function ArticleContainer({ article, blog, playlist, comments }) {
         <div className={styles.section}>
           <Header article={article} blog={blog} />
           <article>
-            {typeof window !== "undefined" && window.outerWidth <= 1200 ? (
-              loadingArticles ? (
-                <LoadingScreen />
-              ) : (
-                <PlayListFull
-                  playlist={playlist}
-                  articles={articles}
-                  totalReaders={totalReaders}
-                  mobileDevice={true}
-                />
-              )
-            ) : null}
+            <PlayListFull
+              playlist={playlist}
+              articles={articles}
+              totalReaders={totalReaders}
+              mobileDevice={true}
+              loading={loadingArticles}
+            />
             <QuillContent delta={JSON.parse(article.content)} />
           </article>
           <PostEndSeparator />
@@ -145,17 +140,12 @@ function ArticleContainer({ article, blog, playlist, comments }) {
           )}
         </div>
       </div>
-      {typeof window !== "undefined" && window.outerWidth > 1200 ? (
-        loadingArticles ? (
-          <LoadingScreen />
-        ) : (
-          <PlayListFull
-            playlist={playlist}
-            articles={articles}
-            totalReaders={totalReaders}
-          />
-        )
-      ) : null}
+      <PlayListFull
+        playlist={playlist}
+        articles={articles}
+        totalReaders={totalReaders}
+        loading={loadingArticles}
+      />
     </div>
   );
 }

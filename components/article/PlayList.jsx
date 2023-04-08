@@ -16,14 +16,27 @@ import { useRouter } from "next/router";
 import { useTargetBlog } from "../../context/BlogProvider";
 import ShareButton from "../actions/ShareButton";
 import { domainName } from "../links/AwesomeLink.type";
+import LoadingScreen from "../inputs/LoadingScreen";
+import Image from "next/image";
 
 export function PlayListFull({
   playlist,
   articles,
   totalReaders,
   mobileDevice,
+  loading,
 }) {
   const [toggle, setToggle] = useState(false);
+
+  if (mobileDevice && typeof window !== "undefined" && window.outerWidth > 1200)
+    return null;
+
+  if (
+    !mobileDevice &&
+    typeof window !== "undefined" &&
+    window.outerWidth <= 1200
+  )
+    return null;
 
   return (
     <div
@@ -57,16 +70,20 @@ export function PlayListFull({
         )}
       </div>
       <div className={styles.playlist_list}>
-        {articles.map((article, index) => (
-          <ArticleCardThin
-            key={index}
-            postId={article.id}
-            title={article.title}
-            reads={article.readers}
-            thumbnail={article.thumbnail}
-            at={toTimeString(article.createAt)}
-          />
-        ))}
+        {loading ? (
+          <LoadingScreen />
+        ) : (
+          articles.map((article, index) => (
+            <ArticleCardThin
+              key={index}
+              postId={article.id}
+              title={article.title}
+              reads={article.readers}
+              thumbnail={article.thumbnail}
+              at={toTimeString(article.createAt)}
+            />
+          ))
+        )}
       </div>
     </div>
   );
@@ -86,7 +103,13 @@ export function PlayList({ blog, playlist, totalReaders }) {
       )}
       <div className={styles.head}>
         <div className={styles.thumb}>
-          <img src={playlist.thumbnail} alt={playlist.name} />
+          <Image
+            className="skeleton"
+            src={playlist.thumbnail}
+            alt={playlist.name + " - thumbnail"}
+            priority
+            layout="fill"
+          />
         </div>
         <div className={styles.infos}>
           <h2>{playlist.name}</h2>

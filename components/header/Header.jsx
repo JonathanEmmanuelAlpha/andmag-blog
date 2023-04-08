@@ -37,6 +37,7 @@ export default function Header({
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="robots" content={robots || "all"} />
+        <meta name="title" content={"Andmag-ground" || title} />
         <meta name="description" content={description || desc} />
         <meta name="author" content={author || "Andmag ground"} />
         <meta

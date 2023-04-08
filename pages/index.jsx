@@ -85,7 +85,14 @@ function AboutCard({
     <div className={styles.card}>
       <div className={styles.card_wrap}>
         <div className={styles.img}>
-          <img src={url} alt={alt} />
+          <Image
+            className="skeleton"
+            src={url}
+            alt={alt}
+            priority
+            width={350}
+            height={200}
+          />
         </div>
         <div className={styles.details}>
           <span>{target}</span>
@@ -503,7 +510,12 @@ function InfoCard({
   return (
     <section className={styles.info_card}>
       <div className={styles.left}>
-        <img src={imageUrl} alt={title + ".png"} />
+        <img
+          className="skeleton"
+          src={imageUrl}
+          alt={title + ".png"}
+          priority
+        />
         <div className={styles.over} />
       </div>
       <div className={styles.right}>
