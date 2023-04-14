@@ -76,7 +76,7 @@ export function ArticleCard({
   const { isOwner } = useTargetBlog();
   return (
     <div className={styles.card}>
-      {isOwner && createBy === currentUser?.uid && (
+      {currentUser && isOwner && createBy === currentUser.uid && (
         <EditLink
           url={`/blogs/${blogId}/articles/add?channel=${articleId}`}
           top={"1px"}

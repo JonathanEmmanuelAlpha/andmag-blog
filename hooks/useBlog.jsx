@@ -55,6 +55,7 @@ export default function useBlog(
   /** Get all playlists off blog */
   const [loadingPlaylists, setLoadingPlaylists] = useState(true);
   const [playlists, setPlaylists] = useState([]);
+
   useEffect(() => {
     if (!blogId || !documents.includes("playlists")) return;
 
@@ -196,7 +197,6 @@ export default function useBlog(
 
       router.push(`/blogs/${result.id}`);
     } catch (error) {
-      console.log("Blog err: ", error);
       setError((prev) => {
         const store = handleFirestoreErrors(error);
         const storage = handleStorageErrors(error);

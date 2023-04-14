@@ -393,8 +393,8 @@
 
 @media screen and (max-width: 680px) {
   .playlist_wrapper {
-    width: 320px;
-    margin: 0 auto 30px auto;
+    width: 425px;
+    margin: 20px auto;
   }
   .playlist_wrapper .head {
     flex-direction: column;
@@ -403,6 +403,32 @@
   .playlist_wrapper .head .thumb {
     height: 170px;
     width: 100%;
+  }
+  .playlist_wrapper .head .thumb img {
+    border-top-right-radius: 5px;
+  }
+  .playlist_wrapper .head .infos {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .playlist_wrapper .head .infos .mod,
+  .playlist_wrapper .head .infos .playlist_link {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 426px) {
+  .playlist_wrapper {
+    width: 100%;
+    margin: 20px 0;
+    border-radius: 0;
+  }
+  .playlist_wrapper .head .thumb img {
+    border-radius: 0;
   }
 }
 

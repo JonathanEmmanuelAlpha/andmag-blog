@@ -14,7 +14,6 @@ import AwesomeLink from "../links/AwesomeLink";
 import EditLink from "../links/EditLink";
 import { useRouter } from "next/router";
 import { useTargetBlog } from "../../context/BlogProvider";
-import ShareButton from "../actions/ShareButton";
 import { domainName } from "../links/AwesomeLink.type";
 import LoadingScreen from "../inputs/LoadingScreen";
 import Image from "next/image";
@@ -131,36 +130,6 @@ export function PlayList({ blog, playlist, totalReaders }) {
                     playlist.createAt.seconds * 1000
                   ).toLocaleDateString()}
             </span>
-          </div>
-          <div className={styles.btns}>
-            <ShareButton
-              generateOnClick={true}
-              metas={[
-                { property: 'property="og:title"', value: playlist.name },
-                {
-                  property: 'property="og:description"',
-                  value: playlist.description,
-                },
-                {
-                  property: 'property="og:url"',
-                  value: `${domainName}/blogs/${blog.id}/playlists?list=${playlist.id}`,
-                },
-                { property: 'property="og:image"', value: playlist.thumbnail },
-                { property: 'property="twitter:title"', value: playlist.name },
-                {
-                  property: 'property="twitter:description"',
-                  value: playlist.description,
-                },
-                {
-                  property: 'property="twitter:url"',
-                  value: `${domainName}/blogs/${blog.id}/playlists?list=${playlist.id}`,
-                },
-                {
-                  property: 'property="twitter:image"',
-                  value: playlist.thumbnail,
-                },
-              ]}
-            />
           </div>
           <div className={styles.playlist_link}>
             <AwesomeLink

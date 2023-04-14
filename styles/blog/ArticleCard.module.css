@@ -7,7 +7,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 30px;
+  margin: 20px;
 }
 
 .card .thumb_fill {
@@ -128,12 +128,12 @@
 
 @media screen and (max-width: 768px) {
   .card {
-    max-width: 400px;
+    max-width: 450px;
     margin: 15px;
   }
   .card header .tags a {
     padding-bottom: 3px;
-    font-size: 9px;
+    font-size: 10px;
   }
   .card .logo {
     margin-bottom: 5px;
@@ -146,28 +146,21 @@
   }
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 425px) {
   .card {
-    max-width: 350px;
+    max-width: 100%;
+    margin: 15px 0;
   }
   .card .title {
     font-size: 1.15rem;
   }
   .card p {
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: 600;
   }
 }
 
 @media screen and (max-width: 380px) {
-  .card {
-    max-width: 320px;
-  }
-  .card .title {
-    font-size: 1.1rem;
-  }
-  .card p {
-    font-size: 14px;
-  }
 }
 
 /*--------------------- THIN ------------------------------*/

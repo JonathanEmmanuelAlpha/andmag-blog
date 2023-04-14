@@ -81,12 +81,15 @@ export default function NewPlayList() {
 
     try {
       const existQ = query(
-        collection(blogsCollection, "playlists"),
+        collection(blogsCollection, blog.id, "playlists"),
         where("name", "==", name),
         limit(1)
       );
       const exist = await getDocs(existQ);
-      if (!exist.empty) return setError("The provided name is already in use.");
+      if (!exist.empty) {
+        setLoading(false);
+        return setError("The provided name is already in use.");
+      }
 
       const fileRef = v4();
       const downloadURL = await fileUpload(
@@ -149,13 +152,15 @@ export default function NewPlayList() {
       const existQ =
         playlist.name !== name &&
         query(
-          collection(blogsCollection, "playlists"),
+          collection(blogsCollection, blog.id, "playlists"),
           where("name", "==", name),
           limit(1)
         );
       const exist = existQ && (await getDocs(existQ));
-      if (exist && !exist.empty)
+      if (exist && !exist.empty) {
+        setLoading(false);
         return setError("The provided name is already in use.");
+      }
 
       let downloadURL = null;
       if (thumbnail instanceof Blob) {

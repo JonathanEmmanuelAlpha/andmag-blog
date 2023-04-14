@@ -10,11 +10,14 @@ import LoadingScreen from "../../../components/inputs/LoadingScreen";
 import BlogContainer from "../../../components/blog/BlogContainer";
 import useArticles from "../../../hooks/useArticles";
 import { ArticleCard } from "../../../components/blog/ArticleCard";
+import { useTargetBlog } from "../../../context/BlogProvider";
 
 export default function Blog() {
   const router = useRouter();
 
   const [pageNumber, setPageNumber] = useState(1);
+
+  const { blog } = useTargetBlog();
 
   const {
     docs: articles,
@@ -26,7 +29,7 @@ export default function Blog() {
   useOnScreen("50px", divRef, () => setPageNumber((prev) => prev + 1));
 
   return (
-    <BlogContainer>
+    <BlogContainer title="Articles">
       {loading ? (
         <LoadingScreen />
       ) : (
@@ -40,8 +43,8 @@ export default function Blog() {
                   createBy={article.createBy}
                   articleId={article.id}
                   blogUrl={`/blogs/${article.blogId}`}
-                  blogLogo={article.blogLogo}
-                  blogName={article.blogName}
+                  blogLogo={blog.logo}
+                  blogName={blog.name}
                   thumbnail={article.thumbnail}
                   title={article.title}
                   reads={article.readers}

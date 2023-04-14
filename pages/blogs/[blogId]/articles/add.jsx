@@ -104,9 +104,8 @@ export default function NewArticle() {
       );
       const exist = await getDocs(existQ);
       if (!exist.empty) {
-        return (
-          setError("The provided title is already in use.") && setLoading(false)
-        );
+        setLoading(false);
+        return setError("The provided title is already in use.");
       }
 
       const fileRef = v4();
@@ -191,10 +190,10 @@ export default function NewArticle() {
         article.title !== title &&
         query(articlesCollection, where("title", "==", title), limit(1));
       const exist = existQ && (await getDocs(existQ));
-      if (exist && !exist.empty)
-        return (
-          setError("The provided title is already in use.") && setLoading(false)
-        );
+      if (exist && !exist.empty) {
+        setLoading(false);
+        return setError("The provided title is already in use.");
+      }
 
       const channel = v4();
       let downloadURL = null;
