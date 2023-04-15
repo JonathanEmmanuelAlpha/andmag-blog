@@ -10,12 +10,13 @@ import EditLink from "../links/EditLink";
 import { useRouter } from "next/router";
 import { useTargetBlog } from "../../context/BlogProvider";
 import Image from "next/image";
+import Skeleton from "react-loading-skeleton";
 
 const QuillContent = dynamic(() => import("../article/QuillContent"), {
   ssr: false,
 });
 
-export function PostCard({ pub, commentShown }) {
+export function PostCard({ pub, commentShown, logo, name, url }) {
   const router = useRouter();
   const { isOwner, blog } = useTargetBlog();
 
@@ -34,14 +35,27 @@ export function PostCard({ pub, commentShown }) {
         />
       )}
       <div className={styles.pp}>
-        <Image src={pub.userPP} width={50} height={50} className="skeleton" />
+        {logo ? (
+          <Image src={logo} width={50} height={50} className="skeleton" />
+        ) : (
+          <Skeleton width={50} height={50} baseColor={"grey"} circle />
+        )}
       </div>
       <div className={styles.pub_wrapper}>
         <div className={styles.head}>
           <div className={styles.uinf}>
-            <Link href={`${domainName}/account/profile?pseudo=${pub.userName}`}>
-              <a>{pub.userName}</a>
-            </Link>
+            {name && url ? (
+              <Link href={url}>
+                <a>{name}</a>
+              </Link>
+            ) : (
+              <Skeleton
+                width={150}
+                height={10}
+                baseColor={"grey"}
+                borderRadius={10}
+              />
+            )}
           </div>
           <div>
             <span>{toTimeString(pub.createAt.seconds * 1000)}</span>

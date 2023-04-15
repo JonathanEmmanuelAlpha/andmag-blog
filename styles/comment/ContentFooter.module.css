@@ -3,6 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 5px 0;
 }
 .foot button {
   background-color: transparent;
@@ -11,7 +12,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  font-size: 11px;
+  font-size: 13px;
   color: inherit;
   font-weight: 600;
   color: inherit;
@@ -31,8 +32,7 @@
   justify-content: flex-start;
 }
 
-button.clap:hover,
-button.like:hover {
+.foot button:hover {
   opacity: 0.6;
 }
 button.like[data-active="true"] {
@@ -46,13 +46,36 @@ button.com_stat {
   cursor: default;
 }
 
-button.com_btn {
-  color: var(--linkColor);
-  font-size: 13px;
-  text-decoration: underline;
-  transition: color 200ms ease-in-out;
-  width: min-content;
+.statistics {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1.5px solid var(--postBorderColor);
+  border-bottom: 1.5px solid var(--postBorderColor);
+  padding: 10px;
 }
-button.com_btn:hover {
-  color: var(--secondary);
+
+.statistics .stats_items {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 768px) {
+  .statistics .stats_items {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .statistics {
+    padding: 10px 0;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .statistics .stats_items {
+    font-size: 11px;
+  }
 }

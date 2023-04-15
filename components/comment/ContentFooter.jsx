@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "../../styles/comment/ContentFooter.module.css";
 import {
+  faCommentAlt,
   faHandsClapping,
   faShareSquare,
   faThumbsDown,
@@ -14,6 +15,7 @@ import {
   arrayUnion,
   collection,
   doc,
+  getCountFromServer,
   updateDoc,
 } from "firebase/firestore";
 import CommentContainer from "./CommentContainer";
@@ -23,6 +25,17 @@ import { showErrorToast } from "../skeleton-layout/ToasComponent";
 import useArray from "../../hooks/useArray";
 import { toast } from "react-toastify";
 import ShareButton from "../actions/ShareButton";
+import { CircleSeparator } from "../article/ArticleContainer";
+
+export function quillDeltaToString(delta) {
+  return delta.ops
+    .map(function (op) {
+      if (typeof op.insert !== "string") return "";
+      let html = op.insert;
+      return html;
+    })
+    .join("");
+}
 
 function ContentFooter({ pub, commentShown, blog }) {
   const router = useRouter();
@@ -48,6 +61,9 @@ function ContentFooter({ pub, commentShown, blog }) {
   const hasClapped =
     currentUser && typeof claps.find((c) => c == currentUser.uid) === "string";
 
+  const [nbComments, setNbComments] = useState(0);
+  const [shares, setShares] = useState(0);
+
   function handleLike() {
     if (!currentUser) return;
 
@@ -58,8 +74,8 @@ function ContentFooter({ pub, commentShown, blog }) {
           likes: arrayRemove(currentUser.uid),
         }),
         {
-          pending: "Retrait de le mention j'aime...",
-          success: "Mention j'aime retirer",
+          pending: "Retrait de la mention j'aime...",
+          success: "Mention j'aime retirée",
           error: {
             render({ data }) {
               return handleFirestoreErrors(data);
@@ -77,8 +93,8 @@ function ContentFooter({ pub, commentShown, blog }) {
         likes: arrayUnion(currentUser.uid),
       }),
       {
-        pending: "Ajout de le mention j'aime...",
-        success: "Mention j'aime ajouter",
+        pending: "Ajout de la mention j'aime...",
+        success: "Mention j'aime ajoutée",
         error: {
           render({ data }) {
             return handleFirestoreErrors(data);
@@ -99,8 +115,8 @@ function ContentFooter({ pub, commentShown, blog }) {
           claps: arrayRemove(currentUser.uid),
         }),
         {
-          pending: "Retrait de le mention en cours...",
-          success: "Mention retirer avec succès",
+          pending: "Retrait de la mention bravo en cours...",
+          success: "Mention bravo retirée",
           error: {
             render({ data }) {
               return handleFirestoreErrors(data);
@@ -118,8 +134,8 @@ function ContentFooter({ pub, commentShown, blog }) {
         claps: arrayUnion(currentUser.uid),
       }),
       {
-        pending: "Ajout de le mention en cours...",
-        success: "Mention ajouter avec succès",
+        pending: "Ajout de la mention bravo en cours...",
+        success: "Mention bravo ajoutée",
         error: {
           render({ data }) {
             return handleFirestoreErrors(data);
@@ -130,59 +146,95 @@ function ContentFooter({ pub, commentShown, blog }) {
     return addClap(currentUser.uid);
   }
 
+  useEffect(() => {
+    if (!pub || typeof router.query.blogId !== "string") return;
+
+    getCountFromServer(
+      collection(
+        blogsCollection,
+        router.query.blogId,
+        "posts",
+        pub.id,
+        "comments"
+      )
+    ).then((snap) => {
+      setNbComments(snap.data().count);
+    });
+  }, [pub, router.query.blogId]);
+
   return (
     <div className={styles.foot_container}>
+      <div className={styles.statistics}>
+        <div className={styles.stats_items}>
+          <span>J'aime</span>
+          <CircleSeparator />
+          <span>{likes.length >= 10 ? likes.length : `0${likes.length}`}</span>
+        </div>
+        <div className={styles.stats_items}>
+          <span>Bravos</span>
+          <CircleSeparator />
+          <span>{claps.length >= 10 ? claps.length : `0${claps.length}`}</span>
+        </div>
+        <div className={styles.stats_items}>
+          <span>Commentaires</span>
+          <CircleSeparator />
+          <span>{nbComments >= 10 ? nbComments : `0${nbComments}`}</span>
+        </div>
+      </div>
       <div className={styles.foot}>
-        <div>
-          <button
-            className={styles.like}
-            data-active={hasLiked}
-            onClick={handleLike}
-          >
-            <FontAwesomeIcon icon={faThumbsUp} />
-            <span>{likes.length > 0 ? likes.length : "J'aime"}</span>
-          </button>
-          <button
-            className={styles.clap}
-            data-active={hasClapped}
-            onClick={handleClap}
-          >
-            <FontAwesomeIcon icon={faHandsClapping} />
-            <span>{claps.length > 0 ? claps.length : "Bravo"}</span>
-          </button>
-          <ShareButton
-            popupOnTop={true}
-            generateOnClick={true}
-            metas={[
-              {
-                property: 'property="og:title"',
-                value: `${blog.name} - publication`,
-              },
-              {
-                property: 'property="og:image"',
-                value: pub.thumbnails[0].downloadURL,
-              },
-              {
-                property: 'property="twitter:title"',
-                value: `${blog.name} - publication`,
-              },
-              {
-                property: 'property="twitter:image"',
-                value: pub.thumbnails[0].downloadURL,
-              },
-            ]}
-          />
-        </div>
-        <div>
-          <button
-            className={styles.com_btn}
-            onClick={() => setOpenComment(!openComment)}
-          >
-            {!openComment
-              ? "Afficher les commentaires"
-              : "Masquer les commentaires"}
-          </button>
-        </div>
+        <button
+          className={styles.like}
+          data-active={hasLiked}
+          onClick={handleLike}
+        >
+          <FontAwesomeIcon icon={faThumbsUp} />
+          <span>{"J'aime"}</span>
+        </button>
+
+        <button
+          className={styles.clap}
+          data-active={hasClapped}
+          onClick={handleClap}
+        >
+          <FontAwesomeIcon icon={faHandsClapping} />
+          <span>Bravo</span>
+        </button>
+
+        <button onClick={() => setOpenComment(!openComment)}>
+          <FontAwesomeIcon icon={faCommentAlt} />
+          <span>Commenter</span>
+        </button>
+
+        <ShareButton
+          popupOnTop={true}
+          generateOnClick={true}
+          metas={[
+            {
+              property: 'property="og:title"',
+              value: `${blog.name} - publication`,
+            },
+            {
+              property: 'property="og:description"',
+              value: quillDeltaToString(JSON.parse(pub.content)),
+            },
+            {
+              property: 'property="og:image"',
+              value: pub.thumbnails[0].downloadURL,
+            },
+            {
+              property: 'property="twitter:title"',
+              value: `${blog.name} - publication`,
+            },
+            {
+              property: 'property="twitter:description"',
+              value: quillDeltaToString(JSON.parse(pub.content)),
+            },
+            {
+              property: 'property="twitter:image"',
+              value: pub.thumbnails[0].downloadURL,
+            },
+          ]}
+        />
       </div>
       {openComment && (
         <CommentContainer

@@ -70,24 +70,18 @@ function BlogContainer({
       robots={robots}
     >
       <div className={styles.container}>
-        {loadingBlog ? (
-          <LoadingScreen />
-        ) : (
-          <>
-            <div
-              className={styles.banner}
-              style={{ backgroundImage: `url(${blog.banner})` }}
-            />
-            <div className={styles.fake} />
-            <div className={styles.wrapper}>
-              <BlogSidebar />
-              <section className={styles.main_section}>
-                {isOwner && <Menu />}
-                <div className={styles.main_content}>{children}</div>
-              </section>
-            </div>
-          </>
-        )}
+        <div
+          className={styles.banner + " skeleton"}
+          style={{ backgroundImage: `url(${blog?.banner})` }}
+        />
+        <div className={styles.fake} />
+        <div className={styles.wrapper}>
+          <BlogSidebar />
+          <section className={styles.main_section}>
+            {isOwner && <Menu />}
+            <div className={styles.main_content}>{children}</div>
+          </section>
+        </div>
       </div>
     </SkeletonLayout>
   );

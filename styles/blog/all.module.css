@@ -3,7 +3,8 @@
 }
 
 .pub_container {
-  margin-top: 20px;
+  padding: 15px;
+  background-color: var(--postBgColor);
 }
 
 .play_list {
@@ -104,9 +105,8 @@
   margin: 10px 0 0 20px;
 }
 
-@media screen and (max-width: 400px) {
-  .list > a {
-    margin: 15px;
-    max-width: 320px;
+@media screen and (max-width: 500px) {
+  .pub_container {
+    padding: 10px 0;
   }
 }

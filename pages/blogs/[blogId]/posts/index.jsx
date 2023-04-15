@@ -5,9 +5,12 @@ import BlogContainer from "../../../../components/blog/BlogContainer";
 import usePosts from "../../../../hooks/usePosts";
 import { PostCard } from "../../../../components/post/PostCard";
 import useOnScreen from "../../../../hooks/useOnScreen";
+import { useTargetBlog } from "../../../../context/BlogProvider";
+import { domainName } from "../../../../components/links/AwesomeLink.type";
 
 export default function Publications() {
   const router = useRouter();
+  const { blog } = useTargetBlog();
   const [pageNumber, setPageNumber] = useState(1);
 
   const {
@@ -23,7 +26,16 @@ export default function Publications() {
     <BlogContainer title="Posts">
       <div className={styles.pub_container}>
         {posts.map((post, index) => {
-          return <PostCard key={index} commentShown={false} pub={post} />;
+          return (
+            <PostCard
+              key={index}
+              commentShown={false}
+              pub={post}
+              logo={blog.logo}
+              name={blog.name}
+              url={`${domainName}/blogs/${blog.id}/posts`}
+            />
+          );
         })}
       </div>
       <div ref={divRef} />

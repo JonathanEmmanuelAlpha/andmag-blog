@@ -60,7 +60,7 @@
   width: 500px;
   height: calc(100vh - var(--headerHeight) - 20px);
   overflow-y: scroll;
-  border-radius: 10px;
+  border-radius: 3px;
   box-shadow: var(--shadow);
   z-index: 100;
 }

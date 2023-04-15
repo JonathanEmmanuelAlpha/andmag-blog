@@ -280,6 +280,14 @@ template {
       format("svg"); /* iOS 4.1- */
 }
 
+@font-face {
+  font-family: "Impact Regular";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Impact Regular"),
+    url("/public/fonts/impact/impact.woff") format("woff");
+}
+
 body {
   --headerHeight: 50px;
 
@@ -292,6 +300,9 @@ body {
   --lightColor: #7f848e;
 
   --articleColor: #2d323b;
+  --postColor: #2d323b;
+  --postBgColor: #23272e;
+  --postBorderColor: #7f848e;
 
   --primColor: #fcc076;
   --alertColor: #e13e3e;
@@ -356,6 +367,9 @@ body.light-theme {
   --themeButtonBgColor: #6da8fa;
 
   --articleColor: #fff;
+  --postColor: #ffffff;
+  --postBgColor: #f3f3f3;
+  --postBorderColor: #e1e1e1;
 }
 
 html,
@@ -574,6 +588,10 @@ main section {
   line-height: 25px;
 }
 
+.quill-content-wrapper .ql-container.ql-snow a {
+  color: var(--linkColor);
+}
+
 .circle {
   width: 10px;
   height: 10px;
@@ -671,7 +689,7 @@ main section {
 
 @keyframes skeleton-loading {
   0% {
-    background-color: hsl(200, 20%, 70%);
+    background-color: #a3b8c2;
   }
 
   100% {

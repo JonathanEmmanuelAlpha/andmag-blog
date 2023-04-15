@@ -115,13 +115,11 @@ button.save svg {
 
 .container img {
   transition: transform 300ms ease;
-  width: initial !important;
-  height: initial !important;
 }
 
 /*------------------------------------ ACTION CLASS STYLES -----------------------------------------------*/
 img.expand {
-  width: 100% !important;
+  width: auto !important;
   height: 100% !important;
 }
 

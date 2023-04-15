@@ -2,7 +2,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: 50px;
+  margin: 20px 0;
   position: relative;
 }
 .pub_items .pp img {
@@ -16,7 +16,7 @@
 
 .pub_wrapper {
   width: calc(100% - 60px);
-  background-color: var(--overColor);
+  background-color: var(--postColor);
   box-shadow: var(--lightBoxShadow);
   padding: 10px;
   margin-left: 10px;
@@ -155,6 +155,6 @@
 
 @media screen and (max-width: 500px) {
   .pub_items {
-    padding: 10px;
+    padding: 0;
   }
 }

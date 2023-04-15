@@ -171,6 +171,10 @@
   color: var(--linkColor);
 }
 
+.sidebar nav > span {
+  margin-bottom: 20px;
+}
+
 /*--------------------------------- MENU -------------------------------------*/
 .menu {
   width: 100%;
@@ -183,6 +187,13 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  scrollbar-color: transparent;
+  scrollbar-width: 0px;
+}
+.menu ul::-webkit-scrollbar {
+  display: none;
 }
 
 .menu ul li {
@@ -191,6 +202,7 @@
 }
 
 .menu ul li a {
+  width: max-content;
   height: 100%;
   display: flex;
   align-items: center;

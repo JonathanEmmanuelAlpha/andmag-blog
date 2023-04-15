@@ -86,8 +86,8 @@ function CommentItem({
           likes: arrayRemove(currentUser.uid),
         }),
         {
-          pending: "Retrait de le mention j'aime...",
-          success: "Mention j'aime retirer",
+          pending: "Retrait de la mention j'aime...",
+          success: "Mention j'aime retirée",
           error: {
             render({ data }) {
               return handleFirestoreErrors(data);
@@ -105,8 +105,8 @@ function CommentItem({
         likes: arrayUnion(currentUser.uid),
       }),
       {
-        pending: "Ajout de le mention j'aime...",
-        success: "Mention j'aime ajouter",
+        pending: "Ajout de la mention j'aime...",
+        success: "Mention j'aime ajoutée",
         error: {
           render({ data }) {
             return handleFirestoreErrors(data);
@@ -127,8 +127,8 @@ function CommentItem({
           claps: arrayRemove(currentUser.uid),
         }),
         {
-          pending: "Retrait de le mention en cours...",
-          success: "Mention retirer avec succès",
+          pending: "Retrait de la mention bravo en cours...",
+          success: "Mention bravo retirée",
           error: {
             render({ data }) {
               return handleFirestoreErrors(data);
@@ -146,8 +146,8 @@ function CommentItem({
         claps: arrayUnion(currentUser.uid),
       }),
       {
-        pending: "Ajout de le mention en cours...",
-        success: "Mention ajouter avec succès",
+        pending: "Ajout de la mention bravo en cours...",
+        success: "Mention bravo ajoutée",
         error: {
           render({ data }) {
             return handleFirestoreErrors(data);
@@ -162,15 +162,7 @@ function CommentItem({
   const [editor, setEditor] = useState(null);
 
   function saveChanges(comment) {
-    console.log(
-      "Starting opération | UID: ",
-      currentUser.uid,
-      " | Comment UID: ",
-      comment.userId
-    );
     if (!currentUser || currentUser.uid !== comment.userId) return;
-
-    console.log("Try to save changes...");
 
     toast.promise(
       updateDoc(doc(collectionRoot, targetId, "comments", comment.id), {

@@ -16,6 +16,7 @@ import styles from "../../styles/blog/BlogContainer.module.css";
 import LoadingScreen from "../inputs/LoadingScreen";
 import { domainName } from "../links/AwesomeLink.type";
 import { SubButton } from "./BlogHead";
+import Skeleton from "react-loading-skeleton";
 
 function AsideHeader({ blog }) {
   const [open, setOpen] = useState(false);
@@ -30,28 +31,85 @@ function AsideHeader({ blog }) {
 
   return (
     <header>
-      <Image
-        src={blog.logo}
-        alt={`${blog.name}.png`}
-        width={100}
-        height={100}
-        className="skeleton"
-      />
-      <h1>{blog.name}</h1>
-      <h2>{followers ? followers : 0} abonnés</h2>
-      <SubButton
-        blog={blog}
-        onSubscribe={() => setFollowers((prev) => prev + 1)}
-        onUnSubscribe={() => setFollowers((prev) => prev - 1)}
-      />
+      {blog && blog.logo ? (
+        <Image
+          src={blog.logo}
+          alt={`${blog.name}.png`}
+          width={100}
+          height={100}
+          className="skeleton"
+        />
+      ) : (
+        <Skeleton width={100} height={100} baseColor={"#a3b8c2"} circle />
+      )}
+      <h1>
+        {blog ? (
+          blog.name
+        ) : (
+          <Skeleton
+            width={200}
+            height={10}
+            baseColor={"#a3b8c2"}
+            borderRadius={10}
+          />
+        )}
+      </h1>
+      <h2>
+        {followers ? (
+          `${followers} abonnés`
+        ) : (
+          <Skeleton
+            width={150}
+            height={8}
+            baseColor={"#a3b8c2"}
+            borderRadius={10}
+          />
+        )}
+      </h2>
+      {blog ? (
+        <SubButton
+          blog={blog}
+          onSubscribe={() => setFollowers((prev) => prev + 1)}
+          onUnSubscribe={() => setFollowers((prev) => prev - 1)}
+        />
+      ) : (
+        <Skeleton
+          width={120}
+          height={35}
+          baseColor={"#a3b8c2"}
+          borderRadius={30}
+        />
+      )}
       <div className={styles.stats}>
         <div>
           <FontAwesomeIcon icon={faNewspaper} />
-          <span>{blog.articles ? blog.articles.length : 0} articles</span>
+          <span>
+            {blog ? (
+              `${blog.articles ? blog.articles.length : 0} articles`
+            ) : (
+              <Skeleton
+                width={50}
+                height={6}
+                baseColor={"#a3b8c2"}
+                borderRadius={10}
+              />
+            )}
+          </span>
         </div>
         <div>
           <FontAwesomeIcon icon={faPeoplePulling} />
-          <span>{blog.tests ? blog.tests.length : 0} tests</span>
+          <span>
+            {blog ? (
+              `${blog.tests ? blog.tests.length : 0} tests`
+            ) : (
+              <Skeleton
+                width={50}
+                height={6}
+                baseColor={"#a3b8c2"}
+                borderRadius={10}
+              />
+            )}
+          </span>
         </div>
       </div>
     </header>
@@ -73,22 +131,62 @@ function AsideMenuItem({ url, name, icon }) {
 function AsideMenu({ blogId }) {
   return (
     <nav>
-      <AsideMenuItem url={`/blogs/${blogId}`} name="Accueille" icon={faHome} />
-      <AsideMenuItem
-        url={`/blogs/${blogId}/posts`}
-        name="Publications"
-        icon={faBookReader}
-      />
-      <AsideMenuItem
-        url={`/blogs/${blogId}/playlists`}
-        name="Listes de lecture"
-        icon={faPlayCircle}
-      />
-      <AsideMenuItem
-        url={`/blogs/${blogId}/trainnings`}
-        name="Tests"
-        icon={faPeoplePulling}
-      />
+      {blogId ? (
+        <AsideMenuItem
+          url={`/blogs/${blogId}`}
+          name="Accueille"
+          icon={faHome}
+        />
+      ) : (
+        <Skeleton
+          width={140}
+          height={100}
+          baseColor={"#a3b8c2"}
+          borderRadius={5}
+        />
+      )}
+      {blogId ? (
+        <AsideMenuItem
+          url={`/blogs/${blogId}/posts`}
+          name="Publications"
+          icon={faBookReader}
+        />
+      ) : (
+        <Skeleton
+          width={140}
+          height={100}
+          baseColor={"#a3b8c2"}
+          borderRadius={5}
+        />
+      )}
+      {blogId ? (
+        <AsideMenuItem
+          url={`/blogs/${blogId}/playlists`}
+          name="Listes de lecture"
+          icon={faPlayCircle}
+        />
+      ) : (
+        <Skeleton
+          width={140}
+          height={100}
+          baseColor={"#a3b8c2"}
+          borderRadius={5}
+        />
+      )}
+      {blogId ? (
+        <AsideMenuItem
+          url={`/blogs/${blogId}/trainnings`}
+          name="Tests"
+          icon={faPeoplePulling}
+        />
+      ) : (
+        <Skeleton
+          width={140}
+          height={100}
+          baseColor={"#a3b8c2"}
+          borderRadius={5}
+        />
+      )}
     </nav>
   );
 }
@@ -97,15 +195,8 @@ export default function BlogSidebar() {
   const { blog, loadingBlog } = useTargetBlog();
   return (
     <aside className={styles.sidebar}>
-      {loadingBlog ? (
-        <LoadingScreen />
-      ) : (
-        <>
-          {" "}
-          <AsideHeader blog={blog} />
-          <AsideMenu blogId={blog.id} />
-        </>
-      )}
+      <AsideHeader blog={blog} />
+      <AsideMenu blogId={blog?.id} />
     </aside>
   );
 }
