@@ -4,6 +4,7 @@ import styles from "../../styles/images-manipulation/LightBoxGallery.module.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCrop,
+  faDownload,
   faExpand,
   faFilter,
   faRotateLeft,
@@ -15,6 +16,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Carousel, { Slider } from "./Carousel";
 import SliderRange from "./SliderRange";
+import { getDownloadURL, ref } from "firebase/storage";
+import { storage } from "../../firebase";
 
 const DEFAULT_FILTERS_OPTIONS = [
   {
@@ -198,6 +201,25 @@ function LightBoxGallery(props) {
     };
   };
 
+  function handleDownload() {
+    const httpsRef = ref(storage, getCurrentImage().src);
+    getDownloadURL(httpsRef)
+      .then((url) => {
+        console.log("Url: ", url);
+
+        const xhr = new XMLHttpRequest();
+        xhr.responseType = "blob";
+        xhr.onload = (event) => {
+          const blob = xhr.response;
+        };
+        xhr.open("GET", url);
+        xhr.send();
+      })
+      .catch((error) => {
+        console.log("Download error: ", error);
+      });
+  }
+
   useEffect(() => {
     if (!window) return;
 
@@ -269,6 +291,9 @@ function LightBoxGallery(props) {
             title="centrer sur l'image"
           >
             <FontAwesomeIcon icon={faExpand} />
+          </button>
+          <button onClick={handleDownload} title="Télécharger l'image">
+            <FontAwesomeIcon icon={faDownload} />
           </button>
         </div>
         <div className={styles.exit_group}>

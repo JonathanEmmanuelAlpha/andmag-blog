@@ -41,11 +41,14 @@
 .main_section {
   width: 800px;
   margin: 0;
-  background-color: var(--mainBgColor);
+  background-color: var(--main-content-color);
   box-shadow: var(--shadow);
   border-radius: 5px 5px 0 0;
   min-height: calc(100vh - var(--headerHeight));
   padding-bottom: var(--headerHeight);
+}
+.main_content {
+  background-color: var(--main-content-color);
 }
 
 .wrapper form {
@@ -179,6 +182,7 @@
 .menu {
   width: 100%;
   box-shadow: var(--bottomShadow);
+  background-color: var(--mainBgColor);
 }
 
 .menu ul {

@@ -1,23 +1,18 @@
 import {
-  faBlog,
   faImagePortrait,
   faNewspaper,
   faPeoplePulling,
-  faStar,
   faUserEdit,
   faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import dashify from "dashify";
-import { getDocs, query, where } from "firebase/firestore";
+import { query, where } from "firebase/firestore";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
 import Infos from "../../components/inputs/Infos";
 import LoadingScreen from "../../components/inputs/LoadingScreen";
 import AwesomeLink from "../../components/links/AwesomeLink";
 import SkeletonLayout from "../../components/skeleton-layout/SkeletonLayout";
-import { showErrorToast } from "../../components/skeleton-layout/ToasComponent";
 import { useAuth } from "../../context/AuthProvider";
 import toTimeString from "../../helpers/toTimeString";
 import styles from "../../styles/account/profile.module.css";
@@ -97,9 +92,7 @@ function ProfileCard({ profile }) {
             </div>
           )}
         </div>
-        <h3>
-          Est devenu membre {toTimeString(profile.createAt.seconds * 1000)}
-        </h3>
+        <h3>Membre depuis {(profile.createAt.seconds * 1000) / 10000}</h3>
       </section>
     </div>
   );

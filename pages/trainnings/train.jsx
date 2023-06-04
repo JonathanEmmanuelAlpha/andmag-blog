@@ -3,12 +3,10 @@ import React from "react";
 import LoadingScreen from "../../components/inputs/LoadingScreen";
 import TestsContainer, {
   QCMCard,
-  TestResultCard,
 } from "../../components/trainning/TestsContainer";
 import { useAuth } from "../../context/AuthProvider";
 import { useTrain } from "../../context/TrainProvider";
 import useIsAurh from "../../hooks/useIsAurh";
-import useTrainning from "../../hooks/useTrainning";
 
 export default function Trainning() {
   const { userProfile } = useAuth();
@@ -67,7 +65,6 @@ export default function Trainning() {
           );
         })
       )}
-      {currentTrainning.doc && hasFinish && <TestResultCard />}
     </TestsContainer>
   );
 }

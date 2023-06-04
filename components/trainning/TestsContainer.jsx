@@ -1,46 +1,79 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/trainning/TestsContainer.module.css";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import SkeletonLayout from "../skeleton-layout/SkeletonLayout";
 import SubmitButton from "../inputs/SubmitButton";
 import LoadingScreen from "../inputs/LoadingScreen";
 import useTimer from "../../hooks/useTimer";
 import { useTrain } from "../../context/TrainProvider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faGraduationCap,
+  faUserClock,
+  faUserGraduate,
+} from "@fortawesome/free-solid-svg-icons";
+import { useAuth } from "../../context/AuthProvider";
+import Skeleton from "react-loading-skeleton";
+import Link from "next/link";
+import { getTime } from "../../helpers/toTimeString";
 
 const QuillContent = dynamic(() => import("../article/QuillContent"), {
   ssr: false,
 });
 
-export function TestResultCard(props) {
-  const { currentTrainning, result } = useTrain();
+export function ResultCard({ test, participant, position }) {
+  const { currentUser, userProfile } = useAuth();
+
+  /**
+   * @param {Number} score
+   */
+  function getScorePlage(score) {
+    if (score >= 80) return "higher";
+    if (score >= 70 < 80) return "advanced";
+    if (score >= 50 < 70) return "medium";
+    if (score >= 30 < 50) return "failled";
+    if (score < 30) return "null";
+  }
 
   return (
-    <div className={styles.res_card}>
-      <h1>{currentTrainning.doc.title}</h1>
-      <div className={styles.res_stats}>
-        <span>
-          <strong>{currentTrainning.doc.questionsNumber}</strong> questions
-        </span>
-        <span>
-          <strong>{currentTrainning.doc.time}</strong> {"min d'évaluation"}
-        </span>
-        <span>
-          <strong>{result.answers}</strong> réponses fournies
-        </span>
-        <span>
-          <strong>{result.skiped}</strong> qestions sautées
-        </span>
-        <span>
-          <strong>{result.correctAnswers}</strong> réponses correctes
-        </span>
-      </div>
-      <div className={styles.res_per}>
-        <span>
-          {Math.round(
-            (result.correctAnswers / currentTrainning.doc.questionsNumber) * 100
-          )}
-          %
-        </span>
+    <div
+      className={styles.res_card}
+      data-score-plage={getScorePlage(participant.score)}
+    >
+      {participant.profile ? (
+        <Image
+          src={participant.profile.pp}
+          className="skeleton"
+          width={100}
+          height={100}
+          priority
+        />
+      ) : (
+        <Skeleton width={100} height={100} baseColor={"#b9b9b9"} circle />
+      )}
+      {participant.profile ? (
+        <Link href={`/account/profile?pseudo=${participant.profile.pseudo}`}>
+          {participant.profile.pseudo}
+        </Link>
+      ) : (
+        <Skeleton width={150} height={10} baseColor={"#b9b9b9"} />
+      )}
+      <div className={styles.res_wrap}>
+        <div className={styles.res_item}>
+          <FontAwesomeIcon icon={faGraduationCap} />
+          <span>
+            {position} / {test.participants}
+          </span>
+        </div>
+        <div className={styles.res_item}>
+          <FontAwesomeIcon icon={faUserGraduate} />
+          <span>{participant.score}%</span>
+        </div>
+        <div className={styles.res_item}>
+          <FontAwesomeIcon icon={faUserClock} />
+          <span>{getTime(participant.evaluationTime * 1000)}</span>
+        </div>
       </div>
     </div>
   );
@@ -86,12 +119,14 @@ function Timer(props) {
   const { currentTrainning, finilizeTest } = useTrain();
 
   const { output, timer, updateOutput } = useTimer(
-    currentTrainning.doc?.time * 60,
-    finilizeTest
+    Math.floor(
+      (currentTrainning.doc?.time * 60) / currentTrainning.doc.questionsNumber
+    ),
+    () => finilizeTest()
   );
 
   return (
-    <div className={styles.time}>
+    <div className={styles.time} data-time-value={timer}>
       <span>{output}</span>
     </div>
   );
@@ -108,6 +143,11 @@ export function QCMCard({
 }) {
   const [choosedAnswer, setChoosedAnswer] = useState("");
 
+  function getTimer() {
+    const target = document.querySelector("[data-time-value]");
+    return parseInt(target.dataset.timeValue);
+  }
+
   if (!active) return null;
 
   return (
@@ -116,6 +156,9 @@ export function QCMCard({
         <span>
           Q {qIndex} / {trainning.questionsNumber}
         </span>
+      </div>
+      <div className={styles.level}>
+        <span>{trainning.level}</span>
       </div>
       <Timer />
       {question.content ? (
@@ -148,9 +191,9 @@ export function QCMCard({
           loading={false}
           progress={25}
           text="Soumettre"
-          onClick={() => onSendAnswer(choosedAnswer)}
+          onClick={() => onSendAnswer(choosedAnswer, getTimer())}
         />
-        <button onClick={() => onSkip()}>Sauter</button>
+        <button onClick={() => onSkip(getTimer())}>Sauter</button>
       </div>
     </div>
   );

@@ -85,50 +85,6 @@ export default function NotificationProvider({ children }) {
                       icon: false,
                     }
                   );
-                  const audio = new Audio("/notifications-sound.mp3");
-                  audio.play();
-                });
-              }
-            );
-          }
-
-          /** Find if we have a new test */
-          if (
-            blog.mostRecentTest &&
-            !notifications.find((n) => n.targetId === blog.mostRecentTest)
-          ) {
-            /** Find the correspondant test */
-            getDoc(doc(trainningsCollection, blog.mostRecentTest)).then(
-              (test) => {
-                /** Create and save new notification document */
-                const notif = {
-                  targetId: test.id,
-                  title: test.data().title,
-                  thumbnail: null,
-                  logo: blog.logo,
-                  createAt: serverTimestamp(),
-                  read: false,
-                  blog: blog.name,
-                };
-                addDoc(notificationsCollection, notif).then((result) => {
-                  /** Send a toast to user */
-                  toast.info(
-                    <NotificationToast
-                      logo={notif.logo}
-                      title={notif.title}
-                      url={`${domainName}/trainnings/train?testChannel=${notif.targetId}`}
-                      at={notif.createAt || { seconds: new Date().getTime() }}
-                      blog={notif.blog}
-                    />,
-                    {
-                      icon: null,
-                      autoClose: false,
-                      hideProgressBar: true,
-                    }
-                  );
-
-                  const audio = new Audio("/notifications-sound.mp3");
-                  audio.play();
                 });
               }
             );

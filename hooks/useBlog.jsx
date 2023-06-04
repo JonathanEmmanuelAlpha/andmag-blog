@@ -186,8 +186,11 @@ export default function useBlog(
         banner: bannerUrl,
         logo: logoUrl,
         createBy: currentUser.uid,
-        createAt: serverTimestamp(),
         mostRecentArticle: null,
+        mostRecentTest: null,
+        articles: [],
+        tests: [],
+        createAt: serverTimestamp(),
       });
 
       await updateDoc(doc(profilesCollection, userProfile.id), {

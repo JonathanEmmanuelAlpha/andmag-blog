@@ -5,8 +5,29 @@ import hljs from "highlight.js";
 import "highlight.js/styles/tomorrow-night-bright.css";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
+import { useState, useEffect } from "react";
 
 function QuillContent({ delta }) {
+  const [quill, setQuill] = useState();
+
+  useEffect(() => {
+    if (!quill) return;
+
+    const updateScroll = quill.scroll.update.bind(quill.scroll);
+    quill.scroll.update = (mutations, context) => {
+      if (!quill.isEnabled()) {
+        return;
+      }
+      updateScroll(mutations, context);
+    };
+    const scrollEnable = quill.scroll.enable.bind(quill.scroll);
+    quill.scroll.enable = (enabled = true) => {
+      quill.container.classList.toggle("notranslate", enabled);
+      scrollEnable(enabled);
+    };
+    quill.container.classList.toggle("notranslate", quill.isEnabled());
+  }, [quill]);
+
   const wrapperRef = useCallback(
     (wrapper) => {
       if (wrapper === null || !delta) return;
@@ -49,6 +70,8 @@ function QuillContent({ delta }) {
       q.setContents(delta);
 
       q.disable();
+
+      setQuill(q);
     },
     [delta]
   );

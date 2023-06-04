@@ -19,16 +19,18 @@ function Header({ name, quickSummary, screenShoot, role, context, period }) {
       </p>
       <div className={styles.infos}>
         <div>
-          <strong>Role</strong>
-          {role}
-        </div>
-        <div>
-          <strong>Contexte</strong>
-          {context}
-        </div>
-        <div>
-          <strong>Période</strong>
-          {period}
+          <div>
+            <strong>Role</strong>
+            {role}
+          </div>
+          <div>
+            <strong>Contexte</strong>
+            {context}
+          </div>
+          <div>
+            <strong>Période</strong>
+            {period}
+          </div>
         </div>
       </div>
       <div className={styles.overlay} />

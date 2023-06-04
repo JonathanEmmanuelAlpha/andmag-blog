@@ -158,6 +158,9 @@
     font-size: 15px;
     font-weight: 600;
   }
+  .card .thumb_fill img {
+    border-radius: 0;
+  }
 }
 
 @media screen and (max-width: 380px) {

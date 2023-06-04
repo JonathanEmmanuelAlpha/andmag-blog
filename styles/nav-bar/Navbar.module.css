@@ -21,6 +21,9 @@
   list-style-type: none;
   height: 100%;
 }
+.wrapper li a {
+  border-radius: 0;
+}
 
 @media screen and (max-width: 768px) {
   .container {

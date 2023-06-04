@@ -74,13 +74,15 @@ export default function AppICon({ onOpen }) {
   return (
     <div className={styles.container}>
       <MenuIcons color={"var(--color)"} onClick={onOpen} />
-      <Image
-        src="/logo/AG.png"
-        alt="andmag-ground logo"
-        width={"40px"}
-        height={"40px"}
-        priority
-      />
+      <a href={"/logo/AG.png"} target="_blank">
+        <Image
+          src="/logo/AG.png"
+          alt="andmag-ground logo"
+          width={"40px"}
+          height={"40px"}
+          priority
+        />
+      </a>
     </div>
   );
 }

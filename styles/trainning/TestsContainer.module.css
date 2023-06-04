@@ -97,13 +97,13 @@
 
 .nbq {
   left: 0;
-  color: var(--dashboardColorFourth);
+  color: var(--acountBorderColor);
 }
 
 .level {
   left: 50%;
   transform: translate(-50%, -15px);
-  color: var(--dashboardColorThird);
+  color: var(--testAnswerColor);
   text-transform: uppercase;
   font-size: 13.5px;
   font-weight: 700;
@@ -115,44 +115,81 @@
 }
 
 .res_card {
-  max-width: 400px;
-  margin: 0 auto;
-  background-color: var(--overColor);
-  padding: 20px;
+  width: 320px;
+  height: 250px;
   border-radius: 20px 0 20px 0;
-  box-shadow: var(--shadow);
-}
-.res_card h1 {
-  margin-top: 0;
-}
-.res_card .res_stats {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-.res_card .res_stats span {
-  padding-bottom: 10px;
-  padding: 10px;
-  border: 1.5px solid var(--lightColor);
-  border-radius: 3px;
-  width: max-content;
-  color: var(--lightColor);
-  font-weight: 500;
-  margin: 7px;
-}
-.res_card .res_stats span strong {
-  font-weight: 700;
-  color: var(--accountBaseColor);
-}
-.res_card .res_per {
+  box-shadow: 0 0.1rem 1.5rem 0 rgba(26, 26, 34, 0.2);
+  padding: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
+  flex-direction: column;
+  background-color: var(--mainBgColor);
 }
-.res_card .res_per span {
-  font-size: 30px;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
-  color: var(--tesnAnswerColor);
+
+.res_card a {
+  display: block;
+  text-transform: capitalize;
+  font-weight: 600;
+  margin: 15px 0 0 0;
+  color: #3a8cd5;
+  border-bottom: 1.5px solid transparent;
+}
+.res_card a:hover {
+  border-color: #3a8cd5;
+}
+
+.res_card img {
+  border-radius: 50%;
+}
+
+.res_card svg {
+  width: 25px;
+  height: 25px;
+}
+
+.res_wrap {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.res_wrap .res_item {
+  width: calc(300px / 3);
+  font-size: 17px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.res_wrap .res_item span {
+  padding-top: 3px;
+}
+
+.res_wrap .res_item:nth-child(1) {
+  color: #3a8cd5;
+}
+
+.res_card[data-score-plage="higher"] .res_item:nth-child(2) {
+  color: #27bf55;
+}
+.res_card[data-score-plage="advanced"] .res_item:nth-child(2) {
+  color: #6ebf27;
+}
+.res_card[data-score-plage="medium"] .res_item:nth-child(2) {
+  color: #bfb227;
+}
+.res_card[data-score-plage="failled"] .res_item:nth-child(2) {
+  color: #bf6627;
+}
+.res_card[data-score-plage="null"] .res_item:nth-child(2) {
+  color: #bf2727;
+}
+
+.res_wrap .res_item:nth-child(3) {
+  color: #ffb64e;
 }

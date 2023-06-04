@@ -1,6 +1,6 @@
 .container {
-  max-width: 800px;
-  margin: 30px auto;
+  max-width: 1400px;
+  margin: 20px auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8,117 +8,136 @@
 }
 
 .wrapper {
-  padding: 15px;
+  padding: 0;
   height: 100%;
-}
-
-.bi_c {
-  width: 100%;
-  height: 330px;
-  margin-bottom: 100px;
-  overflow: hidden;
-  background-color: var(--overColor);
-  box-shadow: var(--shadow);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 5px;
-}
-
-.bi_left {
-  width: 50%;
-  position: relative;
-  height: 100%;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.bi_left img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-}
-
-.bi_right {
-  width: 50%;
-  height: 100%;
-  padding: 15px;
-  position: relative;
-}
-
-.bi_right p {
-  line-height: 20px;
-}
-
-.stats {
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  margin: 20px 0;
-}
-.stats span {
-  width: max-content;
-  padding: 10px 15px;
-  border: 1.5px solid var(--lightColor);
-  border-radius: 3px;
-  color: var(--lightColor);
-  font-size: 15px;
-  font-weight: 600;
-  text-transform: capitalize;
-  margin: 0 10px;
 }
 
-.bi_fw_link {
+/*---------------------------------------------- BLOG CARD --------------------------------------*/
+.blog_card {
+  --width: 400px;
+  --height: 250px;
+  --ov-height: 200px;
+  --ov-top: 305px;
+
+  width: var(--width);
+  height: 500px;
+  overflow: hidden;
+  margin: 20px;
+  border-radius: 20px;
+  display: block;
+  position: relative;
+  box-shadow: 0 0.1rem 1.5rem 0 rgba(26, 26, 34, 0.2);
+  transition: 0.3s;
+}
+.blog_card:hover {
+  box-shadow: 0 0.2rem 2.5rem 0 rgba(26, 26, 34, 0.5);
+  scale: 1.005;
+}
+
+.blog_card svg {
+  width: 20px;
+  height: 20px;
+}
+
+.blog_ban {
+  width: 100%;
+  height: var(--height);
+  position: relative;
+}
+.blog_ban img {
+  border-radius: 20px 20px 0 0;
+}
+
+.blog_overlay {
+  position: absolute;
+  top: var(--ov-top);
+  left: 0;
+  width: 100%;
+  height: var(--ov-height);
+  background-color: var(--overColor);
+  transform: skew(4.4119rad, 5.6204rad);
+  border-radius: 10px;
+}
+
+.blog_body {
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+  position: absolute;
+  top: 170px;
+  left: 0;
+}
+
+.blog_infos {
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+}
+.blog_infos img {
+  border-radius: 50%;
+}
+
+.blog_stats {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.blog_stats div {
+  display: flex;
+  align-items: center;
   justify-content: center;
+  font-size: 18px;
+  color: var(--lightColor);
+  font-weight: 600;
+  padding-right: 10px;
 }
-.bi_fw_link a {
-  width: max-content;
-  padding: 7px 10px;
-  border: 1.5px solid var(--primColor);
-  color: var(--primColor);
-}
-.bi_fw_link a span {
-  font-size: 14px;
+.blog_stats div span {
+  padding-right: 5px;
 }
 
-@media screen and (max-width: 1400px) {
-  .bi_left img {
-    width: 80px;
-    height: 80px;
-  }
+.blog_body h2 {
+  font-size: 25px;
+  color: var(--color);
+  margin-bottom: 20px;
+}
+.blog_body p {
+  color: var(--color);
+  line-height: 22px;
 }
 
-@media screen and (max-width: 830px) {
-  .bi_c {
-    width: 400px;
-    flex-direction: column;
-    height: max-content;
+@media screen and (max-width: 500px) {
+  .blog_card {
+    --width: 320px;
+    --height: 250px;
+    --ov-height: 250px;
+    --ov-top: 250px;
   }
-  .bi_left {
-    width: 100%;
-    height: 250px;
+  .blog_overlay {
+    top: var(--ov-top);
+    height: var(--ov-height);
+    background-color: var(--overColor);
+    transform: skew(4.2606rad, 5.5588rad);
   }
-  .bi_left img {
-    width: 100px;
-    height: 100px;
+  .blog_body {
+    top: 130px;
   }
-  .bi_right {
-    width: 100%;
+  .blog_body h2 {
+    font-size: 20px;
   }
-}
-
-@media screen and (max-width: 450px) {
-  .bi_c {
-    width: 320px;
-    flex-direction: column;
-    height: max-content;
+  .blog_stats div {
+    font-size: 16px;
+  }
+  .blog_stats div svg {
+    width: 18px;
+    height: 18px;
+  }
+  .blog_infos img {
+    width: 50px;
+    height: 50px;
   }
 }

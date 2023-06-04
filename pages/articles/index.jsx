@@ -72,6 +72,7 @@ function Articles() {
               );
             })
           )}
+          {!loading && articles.length !== 0 && <div ref={divRef} />}
         </div>
       </div>
     </SkeletonLayout>

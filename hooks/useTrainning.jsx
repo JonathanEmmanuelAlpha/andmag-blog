@@ -1,14 +1,10 @@
 import {
-  addDoc,
-  arrayRemove,
-  arrayUnion,
   collection,
   doc,
   getDoc,
   getDocs,
   increment,
   limit,
-  onSnapshot,
   orderBy,
   query,
   serverTimestamp,
@@ -48,12 +44,16 @@ function reducer(state, { type, payload }) {
         },
       };
 
-    case ACTIONS.LOAD_CURRENT:
+    case ACTIONS.LOAD_CURRENT: // Load current trainning document
       return {
         ...state,
         currentTrainning: {
           loading: false,
           doc: payload.trainning,
+        },
+        time: {
+          initial: payload.trainning.time * 60,
+          reamining: 0,
         },
       };
 
@@ -85,6 +85,10 @@ function reducer(state, { type, payload }) {
       return {
         ...state,
         questionsDone: [...state.questionsDone, payload.item],
+        time: {
+          ...state.time,
+          reamining: payload.timeReamining,
+        },
       };
 
     default:
@@ -97,7 +101,8 @@ export default function useTrainning(
   docLimit = 20,
   pageNumber,
   trainningRef,
-  currentQuestionId
+  currentQuestionId,
+  partNumber = false
 ) {
   const router = useRouter();
   const { userProfile, loadingProfile } = useAuth();
@@ -120,6 +125,10 @@ export default function useTrainning(
       docs: [],
     },
     questionsDone: [],
+    time: {
+      initial: null,
+      reamining: null,
+    },
   });
 
   const [loading, setLoading] = useState(true);
@@ -151,12 +160,73 @@ export default function useTrainning(
     return sum;
   }
 
+  /**
+   * Get average score and test time
+   * @param {Number} partScore
+   * @param {Number} partTime
+   * @returns
+   */
+  function getAverage(partScore, partTime) {
+    const score = state.currentTrainning.doc.average.averageScore || 0;
+    const time = state.currentTrainning.doc.average.averageTime || 0;
+
+    return {
+      score: score + partScore / (state.currentTrainning.doc.participants + 1),
+      time: time + partTime / (state.currentTrainning.doc.participants + 1),
+    };
+  }
+
+  function getMax(partScore, partTime) {
+    const prevScore = state.currentTrainning.doc.maximum.score || 0;
+    const prevTime = state.currentTrainning.doc.maximum.time || 0;
+
+    return {
+      score: prevScore > partScore ? prevScore : partScore,
+      time: prevScore > partScore ? prevScore : partScore,
+    };
+  }
+
+  function getMin(partScore, partTime) {
+    const prevScore = state.currentTrainning.doc.minimum.score || partScore;
+    const prevTime = state.currentTrainning.doc.minimum.time || partTime;
+
+    return {
+      score: prevScore < partScore ? prevScore : partScore,
+      time: prevScore < partScore ? prevScore : partScore,
+    };
+  }
+
   async function finilizeTest() {
     if (!loadingProfile && !userProfile) {
       router.replace(`/account/login?next${router.asPath}`);
       return;
     }
     try {
+      const data = {
+        score:
+          (getCorrectAnswers() / state.currentTrainning.doc.questionsNumber) *
+          100,
+        evaluationTime: state.time.initial - state.time.reamining,
+        updateAt: serverTimestamp(),
+      };
+
+      const fetchExistance = await getDoc(
+        doc(
+          profilesCollection,
+          userProfile.id,
+          "tests",
+          state.currentTrainning.doc.id
+        )
+      );
+      await updateDoc(doc(trainningsCollection, trainningRef), {
+        participants: !fetchExistance.exists()
+          ? increment(1)
+          : state.currentTrainning.doc.participants,
+        average: getAverage(data.score, data.evaluationTime),
+        maximum: getMax(data.score, data.evaluationTime),
+        minimum: getMin(data.score, data.evaluationTime),
+      });
+
       await setDoc(
         doc(
           profilesCollection,
@@ -164,20 +234,22 @@ export default function useTrainning(
           "tests",
           state.currentTrainning.doc.id
         ),
-        {
-          score: Math.round(
-            (getCorrectAnswers() / state.currentTrainning.doc.questionsNumber) *
-              100
-          ),
-          updateAt: serverTimestamp(),
-        }
+        data
+      );
+      await setDoc(
+        doc(trainningsCollection, trainningRef, "participants", userProfile.id),
+        data
+      );
+
+      return router.push(
+        `/trainnings/results?testChannel=jcVdFzLJd7iqdfBNvsWt`
       );
     } catch (error) {
       return showErrorToast(handleFirestoreErrors(error));
     }
   }
 
-  function sendAnswer(answer, question) {
+  function sendAnswer(answer, question, time) {
     const newItem = {
       questionCorrectAnswer: question.correctAnswer,
       answer: answer,
@@ -185,11 +257,11 @@ export default function useTrainning(
 
     dispatch({
       type: ACTIONS.ADD_QUESTION_DONE,
-      payload: { item: newItem },
+      payload: { item: newItem, timeReamining: state.time.reamining + time },
     });
   }
 
-  function skipQuestion(question) {
+  function skipQuestion(question, time) {
     const newItem = {
       questionCorrectAnswer: question.correctAnswer,
       answer: null,
@@ -197,7 +269,7 @@ export default function useTrainning(
 
     dispatch({
       type: ACTIONS.ADD_QUESTION_DONE,
-      payload: { item: newItem },
+      payload: { item: newItem, timeReamining: state.time.reamining + time },
     });
   }
 

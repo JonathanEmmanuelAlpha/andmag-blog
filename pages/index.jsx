@@ -1,14 +1,21 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import Header from "../components/header/Header";
 import AwesomeLink from "../components/links/AwesomeLink";
 import styles from "../styles/Home.module.css";
 import {
+  faAngleLeft,
+  faAngleRight,
   faArrowRight,
   faCloud,
   faCode,
   faCodeBranch,
+  faMessage,
+  faNewspaper,
+  faPenToSquare,
+  faRegistered,
+  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SkeletonLayout from "../components/skeleton-layout/SkeletonLayout";
@@ -60,8 +67,8 @@ function HeadSection() {
         <h1>Andmag Ground</h1>
         <p>Full stack developer & UI/UX Designer.</p>
         <div className={styles.mor_links}>
-          <Link href={`${domainName}/recent-works`}>
-            <a className={styles.cs}>Travaux récents</a>
+          <Link href={`${domainName}/personal-works`}>
+            <a className={styles.cs}>Travaux personnels</a>
           </Link>
           <Link href={`${domainName}/case-studies`}>
             <a className={styles.re}>Réalistations</a>
@@ -572,6 +579,110 @@ function Contact() {
   );
 }
 
+function CTCItem({ icon, message, rank }) {
+  return (
+    <div>
+      <div className={styles.ctc_item} data-target-slide data-color={rank}>
+        <div>
+          <FontAwesomeIcon icon={icon} />
+        </div>
+        <p>{message}</p>
+      </div>
+    </div>
+  );
+}
+
+function ContentCreator() {
+  const step = 370;
+  const [translate, setTranslate] = useState(0);
+
+  function slideLeft() {
+    const slides = document.querySelectorAll("[data-target-slide]");
+    slides.forEach((slide) => {
+      const currentTranslate = parseInt(
+        getComputedStyle(slide).getPropertyValue("--translate")
+      );
+      console.log("Current: ", currentTranslate + step);
+
+      setTranslate(currentTranslate + step);
+
+      slide.style.setProperty("--translate", currentTranslate + step);
+    });
+  }
+
+  function slideRight() {
+    const slides = document.querySelectorAll("[data-target-slide]");
+    slides.forEach((slide) => {
+      const currentTranslate = parseInt(
+        getComputedStyle(slide).getPropertyValue("--translate")
+      );
+      console.log("Current: ", currentTranslate - step);
+
+      setTranslate(currentTranslate - step);
+
+      slide.style.setProperty("--translate", currentTranslate - step);
+    });
+  }
+
+  return (
+    <div className={styles.content_creator}>
+      <div className={styles.ctc_infos}>
+        <h2>Laissez parler votre créativité en devenant créateur de contenu</h2>
+        <p>
+          Andmag ground vous offre la possibilité de créer un blog en quelque
+          clicks.
+        </p>
+        <div className={styles.ctc_btns}>
+          <div className={styles.ctc_nav}>
+            <button onClick={slideLeft} disabled={translate == 0}>
+              <FontAwesomeIcon icon={faAngleLeft} />
+            </button>
+            <button onClick={slideRight} disabled={translate <= -3 * step}>
+              <FontAwesomeIcon icon={faAngleRight} />
+            </button>
+          </div>
+          <Link href={"/content-creator/recruit"}>
+            <a>
+              <span>Postuler</span>
+              <FontAwesomeIcon icon={faArrowRight} />
+            </a>
+          </Link>
+        </div>
+      </div>
+      <div className={styles.ctc_wrapper}>
+        <CTCItem
+          icon={faPenToSquare}
+          message={
+            "Soumettez une demande de blog en toute simplicité et en quelques cliques."
+          }
+          rank={1}
+        />
+        <CTCItem
+          icon={faNewspaper}
+          message={
+            "Créer du contenu au gré de votre humeur (articles de blog, publication, système de test)"
+          }
+          rank={2}
+        />
+        <CTCItem
+          icon={faSearch}
+          message={
+            "Soiyez en tête des résultats de recherches google sans débourser les moindre sous."
+          }
+          rank={3}
+        />
+        <CTCItem
+          icon={faRegistered}
+          message={
+            "Tout ce que vous avez à faire est de cliquer sur le lien à votre gauche."
+          }
+          rank={4}
+        />
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   return (
     <SkeletonLayout isHome={true}>
@@ -580,15 +691,7 @@ export default function Home() {
           <HeadSection />
           <About />
           <SkillList />
-          <InfoCard
-            imageUrl={"/images/blog.jpg"}
-            title={"Blogs"}
-            description={
-              "Vous êtes un créateur, passionné de lecture et la rédaction d'article vous intéresse ou vous passionne tout simplement ? Avec Andmag-ground, créer un blog n'aura jamais été aussi simple. Tous ce que vous avez à faire est de me contacter. Notez que rien ne vous seras demandé si ce n'est de fournir votre adresse email et bien évidement de créer un compte."
-            }
-            linkText={"Plus d'informations"}
-            linkUrl={"/faq#blog"}
-          />
+          <ContentCreator />
           <InfoCard
             imageUrl={"/images/faq.WEBP"}
             title={"FAQ"}

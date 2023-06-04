@@ -7,7 +7,7 @@ import SkeletonLayout, {
 
 export default function Blogs() {
   return (
-    <SkeletonLayout title={"Andmag-glound - Blogs"}>
+    <SkeletonLayout title={"Andmag-ground - Blogs"}>
       <BlogsList />
     </SkeletonLayout>
   );

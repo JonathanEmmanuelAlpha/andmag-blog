@@ -39,7 +39,7 @@ function TrainningCard({ trainning }) {
           </span>
           <CircleSeparator />
           <span>
-            <strong>{trainning.time * trainning.questionsNumber} min</strong>
+            <strong>{trainning.time} min</strong>
           </span>
         </div>
       </div>

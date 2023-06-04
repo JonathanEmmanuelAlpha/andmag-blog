@@ -213,12 +213,13 @@ button.clap_btn[data-active="true"] {
 @media screen and (max-width: 425px) {
   .com_container {
     position: fixed;
+    z-index: 100;
     top: var(--headerHeight);
     left: 0;
     background-color: var(--overColor);
     height: calc(100vh);
     overflow-y: scroll;
-    padding: 7px 7px calc(var(--headerHeight) + 7px) 7px;
+    padding: 7px 7px 200px 7px;
   }
   .com_container::-webkit-scrollbar {
     display: none;

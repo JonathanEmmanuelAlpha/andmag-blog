@@ -4,7 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "../../styles/blog/BlogsList.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faBell } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRight,
+  faBell,
+  faNewspaper,
+  faPeoplePulling,
+} from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "../nav-bar/SearchBar";
 import { blogsCollection } from "../../firebase";
 import useBlogSearch from "../../hooks/useBlogSearch";
@@ -12,40 +17,62 @@ import LoadingScreen from "../inputs/LoadingScreen";
 import useOnScreen from "../../hooks/useOnScreen";
 import AwesomeLink from "../links/AwesomeLink";
 import BlogHead from "./BlogHead";
+import Skeleton from "react-loading-skeleton";
 
 function BlogItem({ blog }) {
   return (
-    <div className={styles.bi_c}>
-      <div
-        className={styles.bi_left + " skeleton"}
-        style={{ backgroundImage: `url(${blog.banner})` }}
-      >
-        <Image
-          className="skeleton"
-          src={blog.logo}
-          alt={blog.name + ".logo"}
-          width={120}
-          height={120}
-        />
-      </div>
-      <div className={styles.bi_right}>
-        <BlogHead name={blog.name} />
-        <p>{blog.description.slice(0, 254)}</p>
-        <div className={styles.stats}>
-          <span>{blog.articles ? blog.articles.length : 0} articles</span>
-          <span>{blog.tests ? blog.tests.length : 0} tests</span>
-        </div>
-        <div className={styles.bi_fw_link}>
-          <AwesomeLink
-            text="Explorer le blog"
-            url={`/blogs/${blog.id}`}
-            direction="horizontal"
-            icon={faArrowRight}
-            reverse
+    <Link href={`/blogs/${blog.id}`}>
+      <a className={styles.blog_card}>
+        <div className={styles.blog_ban}>
+          <Image
+            className="skeleton"
+            src={blog.banner}
+            alt={blog.name + " - banner"}
+            layout="fill"
           />
         </div>
-      </div>
-    </div>
+        <div className={styles.blog_overlay} />
+        <div className={styles.blog_body}>
+          <div className={styles.blog_infos}>
+            <div className={styles.blog_stats}>
+              <div>
+                {blog.articles ? (
+                  <span>
+                    {blog.articles.length < 10
+                      ? `0${blog.articles.length}`
+                      : blog.articles.length}
+                  </span>
+                ) : (
+                  <span>00</span>
+                )}
+                <FontAwesomeIcon icon={faNewspaper} />
+              </div>
+              <div>
+                {blog.tests ? (
+                  <span>
+                    {blog.tests.length < 10
+                      ? `0${blog.tests.length}`
+                      : blog.tests.length}
+                  </span>
+                ) : (
+                  <span>00</span>
+                )}
+                <FontAwesomeIcon icon={faPeoplePulling} />
+              </div>
+            </div>
+            <Image
+              className="skeleton"
+              src={blog.logo}
+              alt={blog.name + ".logo"}
+              width={60}
+              height={60}
+            />
+          </div>
+          <h2>{blog.name}</h2>
+          <p>{blog.description}</p>
+        </div>
+      </a>
+    </Link>
   );
 }
 
