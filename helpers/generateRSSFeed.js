@@ -37,7 +37,11 @@ export default async function generateRSSFeed() {
         article.id
       }`,
       description: article.data().description,
-      date: new Date(article.data().updateAt.seconds * 1000),
+      date: new Date(
+        article.data().updateAt
+          ? article.data().updateAt.seconds * 1000
+          : article.data().createAt.seconds * 1000
+      ),
       author: article.data().blogName,
       copyright: `All rights reserved ${new Date(
         article.data().createAt.seconds * 1000
