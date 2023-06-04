@@ -27,6 +27,10 @@ import {
 } from "../components/app-icon/AppICon";
 import Link from "next/link";
 import { domainName } from "../components/links/AwesomeLink.type";
+import { getDocs, query, setDoc, where } from "firebase/firestore";
+import { adminsCollection, handleFirestoreErrors } from "../firebase";
+import { useAuth } from "../context/AuthProvider";
+import { toast } from "react-toastify";
 
 function SocialsWrapper() {
   return (
@@ -593,8 +597,11 @@ function CTCItem({ icon, message, rank }) {
 }
 
 function ContentCreator() {
+  const { currentUser } = useAuth();
+
   const step = 370;
   const [translate, setTranslate] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   function slideLeft() {
     const slides = document.querySelectorAll("[data-target-slide]");
@@ -624,6 +631,39 @@ function ContentCreator() {
     });
   }
 
+  async function canPostulate() {
+    const q = query(adminsCollection, where("userId", "==", currentUser.uid));
+    const exist = await getDocs(q).then((snaps) => {
+      if (!snaps.empty)
+        throw new Error("Vous êtes déjà l'un des blogeur de la plateforme !");
+    });
+  }
+
+  async function addBlogger() {
+    await canPostulate();
+    await setDoc(doc(adminsCollection, currentUser.uid), {
+      userId: currentUser.uid,
+      email: currentUser.email,
+    });
+  }
+
+  async function handleClick(e) {
+    e.preventDefault();
+    if (!currentUser) return;
+
+    setLoading(true);
+    toast.promise(addBlogger(), {
+      pending: "Opération en cours...",
+      success: "Félécitation. Vous pouvez désormais créer un blog.",
+      error: {
+        render({ data }) {
+          if (typeof data.message === "string") return data.message;
+          return handleFirestoreErrors(data.error);
+        },
+      },
+    });
+  }
+
   return (
     <div className={styles.content_creator}>
       <div className={styles.ctc_infos}>
@@ -642,7 +682,7 @@ function ContentCreator() {
             </button>
           </div>
           <Link href={"/content-creator/recruit"}>
-            <a>
+            <a aria-disabled={loading} onClick={handleClick}>
               <span>Postuler</span>
               <FontAwesomeIcon icon={faArrowRight} />
             </a>
@@ -652,9 +692,7 @@ function ContentCreator() {
       <div className={styles.ctc_wrapper}>
         <CTCItem
           icon={faPenToSquare}
-          message={
-            "Soumettez une demande de blog en toute simplicité et en quelques cliques."
-          }
+          message={"Devennez blogeur en 02 petites étapes simples et rapides."}
           rank={1}
         />
         <CTCItem

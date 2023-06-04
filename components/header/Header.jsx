@@ -25,7 +25,7 @@ export default function Header({
   const { currentUser, loadingUser, logout } = useAuth();
 
   const desc =
-    "Andmag ground est une entreprise de prestation de services axés sur le génie logiciel et la conception UI/UX. Nous offrons donc à nos clients la possibilités de cibler un large éventail de client, augmentant ainsi leur productivité et leur rentabilité.";
+    "Andmag ground est une plateforme de services axés sur le génie logiciel et la conception UI/UX. Nous offrons donc à nos clients la possibilités de cibler un large éventail de logiciels, augmentant ainsi leur productivité et leur rentabilité.";
 
   return (
     <>
