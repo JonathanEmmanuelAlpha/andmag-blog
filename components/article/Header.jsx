@@ -78,7 +78,7 @@ function Header({ article, blog }) {
     /** Si l'utilisateur avait déjà liker la publication, resitrer son like */
     if (hasLiked) {
       toast.promise(
-        updateDoc(doc(articlesCollection, router.query.articleId), {
+        updateDoc(doc(articlesCollection, article.id), {
           likes: arrayRemove(currentUser.uid),
         }),
         {
@@ -97,7 +97,7 @@ function Header({ article, blog }) {
 
     /** Ajouter un like */
     toast.promise(
-      updateDoc(doc(articlesCollection, router.query.articleId), {
+      updateDoc(doc(articlesCollection, article.id), {
         likes: arrayUnion(currentUser.uid),
       }),
       {
@@ -117,7 +117,7 @@ function Header({ article, blog }) {
     /** Si l'utilisateur avait déjà applaudit la publication, resitrer son like */
     if (hasClapped) {
       toast.promise(
-        updateDoc(doc(articlesCollection, router.query.articleId), {
+        updateDoc(doc(articlesCollection, article.id), {
           claps: arrayRemove(currentUser.uid),
         }),
         {
@@ -136,7 +136,7 @@ function Header({ article, blog }) {
 
     /** Ajouter un bravo */
     toast.promise(
-      updateDoc(doc(articlesCollection, router.query.articleId), {
+      updateDoc(doc(articlesCollection, article.id), {
         claps: arrayUnion(currentUser.uid),
       }),
       {
@@ -154,7 +154,7 @@ function Header({ article, blog }) {
 
   async function addFavoriteHandler() {
     try {
-      await updateDoc(doc(articlesCollection, router.query.articleId), {
+      await updateDoc(doc(articlesCollection, article.id), {
         favorites: arrayUnion(currentUser.uid),
       });
 
@@ -168,7 +168,7 @@ function Header({ article, blog }) {
 
   async function removeFavorite() {
     try {
-      await updateDoc(doc(articlesCollection, router.query.articleId), {
+      await updateDoc(doc(articlesCollection, article.id), {
         favorites: arrayRemove(currentUser.uid),
       });
 
