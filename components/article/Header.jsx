@@ -255,25 +255,18 @@ function Header({ article, blog }) {
         </div>
         <div className={styles.details}>
           <div className={styles.actions}>
-            <div className={styles.tags}>
-              {article.tags.map(
-                (tag, index) =>
-                  index < 5 && (
-                    <Link
-                      key={index}
-                      href={`/articles/results?search_query=${tag}`}
-                    >
-                      {tag}
-                    </Link>
-                  )
-              )}
-            </div>
-            <button onClick={() => setOpen(!open)}>
-              <span>Description - {open ? "Masquer" : "Afficher"}</span>
-              <FontAwesomeIcon icon={open ? faAngleUp : faAngleDown} />
-            </button>
+            {article.tags.map(
+              (tag, index) =>
+                index < 5 && (
+                  <Link
+                    key={index}
+                    href={`/articles/results?search_query=${tag}`}
+                  >
+                    {tag}
+                  </Link>
+                )
+            )}
           </div>
-          <p data-active={open}>{article.description}</p>
         </div>
         <div className={styles.btns}>
           <button

@@ -259,7 +259,7 @@
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  flex-wrap: wrap;
   padding: 10px 0;
 }
 .details .actions a {
@@ -269,43 +269,6 @@
 }
 .details .actions a:hover {
   border-bottom: 1px solid var(--linkColor);
-}
-.details .actions button {
-  background-color: transparent;
-  border: none;
-  display: flex;
-  align-items: last baseline;
-  justify-content: center;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--primColor);
-}
-.details .actions svg {
-  width: 15px;
-  height: 15px;
-  margin-left: 3px;
-}
-
-.details p {
-  line-height: 20px;
-  color: var(--lightColor);
-  height: 0px;
-  overflow: hidden;
-}
-.details p[data-active="true"] {
-  animation: open-desc 5s linear forwards;
-}
-.details p[data-active="false"] {
-  animation: open-desc 5s linear backwards;
-}
-
-@keyframes open-desc {
-  0% {
-    height: 0px;
-  }
-  100% {
-    height: max-content;
-  }
 }
 
 /*---------------------------------- PLAY LIST ---------------------------------*/
