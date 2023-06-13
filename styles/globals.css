@@ -594,18 +594,33 @@ main section {
 
 .quill-content-wrapper .ql-container.ql-snow {
   border: none;
+  background-color: inherit;
 }
 .quill-content-wrapper .ql-container.ql-snow p,
 .quill-content-wrapper .ql-container.ql-snow pre,
 .quill-content-wrapper .ql-container.ql-snow li,
-.quill-content-wrapper .ql-container.ql-snow p span,
-.quill-content-wrapper .ql-container.ql-snow p strong {
-  font-size: 14px;
+.quill-content-wrapper .ql-container.ql-snow span,
+.quill-content-wrapper .ql-container.ql-snow strong {
+  font-size: 16px;
   line-height: 25px;
+}
+.quill-content-wrapper .ql-container.ql-snow p,
+.quill-content-wrapper .ql-container.ql-snow ul,
+.quill-content-wrapper .ql-container.ql-snow ol,
+.quill-content-wrapper .ql-container.ql-snow li,
+.quill-content-wrapper .ql-container.ql-snow h1,
+.quill-content-wrapper .ql-container.ql-snow h2,
+.quill-content-wrapper .ql-container.ql-snow h3,
+.quill-content-wrapper .ql-container.ql-snow h4,
+.quill-content-wrapper .ql-container.ql-snow h5,
+.quill-content-wrapper .ql-container.ql-snow span,
+.quill-content-wrapper .ql-container.ql-snow strong {
+  background-color: transparent !important;
 }
 
 .quill-content-wrapper .ql-container.ql-snow a {
   color: var(--linkColor);
+  background-color: transparent !important;
 }
 
 .circle {

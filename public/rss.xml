@@ -4,7 +4,7 @@
         <title>Andmag-ground</title>
         <link>http://localhost:3000</link>
         <description>Speed, efficiency, performance and safety are our pride. Whatever the difficulty of your project, we promise you support that meets your expectations</description>
-        <lastBuildDate>Sun, 04 Jun 2023 16:12:48 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 09 Jun 2023 20:41:28 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -14,10 +14,17 @@
         </image>
         <copyright>All rights reserved 2023, Andmag-ground</copyright>
         <item>
+            <title><![CDATA[Single Responsibility principle]]></title>
+            <link>http://localhost:3000/articles/single-responsibility-principle-1EbbPseyIeWd8KSqnWo2</link>
+            <guid>1EbbPseyIeWd8KSqnWo2</guid>
+            <pubDate>Fri, 09 Jun 2023 20:18:39 GMT</pubDate>
+            <description><![CDATA[Dans cet article, vous apprendrez ce que l'on entend par principes de conceptions de logiciels, leurs utilisés, et des exemples de principes. Nous aborderons ensuite l'un des principes les plus simples mais aussi l'un des plus puissant SR.]]></description>
+        </item>
+        <item>
             <title><![CDATA[Introduction au langage JavaScript]]></title>
             <link>http://localhost:3000/articles/introduction-au-langage-java-script-Pi0fM6AUFgjoe3Mqg4xu</link>
             <guid>Pi0fM6AUFgjoe3Mqg4xu</guid>
-            <pubDate>Thu, 13 Apr 2023 23:34:24 GMT</pubDate>
+            <pubDate>Mon, 05 Jun 2023 05:55:27 GMT</pubDate>
             <description><![CDATA[Dans cet article, vous apprendrez ce qu'est le langage JavaScript, son origine, les avantages et les inconvénients liés à l'usage, ainsi que les domaines d'applications qui font de ce langage l'un des plus populaire et utilisés au monde.]]></description>
         </item>
     </channel>
