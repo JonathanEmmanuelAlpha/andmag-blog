@@ -1,6 +1,5 @@
 import dashify from "dashify";
 import { format } from "date-fns";
-import fs from "fs";
 import { domainName } from "../components/links/AwesomeLink.type";
 import { articlesCollection, profilesCollection } from "../libs/database";
 
@@ -76,5 +75,5 @@ export default async function generateSitemap() {
             .join("")}
     </urlset>`;
 
-  fs.writeFileSync("./public/sitemap.xml", xml);
+  return xml;
 }

@@ -43,10 +43,15 @@ export default function NotificationProvider({ children }) {
     )
       return;
 
+    [].findIndex();
+
     const q = query(blogsCollection, where("mostRecentArticle", "!=", null));
     const unsubcriber = onSnapshot(q, (snaps) => {
       snaps.docChanges().forEach((change) => {
-        if (change.type === "modified") {
+        if (
+          change.type === "modified" &&
+          userProfile.followed.findIndex((b) => b.id === change.doc.id) !== -1
+        ) {
           let blog = { id: change.doc.id, ...change.doc.data() };
 
           /** Find if we have a new article */
@@ -62,8 +67,11 @@ export default function NotificationProvider({ children }) {
                   targetId: article.id,
                   title: article.data().title,
                   thumbnail: article.data().thumbnail,
-                  logo: blog.logo,
-                  blog: blog.name,
+                  blog: {
+                    id: blog.id,
+                    name: blog.name,
+                    logo: blog.logo,
+                  },
                   createAt: serverTimestamp(),
                   read: false,
                 };
@@ -72,7 +80,6 @@ export default function NotificationProvider({ children }) {
                   // Send a toast to user
                   toast.info(
                     <NotificationToast
-                      logo={notif.logo}
                       title={notif.title}
                       url={`${domainName}/articles/${dashify(notif.title)}-${
                         notif.targetId

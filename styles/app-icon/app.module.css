@@ -158,6 +158,10 @@
 }
 .toast_container header .content a {
   color: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  padding-right: 5px;
+  display: block;
 }
 .toast_container header .img {
   width: 80px;

@@ -31,7 +31,6 @@ export function ArticleCardThin(props) {
               alt={props.title + ".thumbnail"}
               layout="fill"
               priority
-              className="skeleton"
             />
           </div>
         ) : (
@@ -87,7 +86,6 @@ export function ArticleCard({
         <header>
           {blogLogo ? (
             <Image
-              className="skeleton"
               src={blogLogo}
               alt={blogName + ".logo"}
               width={35}
@@ -155,12 +153,7 @@ export function ArticleCard({
         </div>
       </div>
       <div className={styles.thumb_fill}>
-        <Image
-          className="skeleton"
-          src={thumbnail}
-          alt={title + ".thumbnail"}
-          layout="fill"
-        />
+        <Image src={thumbnail} alt={title + ".thumbnail"} layout="fill" />
       </div>
     </div>
   );

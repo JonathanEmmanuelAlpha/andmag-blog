@@ -205,8 +205,6 @@ function LightBoxGallery(props) {
     const httpsRef = ref(storage, getCurrentImage().src);
     getDownloadURL(httpsRef)
       .then((url) => {
-        console.log("Url: ", url);
-
         const xhr = new XMLHttpRequest();
         xhr.responseType = "blob";
         xhr.onload = (event) => {

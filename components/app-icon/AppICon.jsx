@@ -87,7 +87,7 @@ export default function AppICon({ onOpen }) {
   );
 }
 
-export function NotificationToast({ logo, thumbnail, blog, title, url, at }) {
+export function NotificationToast({ thumbnail, blog, title, url, at }) {
   return (
     <div className={styles.toast_container}>
       <header>
@@ -96,26 +96,19 @@ export function NotificationToast({ logo, thumbnail, blog, title, url, at }) {
         </div>
         {thumbnail && (
           <div className={styles.img}>
-            <Image
-              className="skeleton"
-              src={thumbnail}
-              alt="thumbnail"
-              priority
-              layout="fill"
-            />
+            <Image src={thumbnail} alt="thumbnail" priority layout="fill" />
           </div>
         )}
       </header>
       <footer>
         <Image
-          className="skeleton"
-          src={logo}
+          src={blog.logo}
           alt="blog - logo"
           priority
           width={"30px"}
           height={"30px"}
         />
-        <Link href={`/blogs/${blog}`}>{blog}</Link>
+        <Link href={`/blogs/${blog.id}`}>{blog.name}</Link>
       </footer>
     </div>
   );
@@ -173,7 +166,7 @@ function NotificationWrapper({ loading, notifications, open, handleClick }) {
           return (
             <NotificationItem
               key={notif.id}
-              blogLogo={notif.logo}
+              blogLogo={notif.blog.logo}
               at={{ seconds: notif.createAt.seconds }}
               thumbnail={notif.thumbnail}
               title={notif.title}
