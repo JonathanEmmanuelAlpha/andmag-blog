@@ -43,8 +43,6 @@ export default function NotificationProvider({ children }) {
     )
       return;
 
-    [].findIndex();
-
     const q = query(blogsCollection, where("mostRecentArticle", "!=", null));
     const unsubcriber = onSnapshot(q, (snaps) => {
       snaps.docChanges().forEach((change) => {
