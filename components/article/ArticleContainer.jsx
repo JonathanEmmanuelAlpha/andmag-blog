@@ -1,3 +1,4 @@
+import Script from 'next/script'
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/article/ArticleContainer.module.css";
 import Header from "./Header";
@@ -47,6 +48,17 @@ function ArticleContainer({ article, blog, playlist, comments }) {
 
   const [open, setOpen] = useState(false);
 
+  /** Google tag (gtag.js) */
+  useEffect(() => {
+    if(!window) return;
+    
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'AW-11402375436');
+  }, []);
+
   /** Get all articles remaining to current article playlist */
   useEffect(() => {
     if (!blog || !playlist) return;
@@ -87,6 +99,7 @@ function ArticleContainer({ article, blog, playlist, comments }) {
 
   return (
     <div className={styles.container}>
+      <Script async src="https://www.googletagmanager.com/gtag/js?id=AW-11402375436" />
       <div className={styles.wrapper}>
         <div className={styles.section}>
           <Header article={article} blog={blog} />
