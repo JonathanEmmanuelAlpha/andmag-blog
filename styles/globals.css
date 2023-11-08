@@ -278,6 +278,7 @@ template {
     /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
       url("/fonts/ethnocentric/@font-face/5e7e5b88452bacd9f8b087c3223619b5.svg#Ethnocentrique V2")
       format("svg"); /* iOS 4.1- */
+   font-display: swap;
 }
 
 @font-face {
@@ -296,6 +297,7 @@ template {
     /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
       url("/fonts/impact/4cbf858ccd9ffd3923bed6843a474080.svg#Impact W07 Regular")
       format("svg"); /* iOS 4.1- */
+   font-display: swap;
 }
 
 body {
