@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
 import ArticleContainer from "../../components/article/ArticleContainer";
 import SkeletonLayout from "../../components/skeleton-layout/SkeletonLayout";
-import { articlesCollection, blogsCollection, db } from "../../libs/database";
+import { articlesCollection } from "../../libs/database";
 
 function ArticleId({ article }) {
   return (
@@ -14,9 +13,6 @@ function ArticleId({ article }) {
     >
       <ArticleContainer
         article={article}
-        blog={blog}
-        playlist={playlist}
-        comments={comments}
       />
     </SkeletonLayout>
   );
