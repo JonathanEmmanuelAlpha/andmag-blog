@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import Head from "next/head";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Header from "../components/header/Header";
 import AwesomeLink from "../components/links/AwesomeLink";
