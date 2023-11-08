@@ -34,7 +34,7 @@ function Articles() {
   );
 
   return (
-    <SkeletonLayout title={"Andmag-ground - Articles"}>
+    <SkeletonLayout title={"Andmag-ground - Articles"} description="Retrouver un ensemble d'articles de qualités écrits par des experts en la matière.">
       <div className={styles.container}>
         <div className={styles.search}>
           <SearchBar
