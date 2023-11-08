@@ -5,7 +5,7 @@ import { PlayList, PlayListFull } from "./PlayList";
 import CommentContainer from "../comment/CommentContainer";
 import PageNavigation from "./PageNavigation";
 import dynamic from "next/dynamic";
-import { articlesCollection, blogsCollection } from "../../firebase";
+import { articlesCollection } from "../../firebase";
 import {
   collection,
   doc,
@@ -14,7 +14,6 @@ import {
   orderBy,
   query,
   where,
-  getCountFromServer,
 } from "firebase/firestore";
 import LoadingScreen from "../inputs/LoadingScreen";
 import { useRouter } from "next/router";
@@ -39,63 +38,14 @@ function PostEndSeparator(props) {
   );
 }
 
-function ArticleContainer({ article }) {
+function ArticleContainer({ article, blog, playlist, comments }) {
   const router = useRouter();
-
-  const [blog, setBlog] = useState();
-  const [playlist, setPlaylist] = useState();
-  const [comments, setComments] = useState();
 
   const [articles, setArticles] = useState([]);
   const [loadingArticles, setLoadingArticles] = useState(true);
   const [totalReaders, setTotalReaders] = useState(0);
 
   const [open, setOpen] = useState(false);
-
-  /** Get the target article blog */
-  useEffect(() => {
-    if (!article.id) return;
-
-    getDoc(doc(blogsCollection, article.id)).then((blog) => {
-      if (!blog.exists()) return setBlog(undefined);
-      const data = { 
-        ...blog.data(),
-        id: blog.id,
-        createAt: blog.data().createAt.seconds,
-        updateAt: blog.data().updateAt ? blog.data().updateAt.seconds : null
-      };
-      setBlog(data);
-    });
-  }, [article.id]);
-
-  /** Get the target article playlist */
-  useEffect(() => {
-    if (!article.playlist || !blog?.id) return;
-
-    getDoc(doc(blogsCollection, blog.id, "playlists", article.playlist)).then((playlist) => {
-      if (!playlist.exists()) return setPlaylist(undefined);
-      const data = {
-        ...playlist.data(),
-        id: playlist.id,
-        createAt: playlist.data().createAt.seconds,
-        updateAt: playlist.data().updateAt
-          ? playlist.data().updateAt.seconds
-          : null,
-      };
-      setPlaylist(data);
-    });
-  }, [article.playlist, blog.id]);
-
-  /** Get the target article comments number */
-  useEffect(() => {
-    if (!article.id) return;
-
-    const coll = collection(articlesCollection, article.id, "comments");
-    getCountFromServer(coll).then(snap => {
-      if(!snap || snap.data() || snap.data().count) return setComments(0);
-      setComments(snap.data().count);
-    });
-  }, [article]);
 
   /** Get all articles remaining to current article playlist */
   useEffect(() => {
