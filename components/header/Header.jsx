@@ -1,4 +1,3 @@
-import Script from "next/script";
 import Head from "next/head";
 import React from "react";
 import { useRouter } from "next/router";
@@ -28,17 +27,6 @@ export default function Header({
   const desc =
     "Andmag ground est une plateforme de services axés sur le génie logiciel et la conception UI/UX. Nous offrons donc à nos clients la possibilités de cibler un large éventail de logiciels, augmentant ainsi leur productivité et leur rentabilité.";
 
-  /** Google tag (gtag.js) */
-  React.useEffect(() => {
-    if(!window) return;
-    
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-  
-    gtag('config', 'AW-11402375436');
-  }, []);
-  
   return (
     <>
       <Head>
@@ -79,7 +67,6 @@ export default function Header({
         )}
       </Head>
       <header className={styles.container}>
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=AW-11402375436" />
         <AppICon onOpen={onOpen} />
         <Navbar />
         <div className={styles.item}>
