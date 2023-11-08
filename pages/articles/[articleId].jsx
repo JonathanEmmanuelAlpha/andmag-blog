@@ -3,7 +3,7 @@ import ArticleContainer from "../../components/article/ArticleContainer";
 import SkeletonLayout from "../../components/skeleton-layout/SkeletonLayout";
 import { articlesCollection, blogsCollection, db } from "../../libs/database";
 
-function ArticleId({ article, blog, playlist, comments }) {
+function ArticleId({ article }) {
   return (
     <SkeletonLayout
       title={article.title}
@@ -45,36 +45,6 @@ export async function getServerSideProps(context) {
     };
   }
 
-  const blog = await blogsCollection.doc(article.data().blogId).get();
-  if (!blog.exists) {
-    return {
-      redirect: {
-        destination: "/articles",
-        permanent: false,
-      },
-    };
-  }
-
-  const playlist = await blogsCollection
-    .doc(blog.id)
-    .collection("playlists")
-    .doc(article.data().playlist)
-    .get();
-  if (!playlist.exists) {
-    return {
-      redirect: {
-        destination: "/articles",
-        permanent: false,
-      },
-    };
-  }
-
-  const snaps = await db
-    .collection(`articles/${article.id}/comments`)
-    .count()
-    .get();
-  const comments = snaps.data().count;
-
   return {
     props: {
       article: {
@@ -85,21 +55,6 @@ export async function getServerSideProps(context) {
           ? article.data().updateAt.seconds
           : null,
       },
-      blog: {
-        ...blog.data(),
-        id: blog.id,
-        createAt: blog.data().createAt.seconds,
-        updateAt: blog.data().updateAt ? blog.data().updateAt.seconds : null,
-      },
-      playlist: {
-        ...playlist.data(),
-        id: playlist.id,
-        createAt: playlist.data().createAt.seconds,
-        updateAt: playlist.data().updateAt
-          ? playlist.data().updateAt.seconds
-          : null,
-      },
-      comments: comments,
     },
   };
 }
