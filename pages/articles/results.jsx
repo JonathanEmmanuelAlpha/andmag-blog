@@ -34,7 +34,7 @@ function ArticleResults() {
   );
 
   return (
-    <SkeletonLayout title={"Articles ? " + router.query.search_query}>
+    <SkeletonLayout title={"Articles ? " + router.query.search_query} robots={"noindex,nofollow"}>
       <div className={styles.container}>
         <div className={styles.search}>
           <SearchBar
