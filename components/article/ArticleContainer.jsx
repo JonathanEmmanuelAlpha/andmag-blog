@@ -5,7 +5,7 @@ import { PlayList, PlayListFull } from "./PlayList";
 import CommentContainer from "../comment/CommentContainer";
 import PageNavigation from "./PageNavigation";
 import dynamic from "next/dynamic";
-import { articlesCollection } from "../../firebase";
+import { articlesCollection, blogsCollection } from "../../firebase";
 import {
   collection,
   doc,
