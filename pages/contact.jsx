@@ -75,7 +75,6 @@ export default function Contact() {
       <div className={styles.wrapper}>
         <section className={styles.info}>
           <h1>Entrez en contact</h1>
-          <ins className="surfe-be" data-sid="387090"></ins>
           <p>
             {
               "Si vous souhaité entré en contact, parler nous d'un projet ou dites juste salut. Si vous souhaité nous envoyer un mail, remplissez le formulaire ci-dessous ou cliquez sur "
