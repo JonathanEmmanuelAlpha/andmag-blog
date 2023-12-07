@@ -1,4 +1,3 @@
-import Script from 'next/script'
 import AuthProvider from "../context/AuthProvider";
 import BlogProvider from "../context/BlogProvider";
 import FAQProvider from "../context/FAQProvider";
@@ -13,7 +12,6 @@ function MyApp({ Component, pageProps }) {
         <BlogProvider>
           <TrainProvider>
             <FAQProvider>
-              <Script src="//static.surfe.pro/js/net.js"/>
               <Component {...pageProps} />
             </FAQProvider>
           </TrainProvider>
