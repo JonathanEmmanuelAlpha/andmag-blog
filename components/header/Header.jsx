@@ -66,6 +66,7 @@ export default function Header({
           />
         )}
         <meta name="surfe.pro" content="5f0f37988268be0582b791da7eff09c5" />
+        <script>(adsurfebe = window.adsurfebe || []).push({});</script>
       </Head>
       <header className={styles.container}>
         <AppICon onOpen={onOpen} />
