@@ -65,7 +65,7 @@ export default function Header({
             content="_vWfdPyu3FhlyaU6-0SE_aaEecwEICwLk4yhqqKxsX4"
           />
         )}
-        <meta name="surfe.pro" content="5f0f37988268be0582b791da7eff09c5">
+        <meta name="surfe.pro" content="5f0f37988268be0582b791da7eff09c5" />
       </Head>
       <header className={styles.container}>
         <AppICon onOpen={onOpen} />
