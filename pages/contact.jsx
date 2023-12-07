@@ -20,10 +20,6 @@ export default function Contact() {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
-  React.useEffect(() => {
-    (adsurfebe = window.adsurfebe || []).push({})
-  }, []);
-
   function handleSubmit(event) {
     event.preventDefault();
     setError("");
