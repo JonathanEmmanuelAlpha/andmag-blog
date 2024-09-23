@@ -24,7 +24,6 @@ import {
   WhatsappShareButton,
 } from "next-share";
 import { useRouter } from "next/router";
-import { domainName } from "../links/AwesomeLink.type";
 
 export default function ShareButton({ popupOnTop, generateOnClick, metas }) {
   const router = useRouter();
@@ -71,55 +70,55 @@ export default function ShareButton({ popupOnTop, generateOnClick, metas }) {
       >
         <div className={styles.share_wrap}>
           <div className={styles.share_item}>
-            <EmailShareButton url={`${domainName}${router.asPath}`}>
+            <EmailShareButton url={router.asPath}>
               <EmailIcon round />
               <span>Email</span>
             </EmailShareButton>
           </div>
           <div className={styles.share_item}>
-            <FacebookShareButton url={`${domainName}${router.asPath}`}>
+            <FacebookShareButton url={router.asPath}>
               <FacebookIcon round />
               <span>Facebook</span>
             </FacebookShareButton>
           </div>
           <div className={styles.share_item}>
-            <FacebookMessengerShareButton url={`${domainName}${router.asPath}`}>
+            <FacebookMessengerShareButton url={router.asPath}>
               <FacebookMessengerIcon round />
               <span>Messenger</span>
             </FacebookMessengerShareButton>
           </div>
           <div className={styles.share_item}>
-            <LinkedinShareButton url={`${domainName}${router.asPath}`}>
+            <LinkedinShareButton url={router.asPath}>
               <LinkedinIcon round />
               <span>Linkedin</span>
             </LinkedinShareButton>
           </div>
           <div className={styles.share_item}>
-            <RedditShareButton url={`${domainName}${router.asPath}`}>
+            <RedditShareButton url={router.asPath}>
               <RedditIcon round />
               <span>Reddit</span>
             </RedditShareButton>
           </div>
           <div className={styles.share_item}>
-            <TwitterShareButton url={`${domainName}${router.asPath}`}>
+            <TwitterShareButton url={router.asPath}>
               <TwitterIcon round />
               <span>Twitter</span>
             </TwitterShareButton>
           </div>
           <div className={styles.share_item}>
-            <WhatsappShareButton url={`${domainName}${router.asPath}`}>
+            <WhatsappShareButton url={router.asPath}>
               <WhatsappIcon round />
               <span>Whatsapp</span>
             </WhatsappShareButton>
           </div>
           <div className={styles.share_item}>
-            <TelegramShareButton url={`${domainName}${router.asPath}`}>
+            <TelegramShareButton url={router.asPath}>
               <TelegramIcon round />
               <span>Telegram</span>
             </TelegramShareButton>
           </div>
           <div className={styles.share_item}>
-            <PinterestShareButton url={`${domainName}${router.asPath}`}>
+            <PinterestShareButton url={router.asPath}>
               <PinterestIcon round />
               <span>Pinterest</span>
             </PinterestShareButton>
