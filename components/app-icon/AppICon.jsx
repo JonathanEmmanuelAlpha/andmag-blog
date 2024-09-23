@@ -13,7 +13,6 @@ import toTimeString from "../../helpers/toTimeString";
 import styles from "../../styles/app-icon/app.module.css";
 import { CircleSeparator } from "../article/ArticleContainer";
 import LoadingScreen from "../inputs/LoadingScreen";
-import { domainName } from "../links/AwesomeLink.type";
 
 export function FacebookIcon() {
   return (
@@ -172,10 +171,10 @@ function NotificationWrapper({ loading, notifications, open, handleClick }) {
               title={notif.title}
               url={
                 notif.thumbnail
-                  ? `${domainName}/articles/${dashify(notif.title, {
+                  ? `/articles/${dashify(notif.title, {
                       condense: true,
                     })}-${notif.targetId}`
-                  : `${domainName}/trainnings/train?testChannel=${notif.targetId}`
+                  : `/trainnings/train?testChannel=${notif.targetId}`
               }
             />
           );
