@@ -5,13 +5,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SubmitButton from "../inputs/SubmitButton";
 import Alert from "../inputs/Alert";
 import Link from "next/link";
-import { domainName } from "../links/AwesomeLink.type";
 
 export function Input(props) {
   return (
     <div className={styles.input_wrap}>
       {props.withFGP && (
-        <Link href={`${domainName}/account/forgotPassword`}>
+        <Link href={`/account/forgotPassword`}>
           Mot de passe oublié ?
         </Link>
       )}
@@ -75,13 +74,13 @@ function AccountContainer(props) {
               {props.otherLinks.includes("login") && (
                 <div>
                   <span>Déjà membre ?</span>
-                  <Link href={`${domainName}/account/login`}>Se connecter</Link>
+                  <Link href={`/account/login`}>Se connecter</Link>
                 </div>
               )}
               {props.otherLinks.includes("register") && (
                 <div>
                   <span>Pas de compte ?</span>
-                  <Link href={`${domainName}/account/register`}>
+                  <Link href={`/account/register`}>
                     Créer un compte
                   </Link>
                 </div>
@@ -89,7 +88,7 @@ function AccountContainer(props) {
               {props.otherLinks.includes("with-email") && (
                 <div>
                   <span>Accès rapide ?</span>
-                  <Link href={`${domainName}/account/login-with-email-link`}>
+                  <Link href={`/account/login-with-email-link`}>
                     Utiliser mon email
                   </Link>
                 </div>
@@ -97,7 +96,7 @@ function AccountContainer(props) {
               {props.otherLinks.includes("with-password") && (
                 <div>
                   <span>Connection classique ?</span>
-                  <Link href={`${domainName}/account/login`}>Se connecter</Link>
+                  <Link href={`/account/login`}>Se connecter</Link>
                 </div>
               )}
             </div>
