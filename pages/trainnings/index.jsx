@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import LoadingScreen from "../../components/inputs/LoadingScreen";
-import { domainName } from "../../components/links/AwesomeLink.type";
 import ActivitiesContainer from "../../components/trainning/ActivitiesContainer";
 import DomainCard from "../../components/trainning/DomainCard";
 import TrainningCard from "../../components/trainning/TrainningCard";
@@ -49,7 +48,7 @@ export default function Trainnings(props) {
                 key={blog.id}
                 banner={blog.banner}
                 description={blog.description.slice(0, 125)}
-                domainRoute={`${domainName}/trainnings/${blog.id}`}
+                domainRoute={`/trainnings/${blog.id}`}
                 tests={blog.tests}
                 title={blog.name}
               />
