@@ -16,7 +16,6 @@ import toTimeString from "../../helpers/toTimeString";
 import dynamic from "next/dynamic";
 import CommentInput from "./CommentInput";
 import Alert from "../inputs/Alert";
-import { domainName } from "../links/AwesomeLink.type";
 import { handleFirestoreErrors } from "../../firebase";
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
@@ -198,7 +197,7 @@ function CommentItem({
         <div className={styles.chd}>
           <div className={styles.inf}>
             <Link
-              href={`${domainName}/account/profile?pseudo=${comment.userName}`}
+              href={`/account/profile?pseudo=${comment.userName}`}
             >
               {comment.userName}
             </Link>
