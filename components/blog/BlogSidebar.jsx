@@ -14,7 +14,6 @@ import { useTargetBlog } from "../../context/BlogProvider";
 import useBlogFollowers from "../../hooks/useBlogFollowers";
 import styles from "../../styles/blog/BlogContainer.module.css";
 import LoadingScreen from "../inputs/LoadingScreen";
-import { domainName } from "../links/AwesomeLink.type";
 import { SubButton } from "./BlogHead";
 import Skeleton from "react-loading-skeleton";
 
@@ -119,7 +118,7 @@ function AsideHeader({ blog }) {
 function AsideMenuItem({ url, name, icon }) {
   const router = useRouter();
   return (
-    <Link href={`${domainName}${url}`}>
+    <Link href={url}>
       <a data-active={router.asPath === url}>
         <FontAwesomeIcon icon={icon} />
         <span>{name}</span>
