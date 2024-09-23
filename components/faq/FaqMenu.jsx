@@ -6,20 +6,19 @@ import React, { useEffect, useState } from "react";
 import { useFAQ } from "../../context/FAQProvider";
 import styles from "../../styles/faq/FaqMenu.module.css";
 import LoadingScreen from "../inputs/LoadingScreen";
-import { domainName } from "../links/AwesomeLink.type";
 
 function Menu({ route, name, subMenus }) {
   const router = useRouter();
   const [open, setOpen] = useState(
-    router.asPath === `${domainName}/faq/${route}`
+    router.asPath === `/faq/${route}`
   );
 
   return (
     <div className={styles.menu}>
       <div className={styles.mark} />
       <div className={styles.main_menu}>
-        <Link href={`${domainName}/faq/${route}`}>
-          <a data-active={router.asPath === `${domainName}/faq/${route}`}>
+        <Link href={`/faq/${route}`}>
+          <a data-active={router.asPath === `/faq/${route}`}>
             {name}
           </a>
         </Link>
@@ -34,11 +33,11 @@ function Menu({ route, name, subMenus }) {
             ? subMenus.map((menu, index) => (
                 <li key={index}>
                   <div className={styles.sub_mark} />
-                  <Link href={`${domainName}/faq/${route}#${menu?.route}`}>
+                  <Link href={`/faq/${route}#${menu?.route}`}>
                     <a
                       data-active={
                         router.asPath ===
-                        `${domainName}/faq/${route}#${menu?.route}`
+                        `/faq/${route}#${menu?.route}`
                       }
                     >
                       {menu?.name}
