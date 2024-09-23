@@ -5,7 +5,6 @@ import Image from "next/image";
 import styles from "../../styles/blog/ArticleCard.module.css";
 import toTimeString from "../../helpers/toTimeString";
 import { CircleSeparator } from "../article/ArticleContainer";
-import { domainName } from "../links/AwesomeLink.type";
 import EditLink from "../links/EditLink";
 import { useAuth } from "../../context/AuthProvider";
 import { useTargetBlog } from "../../context/BlogProvider";
@@ -95,7 +94,7 @@ export function ArticleCard({
             <Skeleton width={35} height={35} baseColor={"grey"} circle />
           )}
           <div className={styles.infos}>
-            <Link href={`${domainName}/blogs/${blogId}`}>
+            <Link href={`/blogs/${blogId}`}>
               {blogName || (
                 <Skeleton
                   width={175}
@@ -111,7 +110,7 @@ export function ArticleCard({
                   (tag, index) =>
                     index < 5 && (
                       <Link
-                        href={`${domainName}/articles/results?search_query=${tag.slice(
+                        href={`/articles/results?search_query=${tag.slice(
                           1,
                           tag.length
                         )}`}
@@ -141,7 +140,7 @@ export function ArticleCard({
             </span>
           </div>
           <Link
-            href={`${domainName}/articles/${dashify(title, {
+            href={`/articles/${dashify(title, {
               condense: true,
             })}-${articleId}`}
           >
