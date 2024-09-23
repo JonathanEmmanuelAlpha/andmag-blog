@@ -6,11 +6,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "../../styles/case-studies/Card.module.css";
-import { domainName } from "../links/AwesomeLink.type";
 
 function ExploreButton({ id, text }) {
   return (
-    <Link href={`${domainName}/case-studies/${id}`}>
+    <Link href={`/case-studies/${id}`}>
       <a className={styles.exp_btn}>
         Explorer <FontAwesomeIcon icon={faArrowRight} />
       </a>
