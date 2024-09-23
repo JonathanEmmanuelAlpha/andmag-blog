@@ -6,7 +6,6 @@ import { faPaperPlane, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import dynamic from "next/dynamic";
 import { useAuth } from "../../context/AuthProvider";
 import Link from "next/link";
-import { domainName } from "../links/AwesomeLink.type";
 import { useRouter } from "next/router";
 import LoadingScreen from "../inputs/LoadingScreen";
 
@@ -40,7 +39,7 @@ function CommentInput({ handlePost }) {
         </button>
         {loadingUser && <LoadingScreen />}
         {!loadingUser && !currentUser && (
-          <Link href={`${domainName}/account/login?next=${router.asPath}`}>
+          <Link href={`/account/login?next=${router.asPath}`}>
             <a>
               <span>Se connecter</span>
               <FontAwesomeIcon icon={faSignInAlt} />
