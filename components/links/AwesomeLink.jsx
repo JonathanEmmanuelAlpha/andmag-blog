@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { AwesomeLinkProps, domainName } from "./AwesomeLink.type";
+import { AwesomeLinkProps } from "./AwesomeLink.type";
 import styles from "../../styles/links/AwesomeLink.module.css";
 import { useRouter } from "next/router";
 
@@ -17,10 +17,9 @@ export default function AwesomeLink({
   rel,
 }) {
   const router = useRouter();
-  const finalUrl = `${domainName}${url}`;
 
   return (
-    <Link href={finalUrl}>
+    <Link href={url}>
       <a
         data-active={router.asPath === url}
         data-direction={direction}
