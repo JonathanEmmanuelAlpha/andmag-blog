@@ -25,7 +25,6 @@ import {
   WhatsappIcon,
 } from "../components/app-icon/AppICon";
 import Link from "next/link";
-import { domainName } from "../components/links/AwesomeLink.type";
 import { getDocs, query, setDoc, where } from "firebase/firestore";
 import { adminsCollection, handleFirestoreErrors } from "../firebase";
 import { useAuth } from "../context/AuthProvider";
@@ -70,10 +69,10 @@ function HeadSection() {
         <h1>Andmag Ground</h1>
         <p>Full stack developer & UI/UX Designer.</p>
         <div className={styles.mor_links}>
-          <Link href={`${domainName}/personal-works`}>
+          <Link href={`/personal-works`}>
             <a className={styles.cs}>Travaux personnels</a>
           </Link>
-          <Link href={`${domainName}/case-studies`}>
+          <Link href={`/case-studies`}>
             <a className={styles.re}>Réalistations</a>
           </Link>
         </div>
