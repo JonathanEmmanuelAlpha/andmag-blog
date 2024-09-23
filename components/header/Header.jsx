@@ -9,7 +9,6 @@ import { faSignIn, faSignOut } from "@fortawesome/free-solid-svg-icons";
 import Account from "../nav-bar/Account";
 import { useAuth } from "../../context/AuthProvider";
 import LoadingScreen from "../inputs/LoadingScreen";
-import { domainName } from "../links/AwesomeLink.type";
 
 export default function Header({
   title,
@@ -47,13 +46,13 @@ export default function Header({
         <meta property="og:site_name" content={"Andmag-ground"} />
         <meta property="og:title" content={title || "Andmag-ground"} />
         <meta property="og:type" content={ogType || "website"} />
-        <meta property="og:url" content={`${domainName}${router.asPath}`} />
+        <meta property="og:url" content={router.asPath} />
         <meta property="og:description" content={description || desc} />
         <meta property="og:image" content={ogImage || "/logo/AG.png"} />
         <meta property="twitter:card" content="summary_large_image" />
         <meta
           property="twitter:url"
-          content={`${domainName}${router.asPath}`}
+          content={router.asPath}
         />
         <meta property="twitter:title" content={title || "Andmag-ground"} />
         <meta property="twitter:description" content={description || desc} />
