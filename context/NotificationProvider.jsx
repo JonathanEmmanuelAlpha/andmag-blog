@@ -13,7 +13,6 @@ import {
 import React, { useState, useEffect, useContext } from "react";
 import { toast } from "react-toastify";
 import { NotificationToast } from "../components/app-icon/AppICon";
-import { domainName } from "../components/links/AwesomeLink.type";
 import {
   articlesCollection,
   blogsCollection,
@@ -79,7 +78,7 @@ export default function NotificationProvider({ children }) {
                   toast.info(
                     <NotificationToast
                       title={notif.title}
-                      url={`${domainName}/articles/${dashify(notif.title)}-${
+                      url={`/articles/${dashify(notif.title)}-${
                         notif.targetId
                       }`}
                       at={notif.createAt || { seconds: new Date().getTime() }}
