@@ -7,7 +7,6 @@ import { faStar, faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
 import { CircleSeparator } from "../../components/article/ArticleContainer";
 import { useAuth } from "../../context/AuthProvider";
 import EditLink from "../links/EditLink";
-import { domainName } from "../links/AwesomeLink.type";
 import { useTargetBlog } from "../../context/BlogProvider";
 
 function TrainningCard({ trainning }) {
@@ -46,7 +45,7 @@ function TrainningCard({ trainning }) {
       <p>{trainning.description.slice(0, 124)}</p>
       {trainning.published && (
         <Link
-          href={`${domainName}/trainnings/train?testChannel=${trainning.id}`}
+          href={`/trainnings/train?testChannel=${trainning.id}`}
         >
           {"S'entrainner"}
         </Link>
