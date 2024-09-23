@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import styles from "../../styles/blog/BlogContainer.module.css";
 import Link from "next/link";
 import Image from "next/image";
-import { domainName } from "../links/AwesomeLink.type";
 import BlogHead from "./BlogHead";
 import { useRouter } from "next/router";
 import useIsOwner from "../../hooks/useIsOwner";
@@ -21,7 +20,7 @@ function MenuLink({ url, text }) {
 
   return (
     <li data-active={url === router.asPath}>
-      <Link href={`${domainName}${url}`}>{text}</Link>
+      <Link href={`${url}`}>{text}</Link>
     </li>
   );
 }
