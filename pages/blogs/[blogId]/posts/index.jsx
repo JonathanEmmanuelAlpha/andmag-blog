@@ -6,7 +6,6 @@ import usePosts from "../../../../hooks/usePosts";
 import { PostCard } from "../../../../components/post/PostCard";
 import useOnScreen from "../../../../hooks/useOnScreen";
 import { useTargetBlog } from "../../../../context/BlogProvider";
-import { domainName } from "../../../../components/links/AwesomeLink.type";
 
 export default function Publications() {
   const router = useRouter();
@@ -33,7 +32,7 @@ export default function Publications() {
               pub={post}
               logo={blog.logo}
               name={blog.name}
-              url={`${domainName}/blogs/${blog.id}/posts`}
+              url={`/blogs/${blog.id}/posts`}
             />
           );
         })}
