@@ -14,7 +14,6 @@ import AwesomeLink from "../links/AwesomeLink";
 import EditLink from "../links/EditLink";
 import { useRouter } from "next/router";
 import { useTargetBlog } from "../../context/BlogProvider";
-import { domainName } from "../links/AwesomeLink.type";
 import LoadingScreen from "../inputs/LoadingScreen";
 import Image from "next/image";
 
