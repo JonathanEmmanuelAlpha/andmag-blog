@@ -18,10 +18,7 @@ export default function Navbar(props) {
     <nav className={styles.container}>
       <ul className={styles.wrapper}>
         <li>
-          <AwesomeLink text="Accueil" />
-        </li>
-        <li>
-          <AwesomeLink icon={faNewspaper} text="Articles" url="/articles" />
+          <AwesomeLink icon={faNewspaper} text="Articles" url="/" />
         </li>
         <li>
           <AwesomeLink icon={faBlog} text="Blogs" url="/blogs" />
