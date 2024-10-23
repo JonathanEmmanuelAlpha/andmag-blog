@@ -39,40 +39,6 @@ export default async function generateSitemap() {
             <loc>${domainName}/account/login-with-email-link</loc>
             <lastmod>2023-03-09</lastmod>
         </url>
-        ${articles
-          .map((article) => {
-            return `<url>
-                <loc>${domainName}/articles/${dashify(article.data().title, {
-              condense: true,
-            })}-${article.id}</loc>
-                <lastmod>${format(
-                  new Date(
-                    article.data().updateAt
-                      ? article.data().updateAt.seconds * 1000
-                      : article.data().createAt.seconds * 1000
-                  ),
-                  "yyyy-MM-dd"
-                )}</lastmod>
-            </url>`;
-          })
-          .join("")}
-          ${profiles
-            .map((profile) => {
-              return `<url>
-                  <loc>${domainName}/account/profile?pseudo=${
-                profile.data().pseudo
-              }</loc>
-                  <lastmod>${format(
-                    new Date(
-                      profile.data().updateAt
-                        ? profile.data().updateAt.seconds * 1000
-                        : profile.data().createAt.seconds * 1000
-                    ),
-                    "yyyy-MM-dd"
-                  )}</lastmod>
-              </url>`;
-            })
-            .join("")}
     </urlset>`;
 
   return xml;
